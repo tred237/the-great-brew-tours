@@ -1,0 +1,2 @@
+class ScheduledTour < ApplicationRecord
+end

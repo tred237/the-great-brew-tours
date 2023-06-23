@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :tour_breweries
+  resources :scheduled_tours
+  resources :breweryreviews
+  resources :breweries
+  resources :tours
+  resources :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
