@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: the_great_brew_tours_production
-  username: the_great_brew_tours
-  password: <%= ENV["THE_GREAT_BREW_TOURS_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
