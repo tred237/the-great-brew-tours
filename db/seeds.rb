@@ -1,7 +1,7 @@
 require 'byebug'
 
 # Admin User
-User.create!(username: 'admin', password: 'T3ster!', password_confirmation: "T3ster!", email: "admin@email.com", age: 21, is_admin: true) # admin account
+User.create!(username: 'admin', password: 'T3ster!', password_confirmation: "T3ster!", email: "admin@email.com", birth_date: '1990-01-01', is_admin: true) # admin account
 puts "Admin created..."
 
 # Create Breweries
@@ -13,8 +13,11 @@ puts "Breweries created..."
 
 # Create Non-Admin Users
 (1..20).each do |u|
-    username = Faker::Name.name
-    User.create!(username: Faker::Name.name, password: 'T3stUser!', password_confirmation: 'T3stUser!', age: 21, email: username.downcase.gsub!(' ', '')) if !User.all.map{|i| i.username}.include? username
+    username = ''
+    until username != '' and !User.all.map{|u| u["username"]}.include? username
+        username = "#{Faker::Name.first_name} #{Faker::Name.last_name}"
+    end
+    User.create!(username: username, password: 'T3stUser!', password_confirmation: 'T3stUser!', birth_date: "#{rand(1950...2001)}-#{rand(1..12)}-#{rand(1..28)}", email: "#{username.downcase.gsub!(' ', '.')}@email.com")
 end
 puts "Non-admin users created..."
 
