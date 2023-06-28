@@ -7,7 +7,7 @@ class Brewery < ApplicationRecord
     validates :name, presence: true, uniqueness: true
     validate :website_uniqueness
     validates :city, presence: true
-    validates :creator_id, presence: true, inclusion: [1]
+    validates :creator_id, presence: true, inclusion: User.where(is_admin: true).map{|u| u.id}
 
     def website_uniqueness
         unless !website or !Brewery.all.map{ |b| b.website}.include? website
