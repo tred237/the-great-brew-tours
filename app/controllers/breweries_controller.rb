@@ -1,4 +1,6 @@
 class BreweriesController < ApplicationController
+    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_error_message
+
     def create
         # change to session id
         creator = User.find(params[:creator_id])

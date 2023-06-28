@@ -4,7 +4,7 @@ class Tour < ApplicationRecord
     has_many :breweries, through: :tour_breweries
     belongs_to :creator, foreign_key: 'creator_id', class_name: 'User'
 
-    validates :tours, presence: true
+    validates :tour_date, presence: true
     validates :duration, presence: true
     validates :meeting_location, presence: true
     validates :available_slots, presence: true
