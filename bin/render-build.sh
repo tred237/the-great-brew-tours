@@ -11,4 +11,4 @@ cp -a client/build/. public/
 bundle install
 bundle exec rake db:migrate 
 # change back to seed!
-bundle exec rake db:reset # if you have seed data, run this command for the initial deploy only to avoid duplicate records
+bundle exec rake db:reset DISABLE_DATABASE_ENVIRONMENT_CHECK=1 # if you have seed data, run this command for the initial deploy only to avoid duplicate records
