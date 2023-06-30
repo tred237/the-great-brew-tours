@@ -77,7 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_28_020107) do
     t.boolean "is_admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "birth_date"
+    t.date "birth_date", null: false
   end
 
   add_foreign_key "breweries", "users", column: "creator_id"
