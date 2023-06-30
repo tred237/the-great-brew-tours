@@ -3,7 +3,7 @@ class BreweriesController < ApplicationController
 
     def create
         # change to session id
-        creator = User.find(params[:creator_id])
+        creator = find_creator
         if creator.is_admin
             brewery = Brewery.new(brewery_params)
             brewery.creator = creator
@@ -14,7 +14,43 @@ class BreweriesController < ApplicationController
         end
     end
 
+    def index
+        breweries = Brewery.all
+        render json: breweries, status: :ok
+    end
+
+    def show
+        brewery = find_brewery
+        render json: brewery, status: :ok
+    end
+
+    def update
+        creator = find_creator
+        if creator.is_admin
+            brewery = find_brewery
+            brewery.update!(brewery_params)
+            render json: brewery, status: :ok
+        else
+            render json: {errors: ["You are not authorized to edit a brewery"]}, status: :unauthorized
+        end
+    end
+
+    def destroy
+        creator = find_creator
+        if creator.is_admin
+            brewery = find_brewery
+            brewery.destroy
+            head :no_content
+        else
+            render json: {errors: ["You are not authorized to delete a brewery"]}, status: :unauthorized
+        end
+    end
+
     private
+
+    def find_brewery
+        Brewery.find(params[:id])
+    end
 
     def brewery_params
         params.permit(:name, :website, :address, :city, :postal_code, :latitude, :longitude)
