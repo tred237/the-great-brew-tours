@@ -1,9 +1,10 @@
 class ChangeAgeDataType < ActiveRecord::Migration[7.0]
-  def up
-    change_column :users, :age, :float
-  end
-
-  def  down
-    change_column :users, :age, :integer
+  def change
+    reversible do |direction|
+      change_table :users do |t|
+        direction.up { t.change :age, :float }
+        direction.down { t.change :price, :integer }
+      end
+    end
   end
 end
