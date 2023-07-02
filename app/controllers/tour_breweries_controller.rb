@@ -2,7 +2,7 @@ require 'byebug'
 class TourBreweriesController < ApplicationController
     def create
         # change to session id
-        creator = User.find(params[:creator_id])
+        creator = find_creator
         if creator.is_admin
             breweries = []
             params[:breweries].map do |b|
