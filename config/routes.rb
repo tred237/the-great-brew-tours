@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :tour_breweries
   resources :scheduled_tours
-  resources :breweryreviews
+  resources :brewery_reviews
   resources :breweries
   resources :tours
   resources :users
