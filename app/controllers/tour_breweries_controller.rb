@@ -1,5 +1,8 @@
 require 'byebug'
 class TourBreweriesController < ApplicationController
+    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_error_message
+    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_error_message
+
     def create
         # change to session id
         creator = find_creator
