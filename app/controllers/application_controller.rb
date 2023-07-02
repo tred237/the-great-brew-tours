@@ -3,8 +3,8 @@ class ApplicationController < ActionController::API
 
     private
 
-    def find_creator
-        User.find(params[:creator_id])
+    def find_user
+        User.find(session[:user_id])
     end
 
     def unprocessable_entity_error_message(invalid)

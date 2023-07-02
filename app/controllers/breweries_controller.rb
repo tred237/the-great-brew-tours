@@ -2,8 +2,7 @@ class BreweriesController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_error_message
 
     def create
-        # change to session id
-        creator = find_creator
+        creator = find_user
         if creator.is_admin
             brewery = Brewery.new(brewery_params)
             brewery.creator = creator
@@ -25,8 +24,8 @@ class BreweriesController < ApplicationController
     end
 
     def update
-        creator = find_creator
-        if creator.is_admin
+        updater = find_user
+        if updater.is_admin
             brewery = find_brewery
             brewery.update!(brewery_params)
             render json: brewery, status: :ok
@@ -36,8 +35,8 @@ class BreweriesController < ApplicationController
     end
 
     def destroy
-        creator = find_creator
-        if creator.is_admin
+        destroyer = find_user
+        if destroyer.is_admin
             brewery = find_brewery
             brewery.destroy
             head :no_content
