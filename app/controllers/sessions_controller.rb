@@ -1,5 +1,6 @@
-require 'byebug'
 class SessionsController < ApplicationController
+    rescue_from ActiveRecord::RecordNotFound, with: :user_unauthorized_response
+
     def create
         user = User.find_by("username = ? or email = ?", params[:user], params[:user])
         if user&.authenticate(params[:password])
@@ -18,5 +19,11 @@ class SessionsController < ApplicationController
     def destroy
         session.delete :user_id
         head :no_content
+    end
+
+    private
+
+    def user_unauthorized_response(invalid)
+        render json: {error: "Not Authorized"}, status: :unauthorized
     end
 end

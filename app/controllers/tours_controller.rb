@@ -14,14 +14,14 @@ class ToursController < ApplicationController
         end
     end
 
-    def index 
-        tours = Tour.all
-        render json: tours, status: :ok
-    end
-
-    def show
-        tour = find_tour
-        render json: tour, status: :ok
+    def index
+        user = find_user
+        if user.is_admin
+            tours = Tour.all
+            render json: tours, status: :ok
+        else
+            render json: exclude_full_tours, status: :ok
+        end
     end
 
     def update
@@ -56,4 +56,13 @@ class ToursController < ApplicationController
         params.permit(:tour_date, :duration, :meeting_location, :available_slots)
     end
 
+    def exclude_full_tours
+        tours = []
+        scheduled_tour_agg = ScheduledTour.group(:tour_id).sum(:number_of_people)
+        scheduled_tour_agg.each do |k,v|
+            tour = Tour.find(k)
+            tours.push tour unless v >= tour.available_slots
+        end
+        tours
+    end
 end
