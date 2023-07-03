@@ -10,7 +10,7 @@ class TourBreweriesController < ApplicationController
                 if !TourBrewery.exists?(tour_id: params[:tour_id], brewery_id: b)
                     brewery = Tour.find(params[:tour_id]).tour_breweries.create!(brewery_id: b)
                     breweries.push brewery
-                end 
+                end
             end
             render json: breweries, status: :created
         else

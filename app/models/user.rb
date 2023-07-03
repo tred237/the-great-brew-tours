@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
     def must_be_twenty_one
         unless birth_date.to_date <= Time.now.years_ago(21).to_date
-            errors.add(:birth_date, "Must be 21 years of ago or older")
+            errors.add(:user_age, "must be 21 years or older")
         end
     end
 end
