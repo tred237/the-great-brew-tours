@@ -4,23 +4,23 @@ class BreweryReviewsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_error_message
 
     def create
-        creator = find_creator
+        creator = find_user
         brewery_review = creator.brewery_reviews.create!(brewery_review_params)
         render json: brewery_review, status: :created
     end
 
     def update
-        creator = find_creator
-        brewery_review = creator.brewery_reviews.find(params[:id])
+        updater = find_user
+        brewery_review = updater.brewery_reviews.find(params[:id])
         params[:is_edited] = true
         brewery_review.update!(update_brewery_review_params)
         render json: brewery_review, status: :ok
     end
 
     def destroy
-        creator = find_creator
+        destroyer = find_user
         brewery_review = BreweryReview.find(params[:id])
-        if creator.is_admin
+        if destroyer.is_admin
             brewery_review.destroy
             head :no_content
         else

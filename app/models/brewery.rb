@@ -11,7 +11,7 @@ class Brewery < ApplicationRecord
 
     def website_uniqueness
         unless !website or !Brewery.all.map{ |b| b.website}.include? website
-            errors.add(:website, "Website has already been taken")
+            errors.add(:website, "has already been taken")
         end
     end
 end
