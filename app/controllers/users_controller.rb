@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    skip_before_action :authorize, only: [:create]
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_error_message
 
     def create

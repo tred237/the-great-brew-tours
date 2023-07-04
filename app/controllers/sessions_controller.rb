@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+    skip_before_action :authorize, only: [:create]
     rescue_from ActiveRecord::RecordNotFound, with: :user_unauthorized_response
 
     def create

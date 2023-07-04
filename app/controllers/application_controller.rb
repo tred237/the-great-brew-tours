@@ -1,5 +1,10 @@
 class ApplicationController < ActionController::API
     include ActionController::Cookies
+    before_action :authorize
+
+    def authorize
+        render json: { errors: "You are not authorized to complete this action" }, status: :unauthorized unless session.include? :user_id
+    end
 
     private
 
