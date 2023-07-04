@@ -1,4 +1,3 @@
-require 'byebug'
 class BreweryReviewsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_error_message
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_error_message
