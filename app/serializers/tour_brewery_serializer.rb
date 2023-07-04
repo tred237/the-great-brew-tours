@@ -1,3 +1,3 @@
 class TourBrewerySerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :tour_id, :brewery_id
 end

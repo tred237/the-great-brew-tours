@@ -20,7 +20,7 @@ class BreweriesController < ApplicationController
 
     def show
         brewery = find_brewery
-        render json: brewery, status: :ok
+        render json: brewery, serializer: SingleBrewerySerializer, status: :ok
     end
 
     def update
@@ -28,7 +28,7 @@ class BreweriesController < ApplicationController
         if updater.is_admin
             brewery = find_brewery
             brewery.update!(brewery_params)
-            render json: brewery, status: :ok
+            render json: brewery, serializer: SingleBrewerySerializer, status: :ok
         else
             render json: {errors: ["You are not authorized to edit a brewery"]}, status: :unauthorized
         end
