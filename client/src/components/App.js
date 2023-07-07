@@ -3,23 +3,21 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [breweries, setBreweries] = useState([]);
 
   useEffect(() => {
-    fetch("/hello")
-      .then((r) => r.json())
-      .then((data) => setCount(data.count));
+    fetch("/breweries")
+      .then((res) => {
+        if(res.ok) res.json().then(b => setBreweries(b)) 
+      })
   }, []);
 
   return (
     <BrowserRouter>
       <div className="App">
         <Switch>
-          <Route path="/testing">
-            <h1>Test Route</h1>
-          </Route>
           <Route path="/">
-            <h1>Page Count: {count}</h1>
+            {breweries.map(b => <p key={b.id}>{b.name}</p>)}
           </Route>
         </Switch>
       </div>
