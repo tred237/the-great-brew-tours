@@ -1,5 +1,5 @@
-import Container from 'react-bootstrap/Container';
-import Breweries from '../features/breweries/Breweries';
+import Container from 'react-bootstrap/esm/Container';
+import Breweries from './Breweries';
 
 export default function HomePage() {
     return (
