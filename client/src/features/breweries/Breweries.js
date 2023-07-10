@@ -12,11 +12,8 @@ export default function Breweries() {
   }, [dispatch, breweryStatus]);
 
   return (
-    <div>
-      <h1>Breweries</h1>
       <ul>
         {breweryStatus === 'loading' || breweryStatus === 'idle' ? <p>Loading...</p> : breweries.map(b => <li key={b.id}>{b.name}</li> )}
       </ul>
-    </div>
   );
 }

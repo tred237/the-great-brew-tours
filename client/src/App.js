@@ -1,27 +1,18 @@
-// import { useState, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
-import Breweries from "./features/breweries/Breweries";
+import HomePage from "./pages/HomePage";
 
-function App() {
-  // const [breweries, setBreweries] = useState([]);
-
-  // useEffect(() => {
-  //   fetch("/breweries")
-  //     .then((res) => {
-  //       if(res.ok) res.json().then(b => setBreweries(b)) 
-  //     })
-  // }, []);
-
+export default function App() {
   return (
     <div className="App">
       <Switch>
+        <Route exact path="/home">
+          <HomePage />
+        </Route>
         <Route path="/">
-          <Breweries />
+          <Redirect to="/home" />
         </Route>
       </Switch>
     </div>
   );
 }
-
-export default App;
