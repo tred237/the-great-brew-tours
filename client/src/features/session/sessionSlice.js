@@ -20,6 +20,18 @@ export const fetchSession = createAsyncThunk("session/fetchSession", () => {
             .then(data => data)
 })
 
+export const fetchLogout = createAsyncThunk("session/fetchLogout", () => {
+    return fetch('/logout', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => data)
+})
+
 const sessionSlice = createSlice({
     name: "session",
     initialState: {
@@ -65,6 +77,25 @@ const sessionSlice = createSlice({
             }
         })
         .addCase(fetchSession.rejected, (state, action) => {
+            state.status = 'failed'
+            state.actionError = action.error.message
+        })
+
+
+        .addCase(fetchLogout.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetchLogout.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            if('errors' in action.payload) {
+                state.errors = action.payload
+            } else {
+                state.loggedIn = false
+                state.user = {}
+                delete state.errors
+            }
+        })
+        .addCase(fetchLogout.rejected, (state, action) => {
             state.status = 'failed'
             state.actionError = action.error.message
         })

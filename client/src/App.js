@@ -1,12 +1,12 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 
 import HomePage from "./features/breweries/HomePage";
 import BreweryPage from "./features/brewery/BreweryPage";
 import LoginPage from "./features/session/LoginPage";
-import { useEffect } from "react";
 import { fetchSession } from "./features/session/sessionSlice";
+import NavBar from "./features/NavBar";
 
 export default function App() {
   const state = useSelector((state) => state);
@@ -14,13 +14,13 @@ export default function App() {
   const dispatch = useDispatch()
   console.log(state)
 
-  useEffect(() => {
-    dispatch(fetchSession())
-  },[loggedIn])
+  // useEffect(() => {
+  //   dispatch(fetchSession())
+  // },[loggedIn])
 
   return (
     <div className="App">
-      {/* <NavLink to="/breweries/2">brewery</NavLink>; */}
+      <NavBar />
       <Routes>
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/breweries/:id" element={<BreweryPage />} />

@@ -19,12 +19,12 @@ class SessionsController < ApplicationController
 
     def destroy
         session.delete :user_id
-        head :no_content
+        render json: { message: "Logged Out" }, status: :ok
     end
 
     private
 
     def user_unauthorized_response(invalid)
-        render json: {error: "Not Authorized"}, status: :unauthorized
+        render json: { error: "Not Authorized" }, status: :unauthorized
     end
 end
