@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchLogin = createAsyncThunk("session/fetchSession", (loginCredentials) => {
+export const fetchLogin = createAsyncThunk("session/fetchLogin", (loginCredentials) => {
     return fetch('/login', {
                 method: 'POST',
                 headers: {
@@ -12,6 +12,13 @@ export const fetchLogin = createAsyncThunk("session/fetchSession", (loginCredent
             .then((res) => res.json())
             .then(data => data)
 });
+
+export const fetchSession = createAsyncThunk("session/fetchSession", () => {
+    console.log("fetch session running")
+    return fetch('logged-in-user')
+            .then(res => res.json())
+            .then(data => data)
+})
 
 const sessionSlice = createSlice({
     name: "session",
@@ -29,7 +36,6 @@ const sessionSlice = createSlice({
         .addCase(fetchLogin.fulfilled, (state, action) => {
             if('errors' in action.payload) {
                 state.status = 'succeeded'
-                console.log(action.payload.errors[0])
                 state.errors = action.payload
             } else {
                 state.loggedIn = true
@@ -41,6 +47,26 @@ const sessionSlice = createSlice({
         .addCase(fetchLogin.rejected, (state, action) => {
           state.status = 'failed'
           state.actionError = action.error.message
+        })
+
+
+        .addCase(fetchSession.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetchSession.fulfilled, (state, action) => {
+            if('errors' in action.payload) {
+                state.status = 'succeeded'
+                state.errors = action.payload
+            } else {
+                state.loggedIn = true
+                state.status = 'succeeded'
+                state.user = action.payload
+                delete state.errors
+            }
+        })
+        .addCase(fetchSession.rejected, (state, action) => {
+            state.status = 'failed'
+            state.actionError = action.error.message
         })
     }
 });
