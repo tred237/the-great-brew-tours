@@ -15,7 +15,7 @@ export const fetchLogin = createAsyncThunk("session/fetchLogin", (loginCredentia
 
 export const fetchSession = createAsyncThunk("session/fetchSession", () => {
     console.log("fetch session running")
-    return fetch('logged-in-user')
+    return fetch('/logged-in-user')
             .then(res => res.json())
             .then(data => data)
 })
