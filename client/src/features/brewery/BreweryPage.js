@@ -8,14 +8,13 @@ import BreweryInformation from "./BreweryInformation";
 
 export default function BreweryPage() {
     const brewery = useSelector((state) => state.brewery.entities);
-    const breweryStatus = useSelector((state) => state.brewery.status);
     const dispatch = useDispatch();
     const breweryId = useParams()
     const navigate = useNavigate()
   
     useEffect(() => {
-      if(breweryStatus === 'idle') dispatch(fetchBrewery(breweryId.id));
-    }, [breweryId, dispatch, breweryStatus]);
+      dispatch(fetchBrewery(breweryId.id));
+    }, [breweryId.id, dispatch]);
 
     if (brewery.errors) return navigate("/home")
     else return (

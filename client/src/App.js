@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <NavLink to="/breweries/1">brewery</NavLink>;
+      {/* <NavLink to="/breweries/2">brewery</NavLink>; */}
       <Routes>
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/breweries/:id" element={<BreweryPage />} />
