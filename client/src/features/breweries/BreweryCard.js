@@ -7,7 +7,6 @@ export default function BreweryCard({ brewery_id, brewery_name }) {
     const navigate = useNavigate()
 
     return (
-        <li>
         <Card style={{opacity: hover ? 0.8 : 1}} 
             onMouseOver={() => setHover(true)}
             onMouseOut={() => setHover(false)} 
@@ -16,6 +15,5 @@ export default function BreweryCard({ brewery_id, brewery_name }) {
                 <Card.Text>{brewery_name}</Card.Text>
             </Card.Body>
         </Card>
-        </li>
     )
 }

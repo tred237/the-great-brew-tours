@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Container from "react-bootstrap/esm/Container";
+
 import { fetchBreweries } from "./breweriesSlice";
 import BreweryCard from "./BreweryCard";
 
@@ -13,8 +15,8 @@ export default function Breweries() {
   }, [dispatch, breweryStatus]);
 
   return (
-      <ul>
+      <Container>
         {breweryStatus === 'loading' || breweryStatus === 'idle' ? <p>Loading...</p> : breweries.map(b => <BreweryCard key={b.id} brewery_id={b.id} brewery_name={b.name} /> )}
-      </ul>
+      </Container>
   );
 }
