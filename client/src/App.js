@@ -10,23 +10,22 @@ import { fetchSession } from "./features/session/sessionSlice";
 
 export default function App() {
   const state = useSelector((state) => state);
-  const user = useSelector((state) => state.session.loggedIn);
+  const loggedIn = useSelector((state) => state.session.loggedIn);
   const dispatch = useDispatch()
   console.log(state)
-  console.log(user)
 
   useEffect(() => {
     dispatch(fetchSession())
-  },[user])
+  },[loggedIn])
 
   return (
     <div className="App">
       <NavLink to="/breweries/1">brewery</NavLink>;
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/breweries/:id" element={<BreweryPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/" element={<HomePage />} />
+        <Route exact path="/login" element={<LoginPage />} />
+        <Route exact path="/breweries/:id" element={<BreweryPage />} />
+        <Route exact path="/home" element={<HomePage />} />
+        <Route path="*" element={<HomePage />} />
       </Routes>
     </div>
   );
