@@ -1,7 +1,5 @@
-// import { useState, useEffect } from "react"
 import { useEffect } from "react"
-import { useParams, Redirect } from "react-router-dom";
-// import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Container from "react-bootstrap/esm/Container"
 
@@ -13,12 +11,13 @@ export default function BreweryPage() {
     const breweryStatus = useSelector((state) => state.brewery.status);
     const dispatch = useDispatch();
     const breweryId = useParams()
+    const navigate = useNavigate()
   
     useEffect(() => {
       if(breweryStatus === 'idle') dispatch(fetchBrewery(breweryId.id));
     }, [breweryId, dispatch, breweryStatus]);
 
-    if (brewery.errors) return <Redirect to="/home" />
+    if (brewery.errors) return navigate("/home")
     else return (
         <Container>
             <Container className='d-flex justify-content-center'>
