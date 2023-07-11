@@ -25,6 +25,6 @@ class SessionsController < ApplicationController
     private
 
     def user_unauthorized_response(invalid)
-        render json: { error: "Not Authorized" }, status: :unauthorized
+        render json: { errors: ["Not Authorized"] }, status: :unauthorized
     end
 end

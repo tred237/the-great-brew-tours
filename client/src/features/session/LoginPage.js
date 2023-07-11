@@ -13,7 +13,7 @@ export default function LoginPage() {
         user: '',
         password: ''
     }
-    const loginError = useSelector((state) => state.session.errors);
+    const loginError = useSelector((state) => state.session.loginErrors);
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const [formData, setFormData] = useState(formDataDefault)
@@ -27,11 +27,11 @@ export default function LoginPage() {
         dispatch(fetchLogin({...formData}))
         .unwrap()
         .then(data => {
-            console.log(data)
             if(!('errors' in data)) navigate('/home')
         })
     }
 
+    // console.log(loginError)
     return (
         <Container>
             <Form onSubmit={handleSubmit}>

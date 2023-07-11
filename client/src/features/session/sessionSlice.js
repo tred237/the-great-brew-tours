@@ -48,12 +48,12 @@ const sessionSlice = createSlice({
         .addCase(fetchLogin.fulfilled, (state, action) => {
             if('errors' in action.payload) {
                 state.status = 'succeeded'
-                state.errors = action.payload
+                state.loginErrors = action.payload
             } else {
                 state.loggedIn = true
                 state.status = 'succeeded'
                 state.user = action.payload
-                delete state.errors
+                delete state.loginErrors
             }
         })
         .addCase(fetchLogin.rejected, (state, action) => {
@@ -68,12 +68,12 @@ const sessionSlice = createSlice({
         .addCase(fetchSession.fulfilled, (state, action) => {
             if('errors' in action.payload) {
                 state.status = 'succeeded'
-                state.errors = action.payload
+                state.sessionErrors = action.payload
             } else {
                 state.loggedIn = true
                 state.status = 'succeeded'
                 state.user = action.payload
-                delete state.errors
+                delete state.sessionErrors
             }
         })
         .addCase(fetchSession.rejected, (state, action) => {
@@ -88,11 +88,13 @@ const sessionSlice = createSlice({
         .addCase(fetchLogout.fulfilled, (state, action) => {
             state.status = 'succeeded'
             if('errors' in action.payload) {
-                state.errors = action.payload
+                state.logoutErrors = action.payload
             } else {
                 state.loggedIn = false
                 state.user = {}
-                delete state.errors
+                delete state.loginErrors
+                delete state.sessionErrors
+                delete state.logoutErrors
             }
         })
         .addCase(fetchLogout.rejected, (state, action) => {

@@ -12,11 +12,12 @@ export default function App() {
   const state = useSelector((state) => state);
   const loggedIn = useSelector((state) => state.session.loggedIn);
   const dispatch = useDispatch()
-  console.log(state)
 
-  // useEffect(() => {
-  //   dispatch(fetchSession())
-  // },[loggedIn])
+  useEffect(() => {
+    dispatch(fetchSession())
+  },[loggedIn])
+
+  console.log(state)
 
   return (
     <div className="App">
