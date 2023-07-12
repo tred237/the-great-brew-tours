@@ -4,16 +4,17 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
-import { fetchAddReview } from './breweryReviewSlice';
-import { reviewAdded } from '../brewery/brewerySlice';
+import { fetchEditReview } from './breweryReviewSlice';
+import { reviewEdited } from '../brewery/brewerySlice';
 
-export default function AddReviewForm({ onCloseModal }) {
+export default function EditReviewForm({ onCloseModal, review }) {
     const brewery_id = useSelector(state => state.brewery.brewery.id)
-    const addReviewErrors = useSelector(state => state.reviews.addErrors)
+    const editReviewErrors = useSelector(state => state.reviews.editErrors)
     const formDataDefault = {
-        is_recommended: 'true',
-        review: '',
-        brewery_id: brewery_id, 
+        is_recommended: review.is_recommended.toString(),
+        review: review.review,
+        brewery_id: brewery_id,
+        reviewId: review.id
     }
 
     const [formData, setFormData] = useState(formDataDefault)
@@ -27,11 +28,11 @@ export default function AddReviewForm({ onCloseModal }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(fetchAddReview({...formData}))
+        dispatch(fetchEditReview({...formData}))
         .unwrap()
         .then(data => {
             if(!('errors' in data)) {
-                dispatch(reviewAdded(data))
+                dispatch(reviewEdited(data))
                 onCloseModal()
             }
         })
@@ -52,9 +53,9 @@ export default function AddReviewForm({ onCloseModal }) {
                             onChange={handleChange}/>
             </Form.Group>
             <Container>
-                {addReviewErrors ? addReviewErrors.errors.map(e => <p key={e}>{e}</p>) : null}
+                {editReviewErrors ? editReviewErrors.errors.map(e => <p key={e}>{e}</p>) : null}
             </Container>
-            <Button variant="success" type="submit">Add</Button>
+            <Button variant="success" type="submit">Edit</Button>
         </Form>
     )
 }

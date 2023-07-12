@@ -37,6 +37,10 @@ const brewerySlice = createSlice({
   reducers: {
     reviewAdded: (state, action) => {
       state.brewery.brewery_reviews.unshift(action.payload)
+    },
+    reviewEdited: (state, action) => {
+      state.brewery.brewery_reviews = state.brewery.brewery_reviews.filter(r => r.id !== action.payload.id)
+      state.brewery.brewery_reviews.unshift(action.payload)
     }
   },
   extraReducers(builder) {
@@ -72,6 +76,6 @@ const brewerySlice = createSlice({
   }
 });
 
-export const { reviewAdded } = brewerySlice.actions; 
+export const { reviewAdded, reviewEdited } = brewerySlice.actions; 
 
 export default brewerySlice.reducer;

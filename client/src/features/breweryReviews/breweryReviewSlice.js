@@ -13,6 +13,22 @@ export const fetchAddReview = createAsyncThunk("breweryReviews/fetchAddReview", 
             .then(data => data)
 });
 
+export const fetchEditReview = createAsyncThunk("breweryReviews/fetchEditReview", (reviewData) => {
+    return fetch(`/brewery_reviews/${reviewData.reviewId}}`, {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(reviewData)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                return data
+            })
+});
+
 const breweryReviewSlice = createSlice({
   name: "breweryReviews",
   initialState: {
@@ -32,16 +48,33 @@ const breweryReviewSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(fetchAddReview.fulfilled, (state, action) => {
-        if('errors' in action.payload) state.errors = action.payload
+        if('errors' in action.payload) state.addErrors = action.payload
         else {
             state.status = 'succeeded'
             state.reviews.push(action.payload)
-            delete state.errors
+            delete state.addErrors
         }
       })
       .addCase(fetchAddReview.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.error.message
+        state.reduxError = action.error.message
+      })
+
+      .addCase(fetchEditReview.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(fetchEditReview.fulfilled, (state, action) => {
+        if('errors' in action.payload) state.editErrors = action.payload
+        else {
+            state.status = 'succeeded'
+            state.reviews = state.reviews.filter(r => r.id !== action.payload.id)
+            state.reviews.push(action.payload)
+            delete state.editErrors
+        }
+      })
+      .addCase(fetchEditReview.rejected, (state, action) => {
+        state.status = 'failed'
+        state.reduxError = action.error.message
       })
   }
 });
