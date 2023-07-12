@@ -40,6 +40,10 @@ const breweryReviewSlice = createSlice({
         state.reviews = []
         state.status = "idle"
         delete state.errors
+    },
+    removeErrors: (state) => {
+        delete state.addErrors
+        delete state.editErrors
     }
   },
   extraReducers(builder) {
@@ -48,9 +52,9 @@ const breweryReviewSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(fetchAddReview.fulfilled, (state, action) => {
+        state.status = 'succeeded'
         if('errors' in action.payload) state.addErrors = action.payload
         else {
-            state.status = 'succeeded'
             state.reviews.push(action.payload)
             delete state.addErrors
         }
@@ -64,9 +68,9 @@ const breweryReviewSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(fetchEditReview.fulfilled, (state, action) => {
+        state.status = 'succeeded'
         if('errors' in action.payload) state.editErrors = action.payload
         else {
-            state.status = 'succeeded'
             state.reviews = state.reviews.filter(r => r.id !== action.payload.id)
             state.reviews.push(action.payload)
             delete state.editErrors
@@ -79,6 +83,6 @@ const breweryReviewSlice = createSlice({
   }
 });
 
-export const { removeReviews } = breweryReviewSlice.actions; 
+export const { removeReviews, removeErrors } = breweryReviewSlice.actions; 
 
 export default breweryReviewSlice.reducer;

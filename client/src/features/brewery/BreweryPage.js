@@ -8,6 +8,7 @@ import { fetchBrewery } from "./brewerySlice";
 import BreweryInformation from "./BreweryInformation";
 import BreweryReviews from "../breweryReviews/BreweryReviews";
 import AddReviewModal from "../../modals/AddReviewModal";
+import { removeErrors } from "../breweryReviews/breweryReviewSlice";
 
 export default function BreweryPage() {
     const brewery = useSelector((state) => state.brewery.brewery);
@@ -25,7 +26,10 @@ export default function BreweryPage() {
     }, [breweryId.id, dispatch]);
 
     const handleShowModal = () => setShowModal(true)
-    const handleCloseModal = () => setShowModal(false)
+    const handleCloseModal = () => {
+        setShowModal(false)
+        dispatch(removeErrors())
+    }
 
     return (
         <Container>
