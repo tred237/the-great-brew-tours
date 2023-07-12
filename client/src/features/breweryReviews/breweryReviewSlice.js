@@ -19,7 +19,13 @@ const breweryReviewSlice = createSlice({
     reviews: [],
     status: "idle",
   },
-  reducers: {},
+  reducers: {
+    removeReviews: (state) => {
+        state.reviews = []
+        state.status = "idle"
+        delete state.errors
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchAddReview.pending, (state) => {
@@ -39,5 +45,7 @@ const breweryReviewSlice = createSlice({
       })
   }
 });
+
+export const { removeReviews } = breweryReviewSlice.actions; 
 
 export default breweryReviewSlice.reducer;

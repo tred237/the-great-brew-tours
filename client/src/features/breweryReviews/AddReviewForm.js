@@ -30,8 +30,6 @@ export default function AddReviewForm({ onCloseModal }) {
         dispatch(fetchAddReview({...formData}))
         .unwrap()
         .then(data => {
-            // dispatch(reviewAdded(action: data))
-            // console.log(data)
             if(!('errors' in data)) {
                 dispatch(reviewAdded(data))
                 onCloseModal()
