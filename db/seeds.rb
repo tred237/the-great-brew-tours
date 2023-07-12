@@ -25,7 +25,7 @@ puts "Non-admin users created..."
 (1..1000).each do |r|
     BreweryReview.create!(user_id: rand(2..User.all.count), 
                         brewery_id: rand(1..Brewery.all.count), 
-                        is_recommended: [true, false].sample, 
+                        is_recommended: [true, true, false].sample, 
                         review: Faker::Lorem.sentence(word_count: rand(3..25), random_words_to_add: 0), 
                         is_edited: [true, false, false, false, false].sample)
 end

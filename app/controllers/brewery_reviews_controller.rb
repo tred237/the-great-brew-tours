@@ -21,7 +21,7 @@ class BreweryReviewsController < ApplicationController
         brewery_review = BreweryReview.find(params[:id])
         if destroyer.is_admin
             brewery_review.destroy
-            head :no_content
+            render json: brewery_review, status: :ok
         else
             render json: { errors: ["You are not authorized to delete this review"] }, status: :unauthorized
         end
