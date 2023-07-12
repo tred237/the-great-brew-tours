@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 
-export const fetchBrewery = createAsyncThunk("breweries/fetchBrewery", (breweryId) => {
+export const fetchBrewery = createAsyncThunk("brewery/fetchBrewery", (breweryId) => {
   // why can i not check if the the response if valid?
   // i want to not have to save the errors to state if promise if not 200
   return fetch(`/breweries/${breweryId}`)
@@ -16,7 +16,7 @@ export const fetchBrewery = createAsyncThunk("breweries/fetchBrewery", (breweryI
         // })
 });
 
-export const fetchDeleteReview = createAsyncThunk("breweries/fetchDeleteReview", (reviewId) => {
+export const fetchDeleteReview = createAsyncThunk("brewery/fetchDeleteReview", (reviewId) => {
   return fetch(`/brewery_reviews/${reviewId}`, {
             method: "DELETE",
             headers: {
@@ -35,8 +35,8 @@ const brewerySlice = createSlice({
     status: "idle",
   },
   reducers: {
-    breweryAdded(state, action) {
-      state.entities.push(action.payload)
+    reviewAdded: (state, action) => {
+      state.brewery.brewery_reviews.unshift(action.payload)
     }
   },
   extraReducers(builder) {
@@ -71,5 +71,7 @@ const brewerySlice = createSlice({
       })
   }
 });
+
+export const { reviewAdded } = brewerySlice.actions; 
 
 export default brewerySlice.reducer;
