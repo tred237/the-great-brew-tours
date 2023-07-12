@@ -46,12 +46,11 @@ const sessionSlice = createSlice({
           state.status = 'loading'
         })
         .addCase(fetchLogin.fulfilled, (state, action) => {
+            state.status = 'succeeded'
             if('errors' in action.payload) {
-                state.status = 'succeeded'
                 state.loginErrors = action.payload
             } else {
                 state.loggedIn = true
-                state.status = 'succeeded'
                 state.user = action.payload
                 delete state.loginErrors
             }
@@ -66,12 +65,11 @@ const sessionSlice = createSlice({
             state.status = 'loading'
         })
         .addCase(fetchSession.fulfilled, (state, action) => {
+            state.status = 'succeeded'
             if('errors' in action.payload) {
-                state.status = 'succeeded'
                 state.sessionErrors = action.payload
             } else {
                 state.loggedIn = true
-                state.status = 'succeeded'
                 state.user = action.payload
                 delete state.sessionErrors
             }
