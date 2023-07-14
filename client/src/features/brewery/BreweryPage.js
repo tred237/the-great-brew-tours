@@ -20,8 +20,10 @@ export default function BreweryPage() {
     useEffect(() => {
       dispatch(fetchBrewery(breweryId.id))
       .unwrap()
-      .then(data => {
-        if('errors' in data) navigate("/home")
+      .then(() => console.log('We have a brewery'))
+      .catch(err => {
+        navigate("/home")
+        console.log(err.errors[0])
       })
     }, [breweryId.id, dispatch]);
 

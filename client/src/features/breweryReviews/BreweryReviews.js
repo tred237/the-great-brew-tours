@@ -21,6 +21,9 @@ export default function BreweryReviews({ review }) {
 
     const handleDelete = () => {
         dispatch(fetchDeleteReview(review.id))
+        .unwrap()
+        .then(() => console.log("Review deleted"))
+        .catch(err => console.log(err.errors[0]))
     }
 
     return (
