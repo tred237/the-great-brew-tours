@@ -1,22 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchBreweries = createAsyncThunk("breweries/fetchBreweries", () => {
-    return fetch("/breweries")
-            .then((res) => res.json())
-            .then(breweries => breweries)
+export const fetchBreweries = createAsyncThunk("breweries/fetchBreweries", async(_, thunkAPI) => {
+  try { 
+    const response = await fetch("/breweries")
+    const data = await response.json()
+    if(response.ok) return data
+    else return thunkAPI.rejectWithValue(data)
+  } catch(err) {
+    return thunkAPI.rejectWithValue(err)
+  }
 });
 
 const breweriesSlice = createSlice({
     name: "breweries",
     initialState: {
-      entities: [],
+      breweries: [],
       status: "idle",
+      breweriesErrors: null,
+      reduxErrors: null,
     },
-    reducers: {
-      breweryAdded(state, action) {
-        if (!state.entities.find(action.payload.id)) state.entities.push(action.payload);
-      },
-    },
+    reducers: {},
     extraReducers(builder) {
       builder
         .addCase(fetchBreweries.pending, (state) => {
@@ -24,15 +27,16 @@ const breweriesSlice = createSlice({
         })
         .addCase(fetchBreweries.fulfilled, (state, action) => {
           state.status = 'succeeded'
-          state.entities = action.payload
+          state.breweries = action.payload
+          state.breweriesErrors = null
+          state.reduxErrors = null
         })
         .addCase(fetchBreweries.rejected, (state, action) => {
           state.status = 'failed'
-          state.error = action.error.message
+          state.breweriesErrors = action.payload.errors
+          state.reduxErrors = action.error.message
         })
     }
 });
-
-export const { breweryAdded } = breweriesSlice.actions;
 
 export default breweriesSlice.reducer;

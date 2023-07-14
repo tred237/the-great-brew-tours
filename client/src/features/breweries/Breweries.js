@@ -6,12 +6,12 @@ import { fetchBreweries } from "./breweriesSlice";
 import BreweryCard from "./BreweryCard";
 
 export default function Breweries() {
-  const breweries = useSelector((state) => state.breweries.entities);
+  const breweries = useSelector((state) => state.breweries.breweries);
   const breweryStatus = useSelector((state) => state.breweries.status);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(breweryStatus === 'idle') dispatch(fetchBreweries());
+    if(breweryStatus === 'idle') dispatch(fetchBreweries())
   }, [dispatch, breweryStatus]);
 
   return (
