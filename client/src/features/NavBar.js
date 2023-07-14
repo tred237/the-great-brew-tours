@@ -16,6 +16,7 @@ export default function NavBar() {
     const handleLogoutClick = () => {
         dispatch(fetchLogout())
         dispatch(resetReviewedBreweries())
+        navigate('/home')
     }
 
     return (
