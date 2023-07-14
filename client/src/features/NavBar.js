@@ -5,6 +5,8 @@ import Nav from 'react-bootstrap/esm/Nav';
 import Container from 'react-bootstrap/esm/Container';
 
 import { fetchLogout } from './session/sessionSlice';
+import { resetReviewedBreweries } from './reviewedBreweries/reviewedBreweriesSlice';
+
 
 export default function NavBar() {
     const loggedIn = useSelector(state => state.session.loggedIn)
@@ -13,6 +15,7 @@ export default function NavBar() {
 
     const handleLogoutClick = () => {
         dispatch(fetchLogout())
+        dispatch(resetReviewedBreweries())
     }
 
     return (

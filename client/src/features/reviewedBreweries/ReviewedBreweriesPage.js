@@ -12,8 +12,8 @@ export default function ReviewedBreweries() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(reviewedBreweryStatus === 'idle') dispatch(fetchReviewedBreweries())
-    },[userId, dispatch])
+        dispatch(fetchReviewedBreweries())
+    },[dispatch])
 
     return (
         <Container>

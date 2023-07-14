@@ -25,6 +25,13 @@ const reviewedBreweriesSlice = createSlice({
         addReviewedBrewery: (state, action) => {
             if(!state.reviewedBreweries.find(b => b.id === action.payload.id)) state.reviewedBreweries.unshift(action.payload)
         },
+        resetReviewedBreweries: () => initialState
+        // removeReviewedBreweries: (state) => {
+        //     state.reviewedBreweries = []
+        //     state.status = "idle"
+        //     state.reviewedBreweriesErrors = null
+        //     state.reduxErrors = null
+        // },
     },
     extraReducers(builder) {
       builder
@@ -44,6 +51,6 @@ const reviewedBreweriesSlice = createSlice({
     }
 });
 
-export const { addReviewedBrewery } = reviewedBreweriesSlice.actions; 
+export const { addReviewedBrewery, resetReviewedBreweries } = reviewedBreweriesSlice.actions; 
 
 export default reviewedBreweriesSlice.reducer;
