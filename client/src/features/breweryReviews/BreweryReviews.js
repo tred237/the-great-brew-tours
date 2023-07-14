@@ -6,7 +6,6 @@ import Button from "react-bootstrap/esm/Button";
 
 import { fetchDeleteReview } from "../brewery/brewerySlice";
 import EditReviewModal from "../../modals/EditReviewModal";
-import { removeErrors } from "./breweryReviewSlice";
 
 export default function BreweryReviews({ review }) {
     const user = useSelector(state => state.session.user)
@@ -14,10 +13,7 @@ export default function BreweryReviews({ review }) {
     const [showModal, setShowModal] = useState(false)
 
     const handleShowModal = () => setShowModal(true)
-    const handleCloseModal = () => {
-        setShowModal(false)
-        dispatch(removeErrors())
-    }
+    const handleCloseModal = () => setShowModal(false)
 
     const handleDelete = () => {
         dispatch(fetchDeleteReview(review.id))

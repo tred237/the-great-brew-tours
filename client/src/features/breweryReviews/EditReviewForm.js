@@ -4,12 +4,11 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
-import { fetchEditReview } from './breweryReviewSlice';
 import { reviewEdited } from '../brewery/brewerySlice';
 
 export default function EditReviewForm({ onCloseModal, review }) {
     const brewery_id = useSelector(state => state.brewery.brewery.id)
-    const editReviewErrors = useSelector(state => state.reviews.editErrors)
+    const [editReviewErrors, setEditReviewErrors] = useState([])
     const formDataDefault = {
         is_recommended: review.is_recommended.toString(),
         review: review.review,
@@ -26,16 +25,22 @@ export default function EditReviewForm({ onCloseModal, review }) {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        dispatch(fetchEditReview({...formData}))
-        .unwrap()
-        .then(data => {
-            if(!('errors' in data)) {
-                dispatch(reviewEdited(data))
-                onCloseModal()
-            }
+        const response = await fetch(`/brewery_reviews/${formData.reviewId}}`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formData)
         })
+        const data = await response.json()
+        if(response.ok) {
+            dispatch(reviewEdited(data))
+            onCloseModal()
+        }
+        else setEditReviewErrors(data.errors)
     }
 
     return (
@@ -53,7 +58,7 @@ export default function EditReviewForm({ onCloseModal, review }) {
                             onChange={handleChange}/>
             </Form.Group>
             <Container>
-                {editReviewErrors ? editReviewErrors.errors.map(e => <p key={e}>{e}</p>) : null}
+                {editReviewErrors ? editReviewErrors.map(e => <p key={e}>{e}</p>) : null}
             </Container>
             <Button variant="success" type="submit">Edit</Button>
         </Form>
