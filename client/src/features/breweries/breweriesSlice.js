@@ -11,14 +11,16 @@ export const fetchBreweries = createAsyncThunk("breweries/fetchBreweries", async
   }
 });
 
+const initialState =  {
+  breweries: [],
+  status: "idle",
+  breweriesErrors: null,
+  reduxErrors: null,
+}
+
 const breweriesSlice = createSlice({
     name: "breweries",
-    initialState: {
-      breweries: [],
-      status: "idle",
-      breweriesErrors: null,
-      reduxErrors: null,
-    },
+    initialState,
     reducers: {},
     extraReducers(builder) {
       builder

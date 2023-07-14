@@ -30,9 +30,10 @@ export default function BreweryPage() {
     const handleShowModal = () => setShowModal(true)
     const handleCloseModal = () => {
         setShowModal(false)
-        dispatch(removeErrors())
+        // dispatch(removeErrors())
     }
 
+    // console.log(brewery)
     return (
         <Container>
             <Container className='d-flex justify-content-center'>

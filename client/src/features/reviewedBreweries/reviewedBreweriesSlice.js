@@ -21,7 +21,11 @@ const initialState = {
 const reviewedBreweriesSlice = createSlice({
     name: "reviewedBreweries",
     initialState,
-    reducers: {},
+    reducers: {
+        addReviewedBrewery: (state, action) => {
+            if(!state.reviewedBreweries.find(b => b.id === action.payload.id)) state.reviewedBreweries.unshift(action.payload)
+        },
+    },
     extraReducers(builder) {
       builder
         .addCase(fetchReviewedBreweries.pending, (state) => {
@@ -39,5 +43,7 @@ const reviewedBreweriesSlice = createSlice({
         })
     }
 });
+
+export const { addReviewedBrewery } = reviewedBreweriesSlice.actions; 
 
 export default reviewedBreweriesSlice.reducer;

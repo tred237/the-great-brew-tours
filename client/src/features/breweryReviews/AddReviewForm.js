@@ -4,20 +4,20 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
-import { fetchAddReview } from './breweryReviewSlice';
 import { reviewAdded } from '../brewery/brewerySlice';
+import { addReviewedBrewery } from '../reviewedBreweries/reviewedBreweriesSlice';
 
 export default function AddReviewForm({ onCloseModal }) {
-    const brewery_id = useSelector(state => state.brewery.brewery.id)
-    const addReviewErrors = useSelector(state => state.reviews.addErrors)
+    const brewery = useSelector(state => state.brewery.brewery)
+    const [addReviewErrors, setAddReviewErrors] = useState([])
+    const dispatch = useDispatch()
+    
     const formDataDefault = {
         is_recommended: 'true',
         review: '',
-        brewery_id: brewery_id, 
+        brewery_id: brewery.id, 
     }
-
     const [formData, setFormData] = useState(formDataDefault)
-    const dispatch = useDispatch()
 
     const isSelected = (value) => formData.is_recommended === value
 
@@ -25,16 +25,23 @@ export default function AddReviewForm({ onCloseModal }) {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        dispatch(fetchAddReview({...formData}))
-        .unwrap()
-        .then(data => {
-            if(!('errors' in data)) {
-                dispatch(reviewAdded(data))
-                onCloseModal()
-            }
-        })
+        const response = await fetch('/brewery_reviews', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formData)
+            })
+        const data = await response.json()
+        if(response.ok) {
+            dispatch(reviewAdded(data))
+            dispatch(addReviewedBrewery(brewery))
+            onCloseModal()
+        }
+        else setAddReviewErrors(data.errors)
     }
 
     return (
@@ -52,7 +59,7 @@ export default function AddReviewForm({ onCloseModal }) {
                             onChange={handleChange}/>
             </Form.Group>
             <Container>
-                {addReviewErrors ? addReviewErrors.errors.map(e => <p key={e}>{e}</p>) : null}
+                {addReviewErrors ? addReviewErrors.map(e => <p key={e}>{e}</p>) : null}
             </Container>
             <Button variant="success" type="submit">Add</Button>
         </Form>
