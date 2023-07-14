@@ -15,7 +15,6 @@ export default function ReviewedBreweries() {
         if(reviewedBreweryStatus === 'idle') dispatch(fetchReviewedBreweries())
     },[userId, dispatch])
 
-    // console.log(reviewedBreweries)
     return (
         <Container>
             {reviewedBreweryStatus === 'loading' || reviewedBreweryStatus === 'idle' ? <p>Loading...</p> : reviewedBreweries.map(b => <BreweryCard key={b.id} brewery_id={b.id} brewery_name={b.name} /> )}
