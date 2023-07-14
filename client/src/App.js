@@ -7,6 +7,7 @@ import BreweryPage from "./features/brewery/BreweryPage";
 import LoginPage from "./features/session/LoginPage";
 import { fetchSession } from "./features/session/sessionSlice";
 import NavBar from "./features/NavBar";
+import ReviewedBreweries from "./features/reviewedBreweries/ReviewedBreweriesPage";
 
 export default function App() {
   const state = useSelector((state) => state);
@@ -25,6 +26,7 @@ export default function App() {
       <Routes>
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/breweries/:id" element={<BreweryPage />} />
+        <Route exact path="/reviewed-breweries" element={<ReviewedBreweries />} />
         <Route exact path="/home" element={<HomePage />} />
         <Route path="*" element={<HomePage />} />
       </Routes>

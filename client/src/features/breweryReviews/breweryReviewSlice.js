@@ -29,12 +29,14 @@ export const fetchEditReview = createAsyncThunk("breweryReviews/fetchEditReview"
             })
 });
 
-const breweryReviewSlice = createSlice({
-  name: "breweryReviews",
-  initialState: {
+const initialState = {
     reviews: [],
     status: "idle",
-  },
+}
+
+const breweryReviewSlice = createSlice({
+  name: "breweryReviews",
+  initialState,
   reducers: {
     removeReviews: (state) => {
         state.reviews = []

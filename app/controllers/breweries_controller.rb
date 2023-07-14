@@ -47,6 +47,13 @@ class BreweriesController < ApplicationController
         end
     end
 
+    def reviewed_breweries
+        reviewer = find_user
+        reviewed_brewery_ids = reviewer.brewery_reviews.order(created_at: :desc).pluck(:brewery_id).uniq
+        reviewed_breweries = reviewed_brewery_ids.map{|b| Brewery.find(b)}
+        render json: reviewed_breweries, status: :ok
+    end
+
     private
 
     def find_brewery
