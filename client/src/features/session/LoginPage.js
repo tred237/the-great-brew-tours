@@ -13,7 +13,7 @@ export default function LoginPage() {
         user: '',
         password: ''
     }
-    const loginError = useSelector((state) => state.session.loginErrors);
+    const loginErrors = useSelector((state) => state.session.loginErrors);
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const [formData, setFormData] = useState(formDataDefault)
@@ -26,12 +26,10 @@ export default function LoginPage() {
         e.preventDefault()
         dispatch(fetchLogin({...formData}))
         .unwrap()
-        .then(data => {
-            if(!('errors' in data)) navigate('/home')
-        })
+        .then(() => navigate('/home'))
+        .catch(() => console.log('woops'))
     }
 
-    // console.log(loginError)
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
@@ -54,7 +52,7 @@ export default function LoginPage() {
                     </InputGroup>
                 </Form.Group>
                 <Container>
-                    {loginError ? <p>{loginError.errors[0]}</p> : null}
+                    {loginErrors ? loginErrors.map(e => <p key={e}>{e}</p>) : null}
                 </Container>
                 <Button variant="success" type="submit">Log in</Button>
             </Form>

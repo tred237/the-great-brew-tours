@@ -15,7 +15,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchSession())
-  },[loggedIn])
+  },[loggedIn, dispatch])
 
   console.log(state)
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Card from 'react-bootstrap/esm/Card';
 
 export default function BreweryCard({ brewery_id, brewery_name }) {

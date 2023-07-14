@@ -1,19 +1,9 @@
-import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchBrewery = createAsyncThunk("brewery/fetchBrewery", (breweryId) => {
-  // why can i not check if the the response if valid?
-  // i want to not have to save the errors to state if promise if not 200
   return fetch(`/breweries/${breweryId}`)
         .then((res) => res.json())
         .then(brewery => brewery)
-        // // return fetch(`/breweries/${breweryId}`)
-        // //         .then((res) => res.json())
-        // //         .then(brewery => brewery)
-        // return fetch(`/breweries/${breweryId}`)
-        // .then(res => {
-        //     if(res.ok) res.json().then(brewery => brewery)
-        // else res.json().then(err => err.errors)
-        // })
 });
 
 export const fetchDeleteReview = createAsyncThunk("brewery/fetchDeleteReview", (reviewId) => {
