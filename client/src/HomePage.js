@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/esm/Container';
-import Breweries from './Breweries';
+import Breweries from './features/breweries/Breweries';
 
-export default function HomePage() {
+export default function Home() {
     return (
         <Container>
             <h1>Experience the Great Brew Tours</h1>

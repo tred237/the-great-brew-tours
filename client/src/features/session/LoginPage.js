@@ -8,7 +8,7 @@ import InputGroup from 'react-bootstrap/esm/InputGroup';
 
 import { fetchLogin } from "./sessionSlice";
 
-export default function LoginPage() {
+export default function Login() {
     const formDataDefault = {
         user: '',
         password: ''

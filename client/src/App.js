@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import HomePage from "./features/breweries/HomePage";
-import BreweryPage from "./features/brewery/BreweryPage";
-import LoginPage from "./features/session/LoginPage";
 import { fetchSession } from "./features/session/sessionSlice";
 import NavBar from "./features/NavBar";
+import Home from "./HomePage";
+import Login from "./features/session/LoginPage";
+import Brewery from "./features/brewery/BreweryPage";
 import ReviewedBreweries from "./features/reviewedBreweries/ReviewedBreweriesPage";
+import Tours from "./features/tours/ToursPage";
 
 export default function App() {
   const state = useSelector((state) => state);
@@ -24,11 +25,12 @@ export default function App() {
     <div className="App">
       <NavBar />
       <Routes>
-        <Route exact path="/login" element={<LoginPage />} />
-        <Route exact path="/breweries/:id" element={<BreweryPage />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/breweries/:id" element={<Brewery />} />
         <Route exact path="/reviewed-breweries" element={<ReviewedBreweries />} />
-        <Route exact path="/home" element={<HomePage />} />
-        <Route path="*" element={<HomePage />} />
+        <Route exact path="/tours" element={<Tours />} />
+        <Route exact path="/home" element={<Home />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     </div>
   );

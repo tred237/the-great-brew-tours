@@ -9,7 +9,7 @@ import BreweryInformation from "./BreweryInformation";
 import BreweryReviews from "./BreweryReviews";
 import AddReviewModal from "../../modals/AddReviewModal";
 
-export default function BreweryPage() {
+export default function Brewery() {
     const brewery = useSelector((state) => state.brewery.brewery);
     const dispatch = useDispatch();
     const breweryId = useParams()
