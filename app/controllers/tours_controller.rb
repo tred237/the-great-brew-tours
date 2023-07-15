@@ -57,12 +57,7 @@ class ToursController < ApplicationController
     end
 
     def exclude_full_tours
-        tours = []
         scheduled_tour_agg = ScheduledTour.group(:tour_id).sum(:number_of_people)
-        scheduled_tour_agg.each do |k,v|
-            tour = Tour.find(k)
-            tours.push tour unless v >= tour.available_slots
-        end
-        tours
+        Tour.all.filter{|t| !scheduled_tour_agg[t.id] or scheduled_tour_agg[t.id] < t.available_slots}
     end
 end
