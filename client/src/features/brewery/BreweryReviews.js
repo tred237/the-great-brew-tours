@@ -4,7 +4,7 @@ import Container from "react-bootstrap/esm/Container";
 import Card from "react-bootstrap/esm/Card";
 import Button from "react-bootstrap/esm/Button";
 
-import { fetchDeleteReview } from "../brewery/brewerySlice";
+import { fetchDeleteReview } from "./brewerySlice";
 import EditReviewModal from "../../modals/EditReviewModal";
 
 export default function BreweryReviews({ review }) {

@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
-import { reviewEdited } from '../brewery/brewerySlice';
+import { reviewEdited } from './brewerySlice';
 
 export default function EditReviewForm({ onCloseModal, review }) {
     const brewery_id = useSelector(state => state.brewery.brewery.id)

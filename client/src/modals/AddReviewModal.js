@@ -1,5 +1,5 @@
 import Modal from 'react-bootstrap/Modal';
-import AddReviewForm from '../features/breweryReviews/AddReviewForm';
+import AddReviewForm from '../features/brewery/AddReviewForm';
 
 export default function AddReviewModal({ showModal, onCloseModal }) {
     return (

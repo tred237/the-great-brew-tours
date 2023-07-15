@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
-import { reviewAdded } from '../brewery/brewerySlice';
+import { reviewAdded } from './brewerySlice';
 import { addReviewedBrewery } from '../reviewedBreweries/reviewedBreweriesSlice';
 
 export default function AddReviewForm({ onCloseModal }) {

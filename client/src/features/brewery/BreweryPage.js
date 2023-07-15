@@ -6,7 +6,7 @@ import Button from "react-bootstrap/esm/Button";
 
 import { fetchBrewery } from "./brewerySlice";
 import BreweryInformation from "./BreweryInformation";
-import BreweryReviews from "../breweryReviews/BreweryReviews";
+import BreweryReviews from "./BreweryReviews";
 import AddReviewModal from "../../modals/AddReviewModal";
 
 export default function BreweryPage() {
@@ -29,7 +29,6 @@ export default function BreweryPage() {
     const handleShowModal = () => setShowModal(true)
     const handleCloseModal = () => setShowModal(false)
 
-    // console.log(brewery)
     return (
         <Container>
             <Container className='d-flex justify-content-center'>
