@@ -24,7 +24,7 @@ export default function App() {
     .catch(err => err)
   },[loggedIn, dispatch])
 
-  console.log(state)
+  // console.log(state)
 
   return (
     <div className="App">
