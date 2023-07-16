@@ -14,7 +14,6 @@ export const fetchScheduleTour = createAsyncThunk("scheduledTours/fetchScheduleT
             })
         })
         const data = await response.json()
-        console.log(data)
         if (response.ok) return data
         else return thunkAPI.rejectWithValue(data)     
     } catch(err) {
