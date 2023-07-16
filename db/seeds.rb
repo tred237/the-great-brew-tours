@@ -32,7 +32,7 @@ end
 puts "Brewery reviews created..."
 
 # Create Tours
-(1..20).each do |t|
+(1..100).each do |t|
     Tour.create!(tour_date: "#{Faker::Date.between(from: DateTime.now, to: DateTime.now + 60)} #{rand(8..15)}:#{[00, 15, 30, 45].sample}:00", 
                 duration: "#{rand(4..8).to_s}.#{[0,25,50,75].sample}",
                 meeting_location: "Union Station, Denver", 
@@ -42,7 +42,7 @@ end
 puts "Tours created..."
 
 # Create Tour Breweries
-(1..20).each do |b|
+(1..100).each do |b|
     breweries = rand(3..5)
     brewery_list = []
     until brewery_list.length == breweries
@@ -54,14 +54,28 @@ end
 puts "Tour breweries created..."
 
 # Create Scheduled Tours
+def tour_already_scheduled(user_id, tour_id)
+    ScheduledTour.find_by(user_id: user_id, tour_id: tour_id)
+end
+
+def scheduled_on_date(user_id, tour)
+    User.find(user_id).tours.find{|t| t.tour_date.to_date == tour.tour_date.to_date}
+end
+
+def slots_filled(tour)
+    tour.scheduled_tours.reduce(0){|pv, cv| pv + cv.number_of_people}
+end
+
 (1..40).each do |t|
-    user_id = rand(2..User.all.count)
-    tour_id = rand(1..20)
+    user_id = rand(2..User.all.count) #8
+    tour_id = rand(1..100) #8
     tour = Tour.find(tour_id)
-    slots_filled = tour.scheduled_tours.reduce(0){|pv, cv| pv + cv.number_of_people}
-    if slots_filled < tour.available_slots and !tour.scheduled_tours.map{|i| i["user_id"]}.include? user_id 
-        ScheduledTour.create!(user_id: user_id, tour_id: tour_id, number_of_people: rand(1..(tour.available_slots - slots_filled)))
+    until !tour_already_scheduled(user_id, tour_id) and !scheduled_on_date(user_id, tour) and slots_filled(tour) < tour.available_slots
+        user_id = rand(2..User.all.count)
+        tour_id = rand(1..100)
+        tour = Tour.find(tour_id)
     end
+    ScheduledTour.create!(user_id: user_id, tour_id: tour_id, number_of_people: rand(1..(tour.available_slots - slots_filled(tour))))
 end
 puts "Scheduled tours created..."
 
