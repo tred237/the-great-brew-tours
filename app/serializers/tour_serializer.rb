@@ -6,6 +6,6 @@ class TourSerializer < ActiveModel::Serializer
   end
 
   has_many :breweries, through: :tour_breweries do
-    object.breweries.map{ |b| {"brewrey_id": b.id, "brewery_name": b.name} }
+    object.breweries.map{ |b| {"brewery_id": b.id, "brewery_name": b.name} }
   end
 end

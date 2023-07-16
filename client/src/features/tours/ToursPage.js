@@ -1,7 +1,11 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import dayjs from 'dayjs';
 import Container from "react-bootstrap/esm/Container";
-import Accordion from 'react-bootstrap/Accordion';
+import Accordion from "react-bootstrap/Accordion";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 import { fetchTours } from "./toursSlice";
 import Tour from "./Tour";
@@ -9,6 +13,7 @@ import Tour from "./Tour";
 export default function Tours() {
     const tours = useSelector(state => state.tours.tours)
     const dispatch = useDispatch()
+    const [date, setDate] = useState(dayjs(Date()))
 
     useEffect(() => {
         dispatch(fetchTours())
@@ -21,8 +26,13 @@ export default function Tours() {
     return(
         <Container>
             <h2>Tours</h2>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateCalendar value={date} onChange={(e) => setDate(e)} />
+            </LocalizationProvider>
             <Accordion defaultActiveKey="0">
-                {tours ? tours.map(t => <Tour key={t.id} tour={t} />) : null}
+                {tours ? tours.map(t => {
+                    if(date.format('YYYYMMDD') === dayjs(t.tour_date).format('YYYYMMDD')) return <Tour key={t.id} tour={t} />
+                }) : null}
             </Accordion>
         </Container>
     )
