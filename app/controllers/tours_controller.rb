@@ -20,7 +20,7 @@ class ToursController < ApplicationController
             tours = Tour.all
             render json: tours, status: :ok
         else
-            render json: exclude_full_tours, status: :ok
+            render json: valid_tours, status: :ok
         end
     end
 
@@ -56,8 +56,8 @@ class ToursController < ApplicationController
         params.permit(:tour_date, :duration, :meeting_location, :available_slots)
     end
 
-    def exclude_full_tours
+    def valid_tours
         scheduled_tour_agg = ScheduledTour.group(:tour_id).sum(:number_of_people)
-        Tour.all.filter{|t| !scheduled_tour_agg[t.id] or scheduled_tour_agg[t.id] < t.available_slots}
+        Tour.all.filter{|t| t.tour_date.to_date > Date.today and (!scheduled_tour_agg[t.id] or scheduled_tour_agg[t.id] < t.available_slots)}
     end
 end
