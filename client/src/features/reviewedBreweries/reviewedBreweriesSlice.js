@@ -26,12 +26,6 @@ const reviewedBreweriesSlice = createSlice({
             if(!state.reviewedBreweries.find(b => b.id === action.payload.id)) state.reviewedBreweries.unshift(action.payload)
         },
         resetReviewedBreweries: () => initialState
-        // removeReviewedBreweries: (state) => {
-        //     state.reviewedBreweries = []
-        //     state.status = "idle"
-        //     state.reviewedBreweriesErrors = null
-        //     state.reduxErrors = null
-        // },
     },
     extraReducers(builder) {
       builder

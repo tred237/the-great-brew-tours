@@ -28,18 +28,6 @@ export const fetchDeleteReview = createAsyncThunk("brewery/fetchDeleteReview", a
   }
 });
 
-// export const fetchDeleteReview = createAsyncThunk("brewery/fetchDeleteReview", (reviewId) => {
-//   return fetch(`/brewery_reviews/${reviewId}`, {
-//             method: "DELETE",
-//             headers: {
-//               "Content-Type": "application/json",
-//               "Accept": "application/json"
-//             }
-//           })
-//         .then((res) => res.json())
-//         .then(data => data)
-// });
-
 const brewerySlice = createSlice({
   name: "brewery",
   initialState: {

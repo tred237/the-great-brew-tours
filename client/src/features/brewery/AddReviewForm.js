@@ -13,13 +13,13 @@ export default function AddReviewForm({ onCloseModal }) {
     const dispatch = useDispatch()
     
     const formDataDefault = {
-        is_recommended: 'true',
+        isRecommended: 'true',
         review: '',
-        brewery_id: brewery.id, 
+        breweryId: brewery.id, 
     }
     const [formData, setFormData] = useState(formDataDefault)
 
-    const isSelected = (value) => formData.is_recommended === value
+    const isSelected = (value) => formData.isRecommended === value
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
@@ -33,7 +33,11 @@ export default function AddReviewForm({ onCloseModal }) {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify({
+                is_recommended: formData.isRecommended,
+                review: formData.review,
+                brewery_id: formData.breweryId,
+            })
             })
         const data = await response.json()
         if(response.ok) {
@@ -48,8 +52,8 @@ export default function AddReviewForm({ onCloseModal }) {
         <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <Form.Label>Would you recommend this brewery?</Form.Label>
-                <Form.Check inline type="radio" name="is_recommended" label="Yes" value='true' checked={isSelected('true')} onChange={handleChange} />
-                <Form.Check inline type="radio" name="is_recommended" label="No" value='false' checked={isSelected('false')} onChange={handleChange} />
+                <Form.Check inline type="radio" name="isRecommended" label="Yes" value='true' checked={isSelected('true')} onChange={handleChange} />
+                <Form.Check inline type="radio" name="isRecommended" label="No" value='false' checked={isSelected('false')} onChange={handleChange} />
             </Form.Group>
             <Form.Group>
                 <Form.Control as="textarea"
