@@ -1,8 +1,9 @@
-import dayjs from 'dayjs';
 import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
 import AccordionItem from "react-bootstrap/esm/AccordionItem";
 import Container from "react-bootstrap/esm/Container";
+
+import ScheduleTourForm from "../scheduledTours/ScheduleTourForm";
 
 export default function Tour({ tour }){
     const durationBreakdown = () => {
@@ -13,7 +14,6 @@ export default function Tour({ tour }){
         else return `${splitDuration[0]} hr`
     }
 
-    console.log(dayjs(tour.tour_date))
     return (
         <AccordionItem eventKey={tour.id}>
             <AccordionHeader>
@@ -29,6 +29,7 @@ export default function Tour({ tour }){
                     <ul>
                         {tour.breweries.map(b => <li key={b.brewery_id}>{b.brewery_name}</li>)}
                     </ul>
+                    <ScheduleTourForm tour_id={tour.id} available_slots={tour.available_slots - tour.taken_slots}/>
                 </Container>
             </AccordionBody>
         </AccordionItem>

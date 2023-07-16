@@ -9,6 +9,7 @@ import Login from "./features/session/LoginPage";
 import Brewery from "./features/brewery/BreweryPage";
 import ReviewedBreweries from "./features/reviewedBreweries/ReviewedBreweriesPage";
 import Tours from "./features/tours/ToursPage";
+import { fetchScheduledTours } from "./features/scheduledTours/scheduledToursSlice";
 
 export default function App() {
   const state = useSelector((state) => state);
@@ -17,6 +18,9 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchSession())
+    .unwrap()
+    .then(() => dispatch(fetchScheduledTours()))
+    .catch(err => err)
   },[loggedIn, dispatch])
 
   console.log(state)

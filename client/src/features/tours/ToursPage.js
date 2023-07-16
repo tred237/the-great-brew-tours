@@ -22,7 +22,6 @@ export default function Tours() {
         .catch(() => console.log("Tours failed"))
     },[dispatch])
 
-    console.log(tours)
     return(
         <Container>
             <h2>Tours</h2>
@@ -31,7 +30,7 @@ export default function Tours() {
             </LocalizationProvider>
             <Accordion defaultActiveKey="0">
                 {tours ? tours.map(t => {
-                    if(date.format('YYYYMMDD') === dayjs(t.tour_date).format('YYYYMMDD')) return <Tour key={t.id} tour={t} />
+                    if(dayjs(t.tour_date).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date).format('YYYYMMDD')) return <Tour key={t.id} tour={t} />
                 }) : null}
             </Accordion>
         </Container>
