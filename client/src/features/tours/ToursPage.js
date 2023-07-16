@@ -30,7 +30,7 @@ export default function Tours() {
             </LocalizationProvider>
             <Accordion defaultActiveKey="0">
                 {tours ? tours.map(t => {
-                    if(dayjs(t.tour_date).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date).format('YYYYMMDD')) return <Tour key={t.id} tour={t} />
+                    if(dayjs(t.tour_date).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date).format('YYYYMMDD')) return <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />
                 }) : null}
             </Accordion>
         </Container>

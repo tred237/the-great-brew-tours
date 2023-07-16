@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
 import Form from "react-bootstrap/esm/Form";
 import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
 
 import { fetchScheduleTour } from "./scheduledToursSlice";
 
-export default function ScheduleTourForm({ tour_id, available_slots }) {
+export default function ScheduleTourForm({ tour_id, available_slots, selectedDate }) {
     const defaultFormData = {
         numberOfPeople: 1,
         tour_id: tour_id
@@ -29,6 +30,9 @@ export default function ScheduleTourForm({ tour_id, available_slots }) {
     if(scheduledTours.find(t => t.tour_id === tour_id)) return (
         <p>You are scheduled for this tour</p>
     ) 
+    else if(scheduledTours.find(t => dayjs(t.tour.tour_date).format('YYYYMMDD') === selectedDate)) return (
+        <p>You have another tour scheduled on this date</p>
+    )
     else return (
         <Form onSubmit={handleSubmit}>
             <Form.Select onChange={handleChange}>

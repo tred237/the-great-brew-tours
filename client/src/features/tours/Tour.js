@@ -5,7 +5,7 @@ import Container from "react-bootstrap/esm/Container";
 
 import ScheduleTourForm from "../scheduledTours/ScheduleTourForm";
 
-export default function Tour({ tour }){
+export default function Tour({ tour, selectedDate }){
     const durationBreakdown = () => {
         const splitDuration = tour.duration.toString().split('.')
         if(splitDuration[1] === '25') return `${splitDuration[0]} hr 15 min`
@@ -29,7 +29,7 @@ export default function Tour({ tour }){
                     <ul>
                         {tour.breweries.map(b => <li key={b.brewery_id}>{b.brewery_name}</li>)}
                     </ul>
-                    <ScheduleTourForm tour_id={tour.id} available_slots={tour.available_slots - tour.taken_slots}/>
+                    <ScheduleTourForm tour_id={tour.id} available_slots={tour.available_slots - tour.taken_slots} selectedDate={selectedDate} />
                 </Container>
             </AccordionBody>
         </AccordionItem>
