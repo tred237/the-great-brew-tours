@@ -28,6 +28,7 @@ const toursSlice = createSlice({
         const filteredTours = state.tours.filter(t => t.id !== action.payload.tour_id)
         state.tours = [tour, ...filteredTours]
       },
+      resetTours: () => initialState
     },
     extraReducers(builder) {
       builder
@@ -48,6 +49,6 @@ const toursSlice = createSlice({
     }
 });
 
-export const { scheduledTourAdded } = toursSlice.actions; 
+export const { scheduledTourAdded, resetTours } = toursSlice.actions; 
 
 export default toursSlice.reducer;

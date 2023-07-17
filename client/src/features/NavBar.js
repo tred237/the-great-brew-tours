@@ -6,6 +6,8 @@ import Container from 'react-bootstrap/esm/Container';
 
 import { fetchLogout } from './session/sessionSlice';
 import { resetReviewedBreweries } from './reviewedBreweries/reviewedBreweriesSlice';
+import { resetTours } from './tours/toursSlice';
+import { resetScheduledTours } from './scheduledTours/scheduledToursSlice';
 
 
 export default function NavBar() {
@@ -16,6 +18,8 @@ export default function NavBar() {
     const handleLogoutClick = () => {
         dispatch(fetchLogout())
         dispatch(resetReviewedBreweries())
+        dispatch(resetTours())
+        dispatch(resetScheduledTours())
         navigate('/home')
     }
 

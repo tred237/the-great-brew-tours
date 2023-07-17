@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { fetchSession } from "./features/session/sessionSlice";
 import NavBar from "./features/NavBar";
-import Home from "./HomePage";
+import Home from "./features/HomePage";
 import Login from "./features/session/LoginPage";
 import Brewery from "./features/brewery/BreweryPage";
 import ReviewedBreweries from "./features/reviewedBreweries/ReviewedBreweriesPage";
@@ -12,7 +12,7 @@ import Tours from "./features/tours/ToursPage";
 import ScheduledTours from "./features/scheduledTours/ScheduledToursPage";
 
 export default function App() {
-  // const state = useSelector((state) => state);
+  const state = useSelector((state) => state);
   const loggedIn = useSelector((state) => state.session.loggedIn);
   const dispatch = useDispatch()
 
@@ -20,7 +20,7 @@ export default function App() {
     dispatch(fetchSession())
   },[loggedIn, dispatch])
 
-  // console.log(state)
+  console.log(state)
 
   return (
     <div className="App">

@@ -82,7 +82,9 @@ const initialState = {
 const scheduledToursSlice = createSlice({
     name: "scheduledTours",
     initialState,
-    reducers: {},
+    reducers: {
+        resetScheduledTours: () => initialState
+    },
     extraReducers(builder) {
       builder
         .addCase(fetchAddScheduleTour.pending, (state) => {
@@ -148,5 +150,7 @@ const scheduledToursSlice = createSlice({
         })
     }
 });
+
+export const { resetScheduledTours } = scheduledToursSlice.actions; 
 
 export default scheduledToursSlice.reducer;
