@@ -6,6 +6,7 @@ import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
 
 import { fetchAddScheduleTour } from "./scheduledToursSlice";
+import { scheduledTourAdded } from "../tours/toursSlice";
 
 export default function ScheduleTourForm({ tour_id, available_slots, selectedDate }) {
     const defaultFormData = {
@@ -23,6 +24,8 @@ export default function ScheduleTourForm({ tour_id, available_slots, selectedDat
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(fetchAddScheduleTour(formData))
+        .unwrap()
+        .then(data => dispatch(scheduledTourAdded(data)))
     }
 
     if(scheduledTours.find(t => t.tour_id === tour_id)) return (

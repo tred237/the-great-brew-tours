@@ -21,7 +21,14 @@ const initialState =  {
 const toursSlice = createSlice({
     name: "tours",
     initialState,
-    reducers: {},
+    reducers: {
+      scheduledTourAdded: (state, action) => {
+        const tour = state.tours.find(t => t.id === action.payload.tour_id)
+        tour.taken_slots = tour.taken_slots + action.payload.number_of_people
+        const filteredTours = state.tours.filter(t => t.id !== action.payload.tour_id)
+        state.tours = [tour, ...filteredTours]
+      },
+    },
     extraReducers(builder) {
       builder
         .addCase(fetchTours.pending, (state) => {
@@ -40,5 +47,7 @@ const toursSlice = createSlice({
         })
     }
 });
+
+export const { scheduledTourAdded } = toursSlice.actions; 
 
 export default toursSlice.reducer;
