@@ -18,9 +18,7 @@ export default function ScheduleTourForm({ tour_id, available_slots, selectedDat
     const [formData, setFormData] = useState({...defaultFormData})
     const dispatch = useDispatch()
 
-    const handleChange = (e) => {
-        setFormData({...formData, numberOfPeople: e.target.value})
-    }
+    const handleChange = (e) => setFormData({...formData, numberOfPeople: e.target.value})
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -35,7 +33,7 @@ export default function ScheduleTourForm({ tour_id, available_slots, selectedDat
     )
     else return (
         <Form onSubmit={handleSubmit}>
-            <Form.Select onChange={handleChange}>
+            <Form.Select defaultValue={formData.numberOfPeople} onChange={handleChange}>
                 {Array(available_slots).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
             </Form.Select>
             <Button type="submit">Schedule</Button>
