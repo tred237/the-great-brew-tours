@@ -8,6 +8,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 import { fetchTours } from "./toursSlice";
+import { fetchScheduledTours } from "../scheduledTours/scheduledToursSlice";
 import Tour from "./Tour";
 
 export default function Tours() {
@@ -18,7 +19,10 @@ export default function Tours() {
     useEffect(() => {
         dispatch(fetchTours())
         .unwrap()
-        .then(() => console.log("Tours loaded"))
+        .then(() => {
+            console.log("Tours loaded")
+            dispatch(fetchScheduledTours())
+        })
         .catch(() => console.log("Tours failed"))
     },[dispatch])
 

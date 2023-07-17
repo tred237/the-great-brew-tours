@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/esm/Form";
+import { useDispatch } from "react-redux";
+import { fetchEditScheduleTour } from "./scheduledToursSlice";
 
 export default function EditDeleteScheduledTourForm({ scheduledTourId, availableSlots, reservedSlots, onChange }) {
     const defaultFormData = {
@@ -8,13 +10,15 @@ export default function EditDeleteScheduledTourForm({ scheduledTourId, available
         scheduledTourId: scheduledTourId,
     }
 
+    const dispatch = useDispatch()
+
     const [formData, setFormData] = useState({...defaultFormData})
 
     const handleChange = (e) => setFormData({...formData, numberOfPeople: e.target.value})
 
     const handleEditSubmit = (e) => {
         e.preventDefault()
-        console.log('edit')
+        dispatch(fetchEditScheduleTour(formData))
     }
 
     const handleDeleteSubmit = (e) => {

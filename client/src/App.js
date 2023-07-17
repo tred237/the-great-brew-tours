@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import { fetchSession } from "./features/session/sessionSlice";
 import NavBar from "./features/NavBar";
 import Home from "./HomePage";
 import Login from "./features/session/LoginPage";
@@ -9,8 +10,6 @@ import Brewery from "./features/brewery/BreweryPage";
 import ReviewedBreweries from "./features/reviewedBreweries/ReviewedBreweriesPage";
 import Tours from "./features/tours/ToursPage";
 import ScheduledTours from "./features/scheduledTours/ScheduledToursPage";
-import { fetchSession } from "./features/session/sessionSlice";
-import { fetchScheduledTours } from "./features/scheduledTours/scheduledToursSlice";
 
 export default function App() {
   const state = useSelector((state) => state);
@@ -19,9 +18,6 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchSession())
-    .unwrap()
-    .then(() => dispatch(fetchScheduledTours()))
-    .catch(err => err)
   },[loggedIn, dispatch])
 
   // console.log(state)

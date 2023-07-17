@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 
-export const fetchScheduleTour = createAsyncThunk("scheduledTours/fetchScheduleTour", async (scheduledTour, thunkAPI) => {
+export const fetchAddScheduleTour = createAsyncThunk("scheduledTours/fetchAddScheduleTour", async (scheduledTour, thunkAPI) => {
     try {
         const response = await fetch('/scheduled_tours', {
             method: 'POST',
@@ -32,11 +32,31 @@ export const fetchScheduledTours = createAsyncThunk("scheduledTours/fetchSchedul
     }
 });
 
+export const fetchEditScheduleTour = createAsyncThunk("scheduledTours/fetchEditScheduleTour", async (scheduledTour, thunkAPI) => {
+    try {
+        const response = await fetch(`/scheduled_tours/${scheduledTour.scheduledTourId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                number_of_people: scheduledTour.numberOfPeople,
+            })
+        })
+        const data = await response.json()
+        if (response.ok) return data
+        else return thunkAPI.rejectWithValue(data)     
+    } catch(err) {
+        return thunkAPI.rejectWithValue(err)
+    }
+});
+
 const initialState = {
     scheduledTours: [],
     status: 'idle',
     reduxErrors: null,
-    scheduleTourErrors: null,
+    addScheduleTourErrors: null,
     scheduledToursErrors: null,
 }
 
@@ -46,18 +66,18 @@ const scheduledToursSlice = createSlice({
     reducers: {},
     extraReducers(builder) {
       builder
-        .addCase(fetchScheduleTour.pending, (state) => {
+        .addCase(fetchAddScheduleTour.pending, (state) => {
             state.status = 'loading'
         })
-        .addCase(fetchScheduleTour.fulfilled, (state, action) => {
+        .addCase(fetchAddScheduleTour.fulfilled, (state, action) => {
             state.status = 'succeeded'
             state.scheduledTours.push(action.payload)
-            state.scheduleTourErrors = null
+            state.addScheduleTourErrors = null
             state.reduxErrors = null
         })
-        .addCase(fetchScheduleTour.rejected, (state, action) => {
+        .addCase(fetchAddScheduleTour.rejected, (state, action) => {
             state.status = 'failed'
-            state.scheduleTourErrors = action.payload.errors
+            state.addScheduleTourErrors = action.payload.errors
             state.reduxErrors = action.error.message
         })
 
@@ -71,6 +91,23 @@ const scheduledToursSlice = createSlice({
             state.reduxErrors = null
         })
         .addCase(fetchScheduledTours.rejected, (state, action) => {
+            state.status = 'failed'
+            state.scheduledToursErrors = action.payload.errors
+            state.reduxErrors = action.error.message
+        })
+
+        .addCase(fetchEditScheduleTour.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetchEditScheduleTour.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            console.log(action.payload)
+            const filteredScheduledTours = current(state.scheduledTours).filter(t => t.id !== action.payload.id)
+            state.scheduledTours = [action.payload, ...filteredScheduledTours]
+            state.scheduledToursErrors = null
+            state.reduxErrors = null
+        })
+        .addCase(fetchEditScheduleTour.rejected, (state, action) => {
             state.status = 'failed'
             state.scheduledToursErrors = action.payload.errors
             state.reduxErrors = action.error.message
