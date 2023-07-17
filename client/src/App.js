@@ -5,28 +5,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSession } from "./features/session/sessionSlice";
 import NavBar from "./features/NavBar";
 import Home from "./features/HomePage";
-import Login from "./features/session/LoginPage";
 import Brewery from "./features/brewery/BreweryPage";
 import ReviewedBreweries from "./features/reviewedBreweries/ReviewedBreweriesPage";
 import Tours from "./features/tours/ToursPage";
 import ScheduledTours from "./features/scheduledTours/ScheduledToursPage";
 
 export default function App() {
-  const state = useSelector((state) => state);
-  const loggedIn = useSelector((state) => state.session.loggedIn);
+  // const state = useSelector(state => state);
+  const isLoggedIn = useSelector((state) => state.session.loggedIn);
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchSession())
-  },[loggedIn, dispatch])
+  },[isLoggedIn, dispatch])
 
-  console.log(state)
+  // console.log(state)
 
   return (
     <div className="App">
       <NavBar />
       <Routes>
-        <Route exact path="/login" element={<Login />} />
         <Route exact path="/breweries/:id" element={<Brewery />} />
         <Route exact path="/reviewed-breweries" element={<ReviewedBreweries />} />
         <Route exact path="/tours" element={<Tours />} />

@@ -10,23 +10,38 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { fetchTours } from "./toursSlice";
 import { fetchScheduledTours } from "../scheduledTours/scheduledToursSlice";
 import Tour from "./Tour";
+import LoginSignupModal from "../../modals/LoginSignupModal";
 
 export default function Tours() {
     const tours = useSelector(state => state.tours.tours)
+    const isLoggedIn = useSelector((state) => state.session.loggedIn);
     const dispatch = useDispatch()
     const [date, setDate] = useState(dayjs(Date()))
+    const [showModal, setShowModal] = useState(false)
+
+    const handleShowModal = () => setShowModal(true)
+    const handleCloseModal = () => setShowModal(false)
 
     useEffect(() => {
-        dispatch(fetchTours())
-        .unwrap()
-        .then(() => {
-            console.log("Tours loaded")
-            dispatch(fetchScheduledTours())
-        })
-        .catch(() => console.log("Tours failed"))
-    },[dispatch])
+        if(isLoggedIn) {
+            dispatch(fetchTours())
+            .unwrap()
+            .then(() => {
+                console.log("Tours loaded")
+                dispatch(fetchScheduledTours())
+            })
+            .catch(() => console.log("Tours failed"))
+        }
+        else handleShowModal()
+    },[dispatch, isLoggedIn])
 
-    return(
+    if(!isLoggedIn) return (
+        <Container>
+            <h2>You must be logged in to see this content</h2>
+            <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />
+        </Container>
+    )
+    else return (
         <Container>
             <h2>Tours</h2>
             <LocalizationProvider dateAdapter={AdapterDayjs}>

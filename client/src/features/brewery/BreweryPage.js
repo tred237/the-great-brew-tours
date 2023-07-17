@@ -8,10 +8,12 @@ import { fetchBrewery } from "./brewerySlice";
 import BreweryInformation from "./BreweryInformation";
 import BreweryReviews from "./BreweryReviews";
 import AddReviewModal from "../../modals/AddReviewModal";
+import LoginSignupModal from "../../modals/LoginSignupModal";
 
 export default function Brewery() {
-    const brewery = useSelector((state) => state.brewery.brewery);
-    const dispatch = useDispatch();
+    const brewery = useSelector((state) => state.brewery.brewery)
+    const isLoggedIn = useSelector(state => state.session.loggedIn)
+    const dispatch = useDispatch()
     const breweryId = useParams()
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
@@ -40,12 +42,12 @@ export default function Brewery() {
             </Container>
             <Container>
                 <h2>Reviews</h2>
-                <Button variant="success" onClick={handleShowModal}>Add Review</Button>
+                <Button onClick={handleShowModal}>Add Review</Button>
             </Container>
             <Container>
                 {brewery.brewery_reviews ? brewery.brewery_reviews.map(r => <BreweryReviews key={r.id} review={r} />) : null}
             </Container>
-            <AddReviewModal showModal={showModal} onCloseModal={handleCloseModal} />
+            {isLoggedIn ? <AddReviewModal showModal={showModal} onCloseModal={handleCloseModal} /> : <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />}
         </Container>
     )
 }
