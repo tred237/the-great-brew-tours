@@ -40,7 +40,7 @@ class ToursController < ApplicationController
         if destroyer.is_admin
             tour = find_tour
             tour.destroy
-            head :no_content
+            render json: tour, status: :ok
         else
             render json: { errors: ["You are not authorized to delete a tour"] }, status: :unauthorized
         end

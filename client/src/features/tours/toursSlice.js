@@ -11,10 +11,28 @@ export const fetchTours = createAsyncThunk("tours/fetchTours", async(_, thunkAPI
   }
 });
 
+export const fetchDeleteTour = createAsyncThunk("tours/fetchDeleteTour", async(tourId, thunkAPI) => {
+  try { 
+    const response = await fetch(`/tours/${tourId}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+    const data = await response.json()
+    if(response.ok) return data
+    else return thunkAPI.rejectWithValue(data)
+  } catch(err) {
+    return thunkAPI.rejectWithValue(err)
+  }
+});
+
 const initialState =  {
   tours: [],
   status: "idle",
-  toursErrors: null,
+  getToursErrors: null,
+  deleteToursErrors: null,
   reduxErrors: null,
 }
 
@@ -38,12 +56,27 @@ const toursSlice = createSlice({
         .addCase(fetchTours.fulfilled, (state, action) => {
           state.status = 'succeeded'
           state.tours = action.payload
-          state.toursErrors = null
+          state.getToursErrors = null
           state.reduxErrors = null
         })
         .addCase(fetchTours.rejected, (state, action) => {
           state.status = 'failed'
-          state.toursErrors = action.payload.errors
+          state.getToursErrors = action.payload.errors
+          state.reduxErrors = action.error.message
+        })
+
+        .addCase(fetchDeleteTour.pending, (state) => {
+          state.status = 'loading'
+        })
+        .addCase(fetchDeleteTour.fulfilled, (state, action) => {
+          state.status = 'succeeded'
+          state.tours = state.tours.filter(t => t.id !== action.payload.id)
+          state.deleteToursErrors = null
+          state.reduxErrors = null
+        })
+        .addCase(fetchDeleteTour.rejected, (state, action) => {
+          state.status = 'failed'
+          state.deleteToursErrors = action.payload.errors
           state.reduxErrors = action.error.message
         })
     }

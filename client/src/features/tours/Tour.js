@@ -4,8 +4,15 @@ import AccordionItem from "react-bootstrap/esm/AccordionItem";
 import Container from "react-bootstrap/esm/Container";
 
 import ScheduleTourForm from "../scheduledTours/ScheduleTourForm";
+import Button from "react-bootstrap/esm/Button";
+import Form from "react-bootstrap/esm/Form";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDeleteTour } from "./toursSlice";
 
 export default function Tour({ tour, selectedDate }){
+    const isAdmin = useSelector(state => state.session.user.is_admin)
+    const dispatch = useDispatch()
+
     const durationBreakdown = () => {
         const splitDuration = tour.duration.toString().split('.')
         if(splitDuration[1] === '25') return `${splitDuration[0]} hr 15 min`
@@ -14,6 +21,20 @@ export default function Tour({ tour, selectedDate }){
         else return `${splitDuration[0]} hr`
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(fetchDeleteTour(tour.id))
+    }
+
+    const adminDeleteButton = () => {
+        if(isAdmin) return (
+            <Form onSubmit={handleSubmit}>
+                <Button type="submit">Delete Tour</Button>
+            </Form>
+        )
+    } 
+
+    console.log(tour)
     return (
         <AccordionItem eventKey={tour.id}>
             <AccordionHeader>
@@ -30,6 +51,7 @@ export default function Tour({ tour, selectedDate }){
                         {tour.breweries.map(b => <li key={b.brewery_id}>{b.brewery_name}</li>)}
                     </ul>
                     <ScheduleTourForm tour_id={tour.id} available_slots={tour.available_slots - tour.taken_slots} selectedDate={selectedDate} />
+                    {adminDeleteButton()}
                 </Container>
             </AccordionBody>
         </AccordionItem>
