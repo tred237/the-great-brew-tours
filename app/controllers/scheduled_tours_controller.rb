@@ -26,7 +26,7 @@ class ScheduledToursController < ApplicationController
         destroyer = find_user
         scheduled_tour = destroyer.scheduled_tours.find(params[:id])
         scheduled_tour.destroy
-        head :no_content
+        render json: scheduled_tour, status: :ok
     end
 
     private

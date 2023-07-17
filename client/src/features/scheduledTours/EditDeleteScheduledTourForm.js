@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/esm/Form";
-import { useDispatch } from "react-redux";
-import { fetchEditScheduleTour } from "./scheduledToursSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDeleteScheduleTour, fetchEditScheduleTour } from "./scheduledToursSlice";
 
 export default function EditDeleteScheduledTourForm({ scheduledTourId, availableSlots, reservedSlots, onChange }) {
     const defaultFormData = {
@@ -10,6 +10,7 @@ export default function EditDeleteScheduledTourForm({ scheduledTourId, available
         scheduledTourId: scheduledTourId,
     }
 
+    const editScheduledTourErrors = useSelector(state => state.scheduledTours.editScheduledTourErrors)
     const dispatch = useDispatch()
 
     const [formData, setFormData] = useState({...defaultFormData})
@@ -23,7 +24,7 @@ export default function EditDeleteScheduledTourForm({ scheduledTourId, available
 
     const handleDeleteSubmit = (e) => {
         e.preventDefault()
-        console.log('delete')
+        dispatch(fetchDeleteScheduleTour(formData))
     }
 
     const canEditScheduledTour = () => {
@@ -38,6 +39,7 @@ export default function EditDeleteScheduledTourForm({ scheduledTourId, available
                     <Form.Select name="numberOfPeople" defaultValue={formData.numberOfPeople} onChange={handleChange}>
                         {Array(availableSlots + reservedSlots).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
                     </Form.Select>
+                    {editScheduledTourErrors ? editScheduledTourErrors.map(e => <p key={e}>{e}</p>) : null}
                     <Button type="submit">Edit</Button>
                 </Form>
                 <Form onSubmit={handleDeleteSubmit}>

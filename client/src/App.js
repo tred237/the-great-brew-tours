@@ -12,7 +12,7 @@ import Tours from "./features/tours/ToursPage";
 import ScheduledTours from "./features/scheduledTours/ScheduledToursPage";
 
 export default function App() {
-  const state = useSelector((state) => state);
+  // const state = useSelector((state) => state);
   const loggedIn = useSelector((state) => state.session.loggedIn);
   const dispatch = useDispatch()
 

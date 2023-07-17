@@ -52,12 +52,31 @@ export const fetchEditScheduleTour = createAsyncThunk("scheduledTours/fetchEditS
     }
 });
 
+export const fetchDeleteScheduleTour = createAsyncThunk("scheduledTours/fetchDeleteScheduleTour", async (scheduledTour, thunkAPI) => {
+    try {
+        const response = await fetch(`/scheduled_tours/${scheduledTour.scheduledTourId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+        })
+        const data = await response.json()
+        if (response.ok) return data
+        else return thunkAPI.rejectWithValue(data)     
+    } catch(err) {
+        return thunkAPI.rejectWithValue(err)
+    }
+});
+
 const initialState = {
     scheduledTours: [],
     status: 'idle',
     reduxErrors: null,
     addScheduleTourErrors: null,
     scheduledToursErrors: null,
+    editScheduledTourErrors: null,
+    deleteScheduledTourErrors: null,
 }
 
 const scheduledToursSlice = createSlice({
@@ -101,15 +120,30 @@ const scheduledToursSlice = createSlice({
         })
         .addCase(fetchEditScheduleTour.fulfilled, (state, action) => {
             state.status = 'succeeded'
-            console.log(action.payload)
             const filteredScheduledTours = current(state.scheduledTours).filter(t => t.id !== action.payload.id)
             state.scheduledTours = [action.payload, ...filteredScheduledTours]
-            state.scheduledToursErrors = null
+            state.editScheduledTourErrors = null
             state.reduxErrors = null
         })
         .addCase(fetchEditScheduleTour.rejected, (state, action) => {
             state.status = 'failed'
-            state.scheduledToursErrors = action.payload.errors
+            state.editScheduledTourErrors = action.payload.errors
+            state.reduxErrors = action.error.message
+        })
+
+        .addCase(fetchDeleteScheduleTour.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetchDeleteScheduleTour.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            const filteredScheduledTours = current(state.scheduledTours).filter(t => t.id !== action.payload.id)
+            state.scheduledTours = filteredScheduledTours
+            state.deleteScheduledTourErrors = null
+            state.reduxErrors = null
+        })
+        .addCase(fetchDeleteScheduleTour.rejected, (state, action) => {
+            state.status = 'failed'
+            state.deleteScheduledTourErrors = action.payload.errors
             state.reduxErrors = action.error.message
         })
     }
