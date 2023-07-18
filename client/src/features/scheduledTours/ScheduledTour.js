@@ -6,6 +6,7 @@ import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
 
 import EditDeleteScheduledTourForm from "./EditDeleteScheduledTourForm";
+import formatTime from "../../helpers/time";
 
 export default function ScheduledTour({ scheduledTour }){
     const [change, setChange] = useState(false)
@@ -28,6 +29,7 @@ export default function ScheduledTour({ scheduledTour }){
             <AccordionBody>
                 <Container>
                     <p>{`Date of Tour: ${scheduledTour.tour.tour_date.split('T')[0]}`}</p>
+                    <p>{`Time of Tour: ${formatTime(scheduledTour.tour.tour_date.split('T')[1])}`}</p>
                     <p>{`Duration: ${durationBreakdown()}`}</p>
                     <p>{`Meeting Location: ${scheduledTour.tour.meeting_location}`}</p>
                     <p>{`Available Spots: ${scheduledTour.tour.available_slots - scheduledTour.taken_slots}`}</p>

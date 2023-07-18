@@ -35,6 +35,7 @@ export default function Tours() {
         else handleShowModal()
     },[dispatch, isLoggedIn])
 
+    console.log(date)
     if(!isLoggedIn) return (
         <Container>
             <h2>You must be logged in to see this content</h2>
@@ -49,7 +50,7 @@ export default function Tours() {
             </LocalizationProvider>
             <Accordion defaultActiveKey="0">
                 {tours ? tours.map(t => {
-                    if(dayjs(t.tour_date).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date).format('YYYYMMDD')) return <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />
+                    if(dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD')) return <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />
                 }) : null}
             </Accordion>
         </Container>
