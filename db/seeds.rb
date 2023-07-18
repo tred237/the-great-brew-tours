@@ -34,7 +34,7 @@ puts "Brewery reviews created..."
 # Create Tours
 (1..100).each do |t|
     Tour.create!(tour_date: "#{Faker::Date.between(from: DateTime.now, to: DateTime.now + 60)} #{rand(8..15)}:#{[00, 15, 30, 45].sample}:00", 
-                duration: "#{rand(4..8).to_s}.#{[0,25,50,75].sample}",
+                duration: "#{rand(4..8).to_s}.#{[0,15,30,45].sample}",
                 meeting_location: "Union Station, Denver", 
                 available_slots: rand(4..10), 
                 creator_id: User.find(1).id)

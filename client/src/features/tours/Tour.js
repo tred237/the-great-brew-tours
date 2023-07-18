@@ -34,7 +34,6 @@ export default function Tour({ tour, selectedDate }){
         )
     } 
 
-    console.log(tour)
     return (
         <AccordionItem eventKey={tour.id}>
             <AccordionHeader>
