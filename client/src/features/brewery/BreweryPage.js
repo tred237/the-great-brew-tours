@@ -26,7 +26,7 @@ export default function Brewery() {
         navigate("/home")
         console.log(err.errors[0])
       })
-    }, [breweryId.id, dispatch]);
+    }, [breweryId.id, dispatch, navigate]);
 
     const handleShowModal = () => setShowModal(true)
     const handleCloseModal = () => setShowModal(false)

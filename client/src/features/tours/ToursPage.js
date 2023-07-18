@@ -48,9 +48,12 @@ export default function Tours() {
                 <DateCalendar value={date} onChange={(e) => setDate(e)} />
             </LocalizationProvider>
             <Accordion defaultActiveKey="0">
-                {tours ? tours.map(t => {
+                {/* {tours ? tours.map(t => {
                     if(dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD')) return <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />
-                }) : null}
+                    else return null
+                }) : null} */}
+                {tours ? tours.filter(t=> dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD'))
+                            .map(t => <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />) : null}
             </Accordion>
         </Container>
     )

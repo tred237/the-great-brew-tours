@@ -5,15 +5,19 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { fetchBreweries } from '../breweries/breweriesSlice';
 import { fetchAddTour } from './toursSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddTourForm() {
+    const isAdmin = useSelector(state => state.session.user.is_admin)
     const breweries = useSelector(state => state.breweries.breweries)
     const breweryStatus = useSelector((state) => state.breweries.status);
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
+        if(!isAdmin) navigate("/home")
         if(breweryStatus === 'idle') dispatch(fetchBreweries())
-    }, [dispatch, breweryStatus]);
+    }, [dispatch, breweryStatus, isAdmin, navigate]);
 
     const defaultFormData = {
         tourDate: '',
@@ -32,7 +36,7 @@ export default function AddTourForm() {
         if(e.target.name === 'breweries') {
             if(e.target.checked) setFormData({...formData, 'breweries': [...formData.breweries, e.target.value] })
             else {
-                const filteredBreweries = formData.breweries.filter(b => b != e.target.value)
+                const filteredBreweries = formData.breweries.filter(b => b !== e.target.value)
                 setFormData({...formData, 'breweries': filteredBreweries })
             }
         } else setFormData({...formData, [e.target.name]: e.target.value})

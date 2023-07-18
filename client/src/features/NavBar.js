@@ -14,6 +14,7 @@ import LoginSignupModal from '../modals/LoginSignupModal';
 
 export default function NavBar() {
     const loggedIn = useSelector(state => state.session.loggedIn)
+    const isAdmin = useSelector(state => state.session.user.is_admin)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
@@ -40,7 +41,7 @@ export default function NavBar() {
                         <Nav.Link as={Link} to="/scheduled-tours">Scheduled Tours</Nav.Link>
                         <Nav.Link as={Link} to="/reviewed-breweries">Reviewed Breweries</Nav.Link>
 
-                        <Nav.Link as={Link} to="/add-tour">Add Tour</Nav.Link>
+                        {isAdmin ? <Nav.Link as={Link} to="/add-tour">Add Tour</Nav.Link> : null}
                         {loggedIn ? <Nav.Link onClick={handleLogoutClick}>Logout</Nav.Link> : <Nav.Link onClick={handleShowModal}>Login</Nav.Link>}
                     </Nav>
                 </Container>
