@@ -28,11 +28,35 @@ export const fetchDeleteTour = createAsyncThunk("tours/fetchDeleteTour", async(t
   }
 });
 
+export const fetchAddTour = createAsyncThunk("tours/fetchAddTour", async(tourData, thunkAPI) => {
+  try { 
+    const response = await fetch(`/tours`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        tour_date: `${tourData.tourDate} ${tourData.meetingTimeHours}:${tourData.meetingTimeMinutes}:00`,
+        duration: `${tourData.durationHours}.${tourData.durationMinutes}`,
+        meeting_location: tourData.meetingLocation,
+        available_slots: tourData.availableSlots
+      })
+    })
+    const data = await response.json()
+    if(response.ok) return data
+    else return thunkAPI.rejectWithValue(data)
+  } catch(err) {
+    return thunkAPI.rejectWithValue(err)
+  }
+});
+
 const initialState =  {
   tours: [],
   status: "idle",
   getToursErrors: null,
-  deleteToursErrors: null,
+  deleteTourErrors: null,
+  createTourErrors: null,
   reduxErrors: null,
 }
 
@@ -71,12 +95,27 @@ const toursSlice = createSlice({
         .addCase(fetchDeleteTour.fulfilled, (state, action) => {
           state.status = 'succeeded'
           state.tours = state.tours.filter(t => t.id !== action.payload.id)
-          state.deleteToursErrors = null
+          state.deleteTourErrors = null
           state.reduxErrors = null
         })
         .addCase(fetchDeleteTour.rejected, (state, action) => {
           state.status = 'failed'
-          state.deleteToursErrors = action.payload.errors
+          state.deleteTourErrors = action.payload.errors
+          state.reduxErrors = action.error.message
+        })
+
+        .addCase(fetchAddTour.pending, (state) => {
+          state.status = 'loading'
+        })
+        .addCase(fetchAddTour.fulfilled, (state, action) => {
+          state.status = 'succeeded'
+          state.tours.push(action.payload)
+          state.addTourErrors = null
+          state.reduxErrors = null
+        })
+        .addCase(fetchAddTour.rejected, (state, action) => {
+          state.status = 'failed'
+          state.addTourErrors = action.payload.errors
           state.reduxErrors = action.error.message
         })
     }

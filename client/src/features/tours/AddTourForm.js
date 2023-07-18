@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { fetchBreweries } from '../breweries/breweriesSlice';
+import { fetchAddTour } from './toursSlice';
 
 export default function AddTourForm() {
     const breweries = useSelector(state => state.breweries.breweries)
@@ -16,6 +17,8 @@ export default function AddTourForm() {
 
     const defaultFormData = {
         tourDate: '',
+        meetingTimeHours: '',
+        meetingTimeMinutes: '',
         durationHours: 1,
         durationMinutes: 0,
         meetingLocation: '',
@@ -35,9 +38,32 @@ export default function AddTourForm() {
         } else setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    console.log(formData)
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(fetchAddTour(formData))
+        .unwrap()
+        .then(data => fetchAddTourBreweries(data.id, formData.breweries))
+        .catch(err => console.log(err.errors))
+    }
+
+    const fetchAddTourBreweries = async (tourId, breweries) => {
+        const response = await fetch('/tour_breweries', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                tour_id: tourId,
+                breweries: breweries
+            })
+        })
+        const data = response.json()
+        if(response.ok) console.log(data)
+    }
+
     return (
-        <Form onSubmit={null}>
+        <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <Form.Label>Date of Tour *</Form.Label>
                 <Form.Control type="date"
@@ -46,12 +72,21 @@ export default function AddTourForm() {
                             onChange={handleChange} />
             </Form.Group>
             <Form.Group>
-                    <Form.Label>Duration *</Form.Label>
-                    <Form.Label>Duration Hours *</Form.Label>
+                    <Form.Label>Meeting Time (Hours) *</Form.Label>
+                    <Form.Select name="meetingTimeHours" defaultValue={formData.meetingTimeHours} onChange={handleChange}>
+                        {Array(23).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
+                    </Form.Select>
+                    <Form.Label>Meeting Time (Minutes) *</Form.Label>
+                    <Form.Select name="meetingTimeMinutes" defaultValue={formData.meetingTimeMinutes} onChange={handleChange}>
+                        {[0, 15, 30, 45].map(s => <option key={s} value={s}>{s}</option>)}
+                    </Form.Select>
+            </Form.Group>
+            <Form.Group>
+                    <Form.Label>Duration (Hours) *</Form.Label>
                     <Form.Select name="durationHours" defaultValue={formData.durationHours} onChange={handleChange}>
                         {Array(23).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
                     </Form.Select>
-                    <Form.Label>Duration Minutes *</Form.Label>
+                    <Form.Label>Duration (Minutes) *</Form.Label>
                     <Form.Select name="durationMinutes" defaultValue={formData.durationMinutes} onChange={handleChange}>
                         {[0, 15, 30, 45].map(s => <option key={s} value={s}>{s}</option>)}
                     </Form.Select>
