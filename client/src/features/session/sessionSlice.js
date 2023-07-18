@@ -40,7 +40,6 @@ export const fetchLogout = createAsyncThunk("session/fetchLogout", async (_, thu
             }
         })
         const data = await response.json()
-        console.log(data)
         if(response.ok) return data
         else return thunkAPI.rejectWithValue(data)  
     } catch(err) {

@@ -22,7 +22,6 @@ export default function SignupForm({ isLogin }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(formData)
         const response = await fetch('/users', {
             method: 'POST',
             headers: {

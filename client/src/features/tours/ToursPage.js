@@ -35,7 +35,6 @@ export default function Tours() {
         else handleShowModal()
     },[dispatch, isLoggedIn])
 
-    console.log(date)
     if(!isLoggedIn) return (
         <Container>
             <h2>You must be logged in to see this content</h2>
