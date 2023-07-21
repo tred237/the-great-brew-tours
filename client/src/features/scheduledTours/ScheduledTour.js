@@ -21,6 +21,7 @@ export default function ScheduledTour({ scheduledTour }){
         else return `${splitDuration[0]} hr`
     }
 
+    console.log(scheduledTour.tour.tour_date.split('T')[1])
     return (
         <AccordionItem eventKey={scheduledTour.id}>
             <AccordionHeader>
