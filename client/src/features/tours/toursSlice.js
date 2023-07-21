@@ -40,7 +40,8 @@ export const fetchAddTour = createAsyncThunk("tours/fetchAddTour", async(tourDat
         tour_date: `${tourData.tourDate} ${tourData.meetingTimeHours}:${tourData.meetingTimeMinutes}:00`,
         duration: `${tourData.durationHours}.${tourData.durationMinutes}`,
         meeting_location: tourData.meetingLocation,
-        available_slots: tourData.availableSlots
+        available_slots: tourData.availableSlots,
+        breweries: tourData.breweries,
       })
     })
     const data = await response.json()
@@ -56,7 +57,7 @@ const initialState =  {
   status: "idle",
   getToursErrors: null,
   deleteTourErrors: null,
-  createTourErrors: null,
+  addTourErrors: null,
   reduxErrors: null,
 }
 

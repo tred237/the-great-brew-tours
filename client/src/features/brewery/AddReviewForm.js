@@ -65,7 +65,7 @@ export default function AddReviewForm({ onCloseModal }) {
             <Container>
                 {addReviewErrors ? addReviewErrors.map(e => <p key={e}>{e}</p>) : null}
             </Container>
-            <Button variant="success" type="submit">Add</Button>
+            <Button type="submit">Save</Button>
         </Form>
     )
 }

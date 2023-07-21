@@ -65,7 +65,7 @@ export default function EditReviewForm({ onCloseModal, review }) {
             <Container>
                 {editReviewErrors ? editReviewErrors.map(e => <p key={e}>{e}</p>) : null}
             </Container>
-            <Button variant="success" type="submit">Edit</Button>
+            <Button type="submit">Save</Button>
         </Form>
     )
 }

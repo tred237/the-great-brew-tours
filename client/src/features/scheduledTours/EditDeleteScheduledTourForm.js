@@ -40,7 +40,7 @@ export default function EditDeleteScheduledTourForm({ scheduledTourId, available
                         {Array(availableSlots + reservedSlots).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
                     </Form.Select>
                     {editScheduledTourErrors ? editScheduledTourErrors.map(e => <p key={e}>{e}</p>) : null}
-                    <Button type="submit">Edit</Button>
+                    <Button type="submit">Save</Button>
                 </Form>
                 <Form onSubmit={handleDeleteSubmit}>
                     <Button type="submit">Delete</Button>

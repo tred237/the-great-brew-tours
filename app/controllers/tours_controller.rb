@@ -5,10 +5,14 @@ class ToursController < ApplicationController
     def create
         creator = find_user
         if creator.is_admin
-            tour = Tour.new(tour_params)
-            tour.creator = creator
-            tour.save!
-            render json: tour, status: :created
+            if !params[:breweries][0]
+                render json: { errors: ["You need include at least one brewery to create a tour"] }, status: :unprocessable_entity
+            else
+                tour = Tour.new(tour_params)
+                tour.creator = creator
+                tour.save!
+                render json: tour, status: :created
+            end
         else
             render json: { errors: ["You are not authorized to add a tour"] }, status: :unauthorized
         end
@@ -56,8 +60,13 @@ class ToursController < ApplicationController
         params.permit(:tour_date, :duration, :meeting_location, :available_slots)
     end
 
+    def has_scheduled_tour(tour_id)
+        ScheduledTour.find_by(tour_id: tour_id, user_id: session[:user_id])
+    end
+
     def valid_tours
         scheduled_tour_agg = ScheduledTour.group(:tour_id).sum(:number_of_people)
-        Tour.all.filter{|t| t.tour_date.to_date > Date.today and (!scheduled_tour_agg[t.id] or scheduled_tour_agg[t.id] < t.available_slots)}
+        # has_scheduled_tour = ScheduledTour.find_by(tour_id: t.id, user_id: session[:user_id])
+        Tour.all.filter{|t| t.tour_date.to_date > Date.today and (has_scheduled_tour(t.id) or !scheduled_tour_agg[t.id] or scheduled_tour_agg[t.id] < t.available_slots)}
     end
 end

@@ -10,7 +10,8 @@ import { useNavigate } from 'react-router-dom';
 export default function AddTourForm() {
     const isAdmin = useSelector(state => state.session.user.is_admin)
     const breweries = useSelector(state => state.breweries.breweries)
-    const breweryStatus = useSelector((state) => state.breweries.status);
+    const breweryStatus = useSelector((state) => state.breweries.status)
+    const tourErrors = useSelector((state) => state.tours.addTourErrors)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -66,6 +67,13 @@ export default function AddTourForm() {
         if(response.ok) console.log(data)
     }
 
+    // const tourErrorsWBreweries = () => {
+    //     if(formData.breweries) return tourErrors
+    //     else return {...tourErrors, }
+    // }
+
+    console.log(tourErrors)
+
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Group>
@@ -117,9 +125,9 @@ export default function AddTourForm() {
                     })}
             </Form.Group>
             <Container>
-                {/* {addReviewErrors ? addReviewErrors.map(e => <p key={e}>{e}</p>) : null} */}
+                {tourErrors ? tourErrors.map(e => <p key={e}>{e}</p>) : null}
             </Container>
-            <Button variant="success" type="submit">Add</Button>
+            <Button variant="success" type="submit">Save</Button>
         </Form>
     )
 }
