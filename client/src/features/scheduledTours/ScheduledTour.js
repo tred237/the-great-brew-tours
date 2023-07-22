@@ -15,9 +15,7 @@ export default function ScheduledTour({ scheduledTour }){
 
     const durationBreakdown = () => {
         const splitDuration = scheduledTour.tour.duration.toString().split('.')
-        if(splitDuration[1] === '25') return `${splitDuration[0]} hr 15 min`
-        else if(splitDuration[1] === '5') return `${splitDuration[0]} hr 30 min`
-        else if(splitDuration[1] === '75') return `${splitDuration[0]} hr 45 min`
+        if(splitDuration[1] !== '00') return `${splitDuration[0]} hr ${splitDuration[1]} min`
         else return `${splitDuration[0]} hr`
     }
 
