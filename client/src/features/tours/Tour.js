@@ -9,17 +9,11 @@ import Form from "react-bootstrap/esm/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDeleteTour } from "./toursSlice";
 
-import formatTime from "../../helpers/time";
+import { formatTime, durationBreakdown } from "../../helpers/time";
 
 export default function Tour({ tour, selectedDate }){
     const isAdmin = useSelector(state => state.session.user.is_admin)
     const dispatch = useDispatch()
-
-    const durationBreakdown = () => {
-        const splitDuration = tour.duration.toString().split('.')
-        if(splitDuration[1] !== '00') return `${splitDuration[0]} hr ${splitDuration[1]} min`
-        else return `${splitDuration[0]} hr`
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -43,7 +37,7 @@ export default function Tour({ tour, selectedDate }){
                 <Container>
                     <p>{`Date of Tour: ${tour.tour_date.split('T')[0]}`}</p>
                     <p>{`Time of Tour: ${formatTime(tour.tour_date.split('T')[1])}`}</p>
-                    <p>{`Duration: ${durationBreakdown()}`}</p>
+                    <p>{`Duration: ${durationBreakdown(tour.duration)}`}</p>
                     <p>{`Meeting Location: ${tour.meeting_location}`}</p>
                     <p>{`Available Spots: ${tour.available_slots - tour.taken_slots}`}</p>
                     <p>{'Breweries to Visit:'}</p>

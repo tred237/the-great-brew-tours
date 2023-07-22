@@ -14,14 +14,18 @@ const withOutSeconds = (hour, minutes, newHour) => {
     else return `${hour.split('')[1]}:${minutes} AM MST`
 }
 
-export default function formatTime(time, seconds = false) {
-    console.log(time)
+export function formatTime(time, seconds = false) {
     let hour = time.split(':')[0]
     const minutes = time.split(':')[1]
     let newHour
     if(hour > '12') newHour = hour.split('')[1] - 2
-    console.log(hour)
 
     if(seconds) return withSeconds(hour, minutes, time.split(':')[2].split('.')[0], newHour)
     else return withOutSeconds(hour, minutes, newHour)
+}
+
+export function durationBreakdown(duration) {
+    const splitDuration = duration.toString().split('.')
+    if(splitDuration[1]) return `${splitDuration[0]} hr ${splitDuration[1]} min`
+    else return `${splitDuration[0]} hr`
 }

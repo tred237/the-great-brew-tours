@@ -6,7 +6,7 @@ import Button from "react-bootstrap/esm/Button";
 
 import { fetchDeleteReview } from "./brewerySlice";
 import EditReviewModal from "../../modals/EditReviewModal";
-import formatTime from "../../helpers/time";
+import { formatTime } from "../../helpers/time";
 
 export default function BreweryReviews({ review }) {
     const user = useSelector(state => state.session.user)
