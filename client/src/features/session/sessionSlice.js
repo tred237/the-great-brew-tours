@@ -60,7 +60,9 @@ const initialState = {
 const sessionSlice = createSlice({
     name: "session",
     initialState,
-    reducers: {},
+    reducers: {
+        resetSession: () => initialState 
+    },
     extraReducers(builder) {
       builder
         .addCase(fetchLogin.pending, (state) => {
@@ -114,5 +116,7 @@ const sessionSlice = createSlice({
         })
     }
 });
+
+export const { resetSession } = sessionSlice.actions; 
 
 export default sessionSlice.reducer;
