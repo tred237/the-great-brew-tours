@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchBrewery = createAsyncThunk("brewery/fetchBrewery", async (breweryId, thunkAPI) => {
-  try{ 
+  console.log(breweryId)
+  try{
     const response = await fetch(`/breweries/${breweryId}`)
     const data = await response.json()
     if(response.ok) return data

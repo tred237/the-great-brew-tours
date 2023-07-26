@@ -12,15 +12,15 @@ import ScheduledTours from "./features/scheduledTours/ScheduledToursPage";
 import AddTour from "./features/tours/AddTourPage";
 
 export default function App() {
-  const state = useSelector(state => state);
+  // const state = useSelector(state => state);
   const isLoggedIn = useSelector((state) => state.session.loggedIn);
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchSession())
-  },[isLoggedIn, dispatch])
+  },[dispatch]) //isLoggedIn
 
-  console.log(state)
+  // console.log(state)
 
   return (
     <div className="App">

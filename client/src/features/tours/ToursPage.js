@@ -6,6 +6,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import Spinner from 'react-bootstrap/Spinner';
 
 import { fetchTours } from "./toursSlice";
 import Tour from "./Tour";
@@ -44,11 +45,11 @@ export default function Tours() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar value={date} onChange={(e) => setDate(e)} />
             </LocalizationProvider>
-            {toursStatus === 'loading' ? <h3>Loading...</h3> :
-            <Accordion defaultActiveKey="0">
-                {tours ? tours.filter(t=> dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD'))
-                            .map(t => <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />) : null}
-            </Accordion>}
+            {toursStatus === 'loading' ? <Spinner animation="border" /> :
+                <Accordion defaultActiveKey="0">
+                    {tours ? tours.filter(t=> dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD'))
+                                .map(t => <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />) : null}
+                </Accordion>}
         </Container>
     )
 }

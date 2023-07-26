@@ -7,7 +7,7 @@ puts "Admin created..."
 # Create Breweries
 parsed_brewery_data = JSON.parse(File.read('db/assets/brewery_data.json')).filter{|e| e["city"] && e['name']}
 parsed_brewery_data.map do |b|
-    Brewery.create!(name: b["name"], city: b["city"], website: b["website"], address: b["address_1"], postal_code: b["postal_code"], latitude: b["latitude"], longitude: b["longitude"], creator_id: User.find(1).id)
+    Brewery.create!(name: b["name"], city: b["city"], website: b["website_url"], address: b["address_1"], postal_code: b["postal_code"], latitude: b["latitude"], longitude: b["longitude"], creator_id: User.find(1).id)
 end
 puts "Breweries created..."
 
@@ -33,7 +33,7 @@ puts "Brewery reviews created..."
 
 # Create Tours
 (1..100).each do |t|
-    Tour.create!(tour_date: "#{Faker::Date.between(from: DateTime.now, to: DateTime.now + 60)} #{rand(8..15)}:#{[00, 15, 30, 45].sample}:00", 
+    Tour.create!(tour_date: "#{Faker::Date.between(from: DateTime.now + 1, to: DateTime.now + 60)} #{rand(8..15)}:#{[00, 15, 30, 45].sample}:00", 
                 duration: "#{rand(4..8).to_s}.#{[0,15,30,45].sample}",
                 meeting_location: "Union Station, Denver", 
                 available_slots: rand(4..10), 

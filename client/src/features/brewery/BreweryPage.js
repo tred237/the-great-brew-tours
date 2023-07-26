@@ -23,10 +23,10 @@ export default function Brewery() {
       .unwrap()
       .then(() => console.log('We have a brewery'))
       .catch(err => {
-        navigate("/home")
+        // navigate("/home")
         console.log(err.errors[0])
       })
-    }, [breweryId.id, dispatch, navigate]);
+    }, [breweryId.id, dispatch, navigate])
 
     const handleShowModal = () => setShowModal(true)
     const handleCloseModal = () => setShowModal(false)

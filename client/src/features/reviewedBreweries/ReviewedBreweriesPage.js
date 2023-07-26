@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import { useDispatch, useSelector } from "react-redux";
+import Spinner from 'react-bootstrap/Spinner';
 
 import { fetchReviewedBreweries } from "./reviewedBreweriesSlice";
 import BreweryCard from "../breweries/BreweryCard";
@@ -29,7 +30,8 @@ export default function ReviewedBreweries() {
     )
     else return (
         <Container>
-            {reviewedBreweryStatus === 'loading' || reviewedBreweryStatus === 'idle' ? <p>Loading...</p> : reviewedBreweries.map(b => <BreweryCard key={b.id} brewery_id={b.id} brewery_name={b.name} /> )}
+            <h2>Reviewed Breweries</h2>
+            {reviewedBreweryStatus === 'loading' || reviewedBreweryStatus === 'idle' ? <Spinner animation="border" /> : reviewedBreweries.map(b => <BreweryCard key={b.id} brewery_id={b.id} brewery_name={b.name} /> )}
         </Container>
     )
 }

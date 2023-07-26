@@ -11,10 +11,7 @@ import AddTourForm from './AddTourForm';
 export default function AddTour() {
     const isAdmin = useSelector(state => state.session.user.is_admin)
     const sessionStatus = useSelector(state => state.session.status)
-    // const breweries = useSelector(state => state.breweries.breweries)
     const breweryStatus = useSelector(state => state.breweries.status)
-    // const tourStatus = useSelector(state => state.tours.status)
-    // const tourErrors = useSelector(state => state.tours.addTourErrors)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [showSuccess, setShowSuccess] = useState(false)
@@ -27,7 +24,7 @@ export default function AddTour() {
     const submissionSuccess = () => {
         return (
             <>
-                <h3>Success!</h3>
+                <h4>Success!</h4>
                 <Button onClick={() => setShowSuccess(false)}>Add Another Tour</Button>
             </>
         )
@@ -35,6 +32,7 @@ export default function AddTour() {
 
     return (
         <Container>
+            <h3>Add Tour</h3>
             {showSuccess ? submissionSuccess() : <AddTourForm setShowSuccess={setShowSuccess} />}
         </Container>
     )

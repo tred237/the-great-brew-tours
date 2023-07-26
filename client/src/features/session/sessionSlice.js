@@ -19,7 +19,7 @@ export const fetchLogin = createAsyncThunk("session/fetchLogin", async (loginCre
 });
 
 export const fetchSession = createAsyncThunk("session/fetchSession", async (_, thunkAPI) => {
-    console.log("fetch session running")
+    // console.log("fetch session running")
     try {
         const response = await fetch('/logged-in-user')
         const data = await response.json()
