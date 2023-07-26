@@ -37,7 +37,7 @@ export const fetchAddTour = createAsyncThunk("tours/fetchAddTour", async(tourDat
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        tour_date: `${tourData.tourDate} ${tourData.meetingTimeHours}:${tourData.meetingTimeMinutes}:00`,
+        tour_date: tourData.tourDate ? `${tourData.tourDate} ${tourData.meetingTimeHours}:${tourData.meetingTimeMinutes}` : '',
         duration: `${tourData.durationHours}.${tourData.durationMinutes}`,
         meeting_location: tourData.meetingLocation,
         available_slots: tourData.availableSlots,
@@ -115,6 +115,8 @@ const toursSlice = createSlice({
           state.reduxErrors = null
         })
         .addCase(fetchAddTour.rejected, (state, action) => {
+          console.log(action.payload)
+          state.addTourErrors = null
           state.status = 'failed'
           state.addTourErrors = action.payload.errors
           state.reduxErrors = action.error.message

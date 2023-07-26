@@ -9,7 +9,7 @@ import Brewery from "./features/brewery/BreweryPage";
 import ReviewedBreweries from "./features/reviewedBreweries/ReviewedBreweriesPage";
 import Tours from "./features/tours/ToursPage";
 import ScheduledTours from "./features/scheduledTours/ScheduledToursPage";
-import AddTourForm from "./features/tours/AddTourForm";
+import AddTour from "./features/tours/AddTourPage";
 
 export default function App() {
   const state = useSelector(state => state);
@@ -30,7 +30,7 @@ export default function App() {
         <Route exact path="/reviewed-breweries" element={<ReviewedBreweries />} />
         <Route exact path="/tours" element={<Tours />} />
         <Route exact path="/scheduled-tours" element={<ScheduledTours />} />
-        <Route exact path="/add-tour" element={<AddTourForm />} />
+        <Route exact path="/add-tour" element={<AddTour />} />
         <Route exact path="/home" element={<Home />} />
         <Route path="*" element={<Home />} />
       </Routes>

@@ -91,7 +91,7 @@ export default function SignupForm({ isLogin }) {
             <Container>
                 {signupErrors ? signupErrors.map(e => <p key={e}>{e}</p>) : null}
             </Container>
-            <Button variant="success" type="submit">Create Account</Button>
+            <Button type="submit">Create Account</Button>
         </Form>
     )
 }

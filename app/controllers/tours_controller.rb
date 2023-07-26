@@ -1,12 +1,12 @@
 class ToursController < ApplicationController
-    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_error_message
+    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_error_message_broken_out
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_error_message
 
     def create
         creator = find_user
         if creator.is_admin
             if !params[:breweries][0]
-                render json: { errors: ["You need include at least one brewery to create a tour"] }, status: :unprocessable_entity
+                render json: { errors: {tour_breweries: ["You need include at least one brewery to create a tour"]} }, status: :unprocessable_entity
             else
                 tour = Tour.new(tour_params)
                 tour.creator = creator
@@ -66,7 +66,6 @@ class ToursController < ApplicationController
 
     def valid_tours
         scheduled_tour_agg = ScheduledTour.group(:tour_id).sum(:number_of_people)
-        # has_scheduled_tour = ScheduledTour.find_by(tour_id: t.id, user_id: session[:user_id])
         Tour.all.filter{|t| t.tour_date.to_date > Date.today and (has_scheduled_tour(t.id) or !scheduled_tour_agg[t.id] or scheduled_tour_agg[t.id] < t.available_slots)}
     end
 end

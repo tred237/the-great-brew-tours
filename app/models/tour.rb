@@ -7,6 +7,13 @@ class Tour < ApplicationRecord
     validates :tour_date, presence: true
     validates :duration, presence: true, numericality: { only_numeric: true }
     validates :meeting_location, presence: true
-    validates :available_slots, presence: true, numericality: { only_integer: true }
+    validates :available_slots, presence: true, numericality: { only_integer: true, greater_than: 0 }
     validates :creator_id, presence: true, inclusion: User.where(is_admin: true).map{|u| u.id}
+    validate :tour_date_after_current_date
+
+    def tour_date_after_current_date
+        unless tour_date and tour_date.to_date > Date.today
+            errors.add(:tour_date, "must occur after current date")
+        end
+    end
 end
