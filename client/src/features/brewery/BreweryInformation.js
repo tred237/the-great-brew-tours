@@ -1,5 +1,4 @@
 import ListGroup from "react-bootstrap/esm/ListGroup";
-import NavLink from "react-bootstrap/esm/NavLink";
 
 export default function BreweryInformation({ name, website, address, city, postal_code }) {
     return (

@@ -19,7 +19,7 @@ export default function AddTour() {
     useEffect(() => {
         if((sessionStatus === 'succeeded' || sessionStatus === 'failed') && !isAdmin) navigate("/home")
         if(breweryStatus === 'idle') dispatch(fetchBreweries())
-    }, [dispatch, breweryStatus, isAdmin, navigate]);
+    }, [dispatch, breweryStatus, isAdmin, navigate, sessionStatus]);
 
     const submissionSuccess = () => {
         return (
