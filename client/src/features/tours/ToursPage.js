@@ -14,6 +14,7 @@ import LoginSignupModal from "../../modals/LoginSignupModal";
 
 export default function Tours() {
     const tours = useSelector(state => state.tours.tours)
+    const toursStatus = useSelector(state => state.tours.status)
     const isLoggedIn = useSelector((state) => state.session.loggedIn);
     const dispatch = useDispatch()
     const [date, setDate] = useState(dayjs(Date()))
@@ -47,10 +48,11 @@ export default function Tours() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar value={date} onChange={(e) => setDate(e)} />
             </LocalizationProvider>
+            {toursStatus === 'loading' ? <h3>Loading...</h3> :
             <Accordion defaultActiveKey="0">
                 {tours ? tours.filter(t=> dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD'))
                             .map(t => <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />) : null}
-            </Accordion>
+            </Accordion>}
         </Container>
     )
 }
