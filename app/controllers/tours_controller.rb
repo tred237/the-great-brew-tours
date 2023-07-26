@@ -18,15 +18,15 @@ class ToursController < ApplicationController
         end
     end
 
-    def index
-        user = find_user
-        if user.is_admin
-            tours = Tour.all
-            render json: tours, status: :ok
-        else
-            render json: valid_tours, status: :ok
-        end
-    end
+    # def index
+    #     user = find_user
+    #     if user.is_admin
+    #         tours = Tour.all
+    #         render json: tours, status: :ok
+    #     else
+    #         render json: valid_tours, status: :ok
+    #     end
+    # end
 
     def update
         updater = find_user
@@ -50,6 +50,16 @@ class ToursController < ApplicationController
         end
     end
 
+    def tours_on_date
+        user = find_user
+        if user.is_admin
+            tours = Tour.where("tour_date::date = '#{params[:year]}-#{params[:month]}-#{params[:day]}'")
+            render json: tours, status: :ok
+        else
+            render json: valid_tours, status: :ok
+        end
+    end
+
     private
 
     def find_tour
@@ -65,7 +75,8 @@ class ToursController < ApplicationController
     end
 
     def valid_tours
+        tours = Tour.where("tour_date::date = '#{params[:year]}-#{params[:month]}-#{params[:day]}'")
         scheduled_tour_agg = ScheduledTour.group(:tour_id).sum(:number_of_people)
-        Tour.all.filter{|t| t.tour_date.to_date > Date.today and (has_scheduled_tour(t.id) or !scheduled_tour_agg[t.id] or scheduled_tour_agg[t.id] < t.available_slots)}
+        tours.filter{|t| t.tour_date.to_date > Date.today and (has_scheduled_tour(t.id) or !scheduled_tour_agg[t.id] or scheduled_tour_agg[t.id] < t.available_slots)}
     end
 end

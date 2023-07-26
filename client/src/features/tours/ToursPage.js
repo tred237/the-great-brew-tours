@@ -8,7 +8,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 import { fetchTours } from "./toursSlice";
-import { fetchScheduledTours } from "../scheduledTours/scheduledToursSlice";
 import Tour from "./Tour";
 import LoginSignupModal from "../../modals/LoginSignupModal";
 
@@ -25,16 +24,13 @@ export default function Tours() {
 
     useEffect(() => {
         if(isLoggedIn) {
-            dispatch(fetchTours())
+            dispatch(fetchTours(date.format('YYYY/MM/DD')))
             .unwrap()
-            .then(() => {
-                console.log("Tours loaded")
-                dispatch(fetchScheduledTours())
-            })
+            .then(() => console.log("Tours loaded"))
             .catch(() => console.log("Tours failed"))
         }
         else handleShowModal()
-    },[dispatch, isLoggedIn])
+    },[dispatch, isLoggedIn, date])
 
     if(!isLoggedIn) return (
         <Container>

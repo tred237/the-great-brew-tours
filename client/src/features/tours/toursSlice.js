@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchTours = createAsyncThunk("tours/fetchTours", async(_, thunkAPI) => {
+export const fetchTours = createAsyncThunk("tours/fetchTours", async(date, thunkAPI) => {
   try { 
-    const response = await fetch("/tours")
+    const response = await fetch(`/tours/${date}`)
     const data = await response.json()
     if(response.ok) return data
     else return thunkAPI.rejectWithValue(data)
