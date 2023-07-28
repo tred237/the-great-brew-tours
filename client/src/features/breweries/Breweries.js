@@ -4,6 +4,8 @@ import Container from "react-bootstrap/esm/Container";
 
 import { fetchBreweries } from "./breweriesSlice";
 import BreweryCard from "./BreweryCard";
+import { sortAscending } from '../../helpers/sort';
+import Spinner from "react-bootstrap/esm/Spinner";
 
 export default function Breweries() {
   const breweries = useSelector((state) => state.breweries.breweries);
@@ -16,7 +18,7 @@ export default function Breweries() {
 
   return (
       <Container>
-        {breweryStatus === 'loading' || breweryStatus === 'idle' ? <p>Loading...</p> : breweries.map(b => <BreweryCard key={b.id} brewery_id={b.id} brewery_name={b.name} /> )}
+        {breweryStatus === 'loading' || breweryStatus === 'idle' ? <Spinner animation="border" /> : breweries.slice().sort((a,b) => sortAscending(a.name, b.name)).map(b => <BreweryCard key={b.id} brewery_id={b.id} brewery_name={b.name} /> )}
       </Container>
   );
 }

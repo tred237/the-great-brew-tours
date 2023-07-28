@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { fetchReviewedBreweries } from "./reviewedBreweriesSlice";
 import BreweryCard from "../breweries/BreweryCard";
 import LoginSignupModal from "../../modals/LoginSignupModal";
+import { sortAscending } from '../../helpers/sort';
 
 export default function ReviewedBreweries() {
     const reviewedBreweries = useSelector((state) => state.reviewedBreweries.reviewedBreweries);
@@ -22,6 +23,8 @@ export default function ReviewedBreweries() {
         else handleShowModal()
     },[dispatch, isLoggedIn])
 
+    console.log(reviewedBreweries)
+
     if(!isLoggedIn) return (
         <Container>
             <h2>You must be logged in to see this content</h2>
@@ -31,7 +34,7 @@ export default function ReviewedBreweries() {
     else return (
         <Container>
             <h2>Reviewed Breweries</h2>
-            {reviewedBreweryStatus === 'loading' || reviewedBreweryStatus === 'idle' ? <Spinner animation="border" /> : reviewedBreweries.map(b => <BreweryCard key={b.id} brewery_id={b.id} brewery_name={b.name} /> )}
+            {reviewedBreweryStatus === 'loading' || reviewedBreweryStatus === 'idle' ? <Spinner animation="border" /> : reviewedBreweries.slice().sort((a,b) => sortAscending(a.name, b.name)).map(b => <BreweryCard key={b.id} brewery_id={b.id} brewery_name={b.name} /> )}
         </Container>
     )
 }

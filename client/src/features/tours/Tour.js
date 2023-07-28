@@ -30,9 +30,7 @@ export default function Tour({ tour, selectedDate }){
 
     return (
         <AccordionItem eventKey={tour.id}>
-            <AccordionHeader>
-                {`${tour.breweries[0] ? tour.breweries[0].brewery_name : null}, ${tour.breweries[1] ? tour.breweries[1].brewery_name : null}, ${tour.breweries[2] ? tour.breweries[2].brewery_name : null}...`}
-            </AccordionHeader>
+            <AccordionHeader>{formatTime(tour.tour_date.split('T')[1])}</AccordionHeader>
             <AccordionBody>
                 <Container>
                     <p>{`Date of Tour: ${tour.tour_date.split('T')[0]}`}</p>

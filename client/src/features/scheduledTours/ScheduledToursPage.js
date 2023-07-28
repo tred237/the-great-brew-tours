@@ -7,6 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { fetchScheduledTours } from './scheduledToursSlice';
 import ScheduledTour from './ScheduledTour';
 import LoginSignupModal from '../../modals/LoginSignupModal';
+import { sortAscending } from '../../helpers/sort';
 
 export default function ScheduledTours() {
     const scheduledTours = useSelector(state => state.scheduledTours.scheduledTours)
@@ -33,12 +34,12 @@ export default function ScheduledTours() {
             <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />
         </Container>
     )
-    else  return (
+    else return (
         <Container>
             <h2>Scheduled Tours</h2>
             {scheduledToursStatus === 'loading' || scheduledToursStatus === 'idle' ? <Spinner animation="border" /> :
                 <Accordion defaultActiveKey="0">
-                    {scheduledTours ? scheduledTours.map(t => <ScheduledTour key={t.id} scheduledTour={t} />) : null}
+                    {scheduledTours ? scheduledTours.slice().sort((a,b) => sortAscending(a.tour.tour_date, b.tour.tour_date)).map(t => <ScheduledTour key={t.id} scheduledTour={t} />) : null}
                 </Accordion>}
         </Container>
     )

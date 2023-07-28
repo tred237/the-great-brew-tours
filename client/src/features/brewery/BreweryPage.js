@@ -11,6 +11,7 @@ import BreweryReviews from "./BreweryReviews";
 import AddReviewModal from "../../modals/AddReviewModal";
 import LoginSignupModal from "../../modals/LoginSignupModal";
 import BreweryNotFound from "./BreweryNotFound";
+import { sortDescending } from "../../helpers/sort";
 
 export default function Brewery() {
     const brewery = useSelector((state) => state.brewery.brewery)
@@ -51,7 +52,7 @@ export default function Brewery() {
                 <Button onClick={handleShowModal}>Add Review</Button>
             </Container>
             <Container>
-                {brewery.brewery_reviews ? brewery.brewery_reviews.map(r => <BreweryReviews key={r.id} review={r} />) : null}
+                {brewery.brewery_reviews ? brewery.brewery_reviews.slice().sort((a,b) => sortDescending(a.created_at, b.created_at)).map(r => <BreweryReviews key={r.id} review={r} />) : null}
             </Container>
             {isLoggedIn.loggedIn ? <AddReviewModal showModal={showModal} onCloseModal={handleCloseModal} /> : <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />}
         </Container>
