@@ -16,7 +16,7 @@ class BreweriesController < ApplicationController
     end
 
     def index
-        breweries = Brewery.all
+        breweries = Brewery.all.order(:name)
         render json: breweries, status: :ok
     end
 
@@ -50,7 +50,7 @@ class BreweriesController < ApplicationController
     def reviewed_breweries
         reviewer = find_user
         reviewed_brewery_ids = reviewer.brewery_reviews.order(created_at: :desc).pluck(:brewery_id).uniq
-        reviewed_breweries = reviewed_brewery_ids.map{|b| Brewery.find(b)}
+        reviewed_breweries = reviewed_brewery_ids.map{|b| Brewery.find(b)}.sort_by{|b| b.name}
         render json: reviewed_breweries, status: :ok
     end
 

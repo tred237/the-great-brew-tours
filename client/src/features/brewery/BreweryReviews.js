@@ -28,7 +28,6 @@ export default function BreweryReviews({ review }) {
             <Card>
                 <Card.Header>
                     <p>{review.review_username} {review.created_at.split('T')[0]} {formatTime(review.created_at.split('T')[1], true)} <i>{review.is_edited ? "Edited" : null}</i></p>
-                    {/* <p>{review.review_username} {review.created_at.split('T')[0]} {review.created_at.split('T')[1].split('Z')[0]} <i>{review.is_edited ? "Edited" : null}</i></p> */}
                     {user && user.is_admin ? <Button onClick={handleDelete}>Delete</Button> : null}
                     {user && user.id === review.user_id ? <Button onClick={handleShowModal}>Edit</Button> : null}
                 </Card.Header>

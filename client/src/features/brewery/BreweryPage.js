@@ -1,36 +1,42 @@
 import { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Container from "react-bootstrap/esm/Container"
 import Button from "react-bootstrap/esm/Button";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 import { fetchBrewery } from "./brewerySlice";
 import BreweryInformation from "./BreweryInformation";
 import BreweryReviews from "./BreweryReviews";
 import AddReviewModal from "../../modals/AddReviewModal";
 import LoginSignupModal from "../../modals/LoginSignupModal";
+import BreweryNotFound from "./BreweryNotFound";
 
 export default function Brewery() {
     const brewery = useSelector((state) => state.brewery.brewery)
-    const isLoggedIn = useSelector(state => state.session.loggedIn)
+    const breweryStatus = useSelector((state) => state.brewery.status)
+    const breweryErrors = useSelector((state) => state.brewery.getBreweryErrors)
+    const isLoggedIn = useSelector(state => state.session)
     const dispatch = useDispatch()
     const breweryId = useParams()
-    const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
+
+    const session = useSelector(state => state.session)
   
     useEffect(() => {
-      dispatch(fetchBrewery(breweryId.id))
-      .unwrap()
-      .then(() => console.log('We have a brewery'))
-      .catch(err => {
-        // navigate("/home")
-        console.log(err.errors[0])
-      })
-    }, [breweryId.id, dispatch, navigate])
+        if(breweryId.id){
+            dispatch(fetchBrewery(breweryId.id))
+            .unwrap()
+            .then(() => console.log('We have a brewery'))
+            .catch(err => console.log(err))
+        }
+    }, [breweryId.id, isLoggedIn, dispatch])
 
     const handleShowModal = () => setShowModal(true)
     const handleCloseModal = () => setShowModal(false)
 
+    if(Object.keys(brewery).length === 0 && (breweryStatus === 'idle' || breweryStatus === 'loading')) return <Spinner animation="border" />
+    else if(Object.keys(brewery).length === 0 && breweryErrors) return <BreweryNotFound />
     return (
         <Container>
             <Container className='d-flex justify-content-center'>
@@ -47,7 +53,7 @@ export default function Brewery() {
             <Container>
                 {brewery.brewery_reviews ? brewery.brewery_reviews.map(r => <BreweryReviews key={r.id} review={r} />) : null}
             </Container>
-            {isLoggedIn ? <AddReviewModal showModal={showModal} onCloseModal={handleCloseModal} /> : <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />}
+            {isLoggedIn.loggedIn ? <AddReviewModal showModal={showModal} onCloseModal={handleCloseModal} /> : <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />}
         </Container>
     )
 }

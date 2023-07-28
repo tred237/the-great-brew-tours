@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { fetchSession } from "./features/session/sessionSlice";
 import NavBar from "./features/NavBar";
@@ -13,15 +13,15 @@ import AddTour from "./features/tours/AddTourPage";
 
 export default function App() {
   // const state = useSelector(state => state);
-  // const isLoggedIn = useSelector((state) => state.session.loggedIn);
+  const session = useSelector((state) => state.session);
+  const isLoggedIn = useSelector((state) => state.session.loggedIn);
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchSession())
-  },[dispatch]) //isLoggedIn
+  },[isLoggedIn, dispatch])
 
-  // console.log(state)
-
+  // console.log(session)
   return (
     <div className="App">
       <NavBar />
