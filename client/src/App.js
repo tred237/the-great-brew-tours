@@ -10,6 +10,7 @@ import ReviewedBreweries from "./features/reviewedBreweries/ReviewedBreweriesPag
 import Tours from "./features/tours/ToursPage";
 import ScheduledTours from "./features/scheduledTours/ScheduledToursPage";
 import AddTour from "./features/tours/AddTourPage";
+import AddBrewery from "./features/breweries/AddBreweryPage";
 
 export default function App() {
   // const state = useSelector(state => state);
@@ -19,7 +20,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchSession())
-  },[isLoggedIn, dispatch])
+  },[dispatch]) //isLoggedIn,
 
   // console.log(session)
   return (
@@ -31,6 +32,7 @@ export default function App() {
         <Route exact path="/tours" element={<Tours />} />
         <Route exact path="/scheduled-tours" element={<ScheduledTours />} />
         <Route exact path="/add-tour" element={<AddTour />} />
+        <Route exact path="/add-brewery" element={<AddBrewery />} />
         <Route exact path="/home" element={<Home />} />
         <Route path="*" element={<Home />} />
       </Routes>

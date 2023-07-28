@@ -1,6 +1,6 @@
 class BreweriesController < ApplicationController
     skip_before_action :authorize, only: [:index, :show]
-    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_error_message
+    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_error_message_broken_out
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_error_message
 
     def create

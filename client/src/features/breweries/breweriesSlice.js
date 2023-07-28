@@ -11,11 +11,36 @@ export const fetchBreweries = createAsyncThunk("breweries/fetchBreweries", async
   }
 });
 
+export const fetchAddBrewery = createAsyncThunk("tours/fetchAddBrewery", async(breweryData, thunkAPI) => {
+  try { 
+    const response = await fetch(`/breweries`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        name: breweryData.breweryName,
+        website: breweryData.website,
+        address: breweryData.address,
+        city: breweryData.city,
+        postal_code: breweryData.postalCode,
+      })
+    })
+    const data = await response.json()
+    if(response.ok) return data
+    else return thunkAPI.rejectWithValue(data)
+  } catch(err) {
+    return thunkAPI.rejectWithValue(err)
+  }
+});
+
 const initialState =  {
   breweries: [],
   status: "idle",
   breweriesErrors: null,
   reduxErrors: null,
+  addBreweryErrors: null,
 }
 
 const breweriesSlice = createSlice({
@@ -36,6 +61,22 @@ const breweriesSlice = createSlice({
         .addCase(fetchBreweries.rejected, (state, action) => {
           state.status = 'failed'
           state.breweriesErrors = action.payload.errors
+          state.reduxErrors = action.error.message
+        })
+
+        .addCase(fetchAddBrewery.pending, (state) => {
+          state.status = 'loading'
+        })
+        .addCase(fetchAddBrewery.fulfilled, (state, action) => {
+          state.status = 'succeeded'
+          state.breweries.push(action.payload)
+          state.addBreweryErrors = null
+          state.reduxErrors = null
+        })
+        .addCase(fetchAddBrewery.rejected, (state, action) => {
+          state.addBreweryErrors = null
+          state.status = 'failed'
+          state.addBreweryErrors = action.payload.errors
           state.reduxErrors = action.error.message
         })
     }
