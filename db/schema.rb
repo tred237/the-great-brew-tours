@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_28_020107) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_29_191149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_28_020107) do
     t.bigint "creator_id", null: false
     t.float "latitude"
     t.float "longitude"
+    t.string "image", null: false
     t.index ["creator_id"], name: "index_breweries_on_creator_id"
   end
 

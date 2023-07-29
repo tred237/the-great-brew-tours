@@ -4,3 +4,26 @@
     padding-bottom: 8%;
     min-height: 100vh;
 }
+
+.breweries-container {
+    padding-top: 3vh;
+}
+
+.breweries-row {
+    width: 95%;
+    padding-left: 6vw;
+}
+
+.breweries-col {
+    padding-bottom: 7vh;
+}
+
+.brewery-image {
+    height: 30vh;
+    border-radius: 10px;
+}
+
+.brewery-information-image {
+    height: 80vh;
+    width: 69%;
+}

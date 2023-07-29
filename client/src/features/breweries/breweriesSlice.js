@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchBreweries = createAsyncThunk("breweries/fetchBreweries", async(_, thunkAPI) => {
   try { 
@@ -25,6 +25,7 @@ export const fetchAddBrewery = createAsyncThunk("tours/fetchAddBrewery", async(b
         address: breweryData.address,
         city: breweryData.city,
         postal_code: breweryData.postalCode,
+        image: breweryData.image,
       })
     })
     const data = await response.json()
@@ -48,10 +49,13 @@ const breweriesSlice = createSlice({
     initialState,
     reducers: {
       breweryEdited: (state, action) => {
+        console.log(action.payload)
         const editedBrewery = state.breweries.find(b => b.id === action.payload.id)
+        console.log(editedBrewery)
         editedBrewery.name = action.payload.name
         editedBrewery.city = action.payload.city
         editedBrewery.postal_code = action.payload.postal_code
+        editedBrewery.image = action.payload.image
         const filteredBreweries = state.breweries.filter(b => b.id !== action.payload.id)
         state.breweries = [...filteredBreweries, editedBrewery]
       }

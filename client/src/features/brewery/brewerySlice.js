@@ -56,6 +56,7 @@ export const fetchEditBrewery = createAsyncThunk("tours/fetchEditBrewery", async
         address: breweryData.address,
         city: breweryData.city,
         postal_code: breweryData.postalCode,
+        image: breweryData.image,
       })
     })
     const data = await response.json()
@@ -138,7 +139,6 @@ const brewerySlice = createSlice({
         state.status = 'loading'
       })
       .addCase(fetchEditBrewery.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.status = 'succeeded'
         state.brewery = action.payload
         state.editBreweryErrors = null

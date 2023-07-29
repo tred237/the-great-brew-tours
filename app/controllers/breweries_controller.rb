@@ -61,6 +61,6 @@ class BreweriesController < ApplicationController
     end
 
     def brewery_params
-        params.permit(:name, :website, :address, :city, :postal_code, :latitude, :longitude)
+        params.permit(:name, :website, :address, :city, :postal_code, :latitude, :longitude, :image)
     end
 end

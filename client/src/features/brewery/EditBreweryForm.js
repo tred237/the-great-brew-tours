@@ -19,6 +19,7 @@ export default function EditBreweryForm({ onCloseModal }) {
         address: brewery.address ? brewery.address : '',
         city: brewery.city,
         postalCode: brewery.postal_code ? brewery.postal_code : '',
+        image: brewery.image,
         breweryId: brewery.id
     }
 
@@ -31,12 +32,16 @@ export default function EditBreweryForm({ onCloseModal }) {
         dispatch(fetchEditBrewery(formData))
         .unwrap()
         .then((data) => {
+            console.log(data)
             dispatch(breweryEdited(data))
             setFormData({...defaultFormData})
             onCloseModal()
         })
-        .catch(err => console.log(err.errors))
+        .catch(err => console.log(err))
     }
+
+    // console.log(formData)
+    // console.log(brewery)
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -61,6 +66,11 @@ export default function EditBreweryForm({ onCloseModal }) {
             <Form.Group>
                 <Form.Label>Postal Code</Form.Label>
                 <Form.Control name="postalCode" value={formData.postalCode} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Image</Form.Label>
+                <Form.Control required name="image" value={formData.image} onChange={handleChange} />
+                {editBreweryErrors && editBreweryErrors.image ? editBreweryErrors.image.map(e => <p key={e}>{`Image ${e}`}</p>) : null}
             </Form.Group>
             {editBreweryStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit">Save</Button>}
         </Form>

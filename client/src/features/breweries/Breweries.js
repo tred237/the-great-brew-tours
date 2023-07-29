@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Container from "react-bootstrap/esm/Container";
 import Spinner from "react-bootstrap/esm/Spinner";
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
 
 import { fetchBreweries } from "./breweriesSlice";
 import BreweryCard from "./BreweryCard";
@@ -17,8 +19,14 @@ export default function Breweries() {
   }, [dispatch, breweryStatus]);
 
   return (
-      <Container>
-        {breweryStatus === 'loading' || breweryStatus === 'idle' ? <Spinner animation="border" /> : breweries.slice().sort((a,b) => sortAscending(a.name, b.name)).map(b => <BreweryCard key={b.id} brewery_id={b.id} brewery_name={b.name} /> )}
+      <Container className="breweries-container">
+        <Row className="breweries-row" md={3}>
+          {breweryStatus === 'loading' || breweryStatus === 'idle' ? <Spinner animation="border" /> : breweries.slice().sort((a,b) => sortAscending(a.name, b.name)).map(b => {
+            return <Col className="see-all-col" key={b.id}>
+                      <BreweryCard breweryId={b.id} breweryName={b.name} breweryImage={b.image} />
+                  </Col>
+          } )}
+        </Row>
       </Container>
   );
 }

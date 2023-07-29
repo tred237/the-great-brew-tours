@@ -6,5 +6,6 @@ class Brewery < ApplicationRecord
 
     validates :name, presence: true, uniqueness: true
     validates :city, presence: true
+    validates :image, presence: true
     validates :creator_id, presence: true, inclusion: User.where(is_admin: true).map{|u| u.id}
 end

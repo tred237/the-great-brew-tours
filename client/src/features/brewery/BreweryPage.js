@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Container from "react-bootstrap/esm/Container"
 import Button from "react-bootstrap/esm/Button";
 import Spinner from "react-bootstrap/esm/Spinner";
+import Image from 'react-bootstrap/esm/Image';
 
 import { fetchBrewery } from "./brewerySlice";
 import BreweryInformation from "./BreweryInformation";
@@ -12,34 +13,43 @@ import AddReviewModal from "../../modals/AddReviewModal";
 import LoginSignupModal from "../../modals/LoginSignupModal";
 import BreweryNotFound from "./BreweryNotFound";
 import { sortDescending } from "../../helpers/sort";
+import { fetchBreweries } from "../breweries/breweriesSlice";
 
 export default function Brewery() {
     const brewery = useSelector((state) => state.brewery.brewery)
     const breweryStatus = useSelector((state) => state.brewery.status)
+    const breweriesStatus = useSelector(state => state.breweries.status)
     const breweryErrors = useSelector((state) => state.brewery.getBreweryErrors)
     const isLoggedIn = useSelector(state => state.session)
     const dispatch = useDispatch()
     const breweryId = useParams()
     const [showModal, setShowModal] = useState(false)
 
-    const session = useSelector(state => state.session)
+    // const session = useSelector(state => state.session)
   
     useEffect(() => {
         if(breweryId.id){
+            if(breweriesStatus === 'idle') dispatch(fetchBreweries())
             dispatch(fetchBrewery(breweryId.id))
             .unwrap()
             .then(() => console.log('We have a brewery'))
             .catch(err => console.log(err))
         }
-    }, [breweryId.id, isLoggedIn, dispatch])
+    }, [breweryId.id, isLoggedIn, dispatch, breweriesStatus])
 
     const handleShowModal = () => setShowModal(true)
     const handleCloseModal = () => setShowModal(false)
+
+    // console.log(breweries)
 
     if(Object.keys(brewery).length === 0 && (breweryStatus === 'idle' || breweryStatus === 'loading')) return <Spinner animation="border" />
     else if(Object.keys(brewery).length === 0 && breweryErrors) return <BreweryNotFound />
     return (
         <Container>
+            <Container className='d-flex justify-content-center p-4 w-75 h-25'>
+                <Image className="rounded brewery-information-image" src={brewery.image} alt={brewery.name} />
+                {/* onError={(e) => e.target.src = gbtlogo} /> */}
+            </Container>
             <Container className='d-flex justify-content-center'>
                 <BreweryInformation name={brewery.name}
                                     website={brewery.website}

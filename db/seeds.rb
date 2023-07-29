@@ -4,10 +4,31 @@ require 'byebug'
 User.create!(username: 'admin', password: 'T3ster!', password_confirmation: "T3ster!", email: "admin@email.com", birth_date: '1990-01-01', is_admin: true) # admin account
 puts "Admin created..."
 
+brewery_images = [
+    'https://source.unsplash.com/W3SEyZODn8U',
+    'https://source.unsplash.com/_fLgxjACz5k',
+    'https://source.unsplash.com/Qy2KMPRV3X4',
+    'https://source.unsplash.com/EUO7L470LXk',
+    'https://source.unsplash.com/K8nr6rNDtUE',
+    'https://source.unsplash.com/-Ygu9Qx309s',
+    'https://source.unsplash.com/xD5SWy7hMbw',
+    'https://source.unsplash.com/WzPdP9pn7go',
+    'https://source.unsplash.com/rJdiuJnONVw',
+    'https://source.unsplash.com/yMbzmWYKNrU'
+]
+
 # Create Breweries
 parsed_brewery_data = JSON.parse(File.read('db/assets/brewery_data.json')).filter{|e| e["city"] && e['name']}
 parsed_brewery_data.map do |b|
-    Brewery.create!(name: b["name"], city: b["city"], website: b["website_url"], address: b["address_1"], postal_code: b["postal_code"], latitude: b["latitude"], longitude: b["longitude"], creator_id: User.find(1).id)
+    Brewery.create!(name: b["name"], 
+                    city: b["city"], 
+                    website: b["website_url"], 
+                    address: b["address_1"], 
+                    postal_code: b["postal_code"], 
+                    latitude: b["latitude"], 
+                    longitude: b["longitude"], 
+                    image: brewery_images.sample, 
+                    creator_id: User.find(1).id)
 end
 puts "Breweries created..."
 
@@ -17,7 +38,11 @@ puts "Breweries created..."
     until username != '' and !User.all.map{|u| u["username"]}.include? username
         username = "#{Faker::Name.first_name} #{Faker::Name.last_name}"
     end
-    User.create!(username: username, password: 'T3stUser!', password_confirmation: 'T3stUser!', birth_date: "#{rand(1950...2001)}-#{rand(1..12)}-#{rand(1..28)}", email: "#{username.downcase.gsub!(' ', '.')}@email.com")
+    User.create!(username: username, 
+                password: 'T3stUser!', 
+                password_confirmation: 'T3stUser!', 
+                birth_date: "#{rand(1950...2001)}-#{rand(1..12)}-#{rand(1..28)}", 
+                email: "#{username.downcase.gsub!(' ', '.')}@email.com")
 end
 puts "Non-admin users created..."
 

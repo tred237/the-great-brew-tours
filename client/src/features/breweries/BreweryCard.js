@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from 'react-bootstrap/esm/Card';
 
-export default function BreweryCard({ brewery_id, brewery_name }) {
+export default function BreweryCard({ breweryId, breweryName, breweryImage }) {
     const [hover, setHover] = useState(false)
     const navigate = useNavigate()
 
@@ -10,9 +10,11 @@ export default function BreweryCard({ brewery_id, brewery_name }) {
         <Card style={{opacity: hover ? 0.8 : 1}} 
             onMouseOver={() => setHover(true)}
             onMouseOut={() => setHover(false)} 
-            onClick={() => navigate(`/breweries/${brewery_id}`)}>
+            onClick={() => navigate(`/breweries/${breweryId}`)}>
+            <Card.Img className='brewery-image' variant="top" src={breweryImage} alt={breweryName} />
+            {/* onError={(e) => e.target.src = gbtlogo} /> */}
             <Card.Body className='text-center'>
-                <Card.Text>{brewery_name}</Card.Text>
+                <Card.Text>{breweryName}</Card.Text>
             </Card.Body>
         </Card>
     )
