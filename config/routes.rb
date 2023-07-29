@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  resources :tour_breweries
-  resources :scheduled_tours
-  resources :brewery_reviews
-  resources :breweries
-  resources :tours
-  resources :users
+  resources :tour_breweries, only: [:create]
+  resources :scheduled_tours, only: [:index, :create, :update, :destroy]
+  resources :brewery_reviews, only: [:create, :update, :destroy]
+  resources :breweries, only: [:index, :show, :create, :update]
+  resources :tours, only: [:create, :destroy]
+  resources :users, only: [:create]
   post '/login', to: 'sessions#create'
   get '/logged-in-user', to: 'sessions#show'
   delete '/logout', to: 'sessions#destroy'

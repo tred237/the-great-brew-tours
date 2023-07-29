@@ -28,16 +28,16 @@ class ToursController < ApplicationController
     #     end
     # end
 
-    def update
-        updater = find_user
-        if updater.is_admin
-            tour = find_tour
-            tour.update!(tour_params)
-            render json: tour, status: :ok
-        else
-            render json: { errors: ["You are not authorized to edit a tour"] }, status: :unauthorized
-        end
-    end
+    # def update
+    #     updater = find_user
+    #     if updater.is_admin
+    #         tour = find_tour
+    #         tour.update!(tour_params)
+    #         render json: tour, status: :ok
+    #     else
+    #         render json: { errors: ["You are not authorized to edit a tour"] }, status: :unauthorized
+    #     end
+    # end
 
     def destroy
         destroyer = find_user
