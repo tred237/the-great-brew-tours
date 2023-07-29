@@ -1,0 +1,15 @@
+import Modal from 'react-bootstrap/Modal';
+import EditBreweryForm from '../features/brewery/EditBreweryForm';
+
+export default function EditBreweryModal({ showModal, onCloseModal, review }) {
+    return (
+        <Modal show={showModal} onHide={onCloseModal} animation={false}>
+            <Modal.Header closeButton>
+                <Modal.Title>Edit your review</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <EditBreweryForm onCloseModal={onCloseModal} />
+            </Modal.Body>
+        </Modal>
+    )
+}

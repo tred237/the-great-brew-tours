@@ -14,15 +14,15 @@ import AddBrewery from "./features/breweries/AddBreweryPage";
 
 export default function App() {
   // const state = useSelector(state => state);
-  const session = useSelector((state) => state.session);
-  const isLoggedIn = useSelector((state) => state.session.loggedIn);
+  // const session = useSelector((state) => state.session);
+  // const isLoggedIn = useSelector((state) => state.session.loggedIn);
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchSession())
   },[dispatch]) //isLoggedIn,
 
-  // console.log(session)
+  // console.log(state)
   return (
     <div className="App">
       <NavBar />

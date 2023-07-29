@@ -42,6 +42,31 @@ export const fetchDeleteReview = createAsyncThunk("brewery/fetchDeleteReview", a
   }
 });
 
+export const fetchEditBrewery = createAsyncThunk("tours/fetchEditBrewery", async(breweryData, thunkAPI) => {
+  console.log(breweryData.breweryId)
+  try { 
+    const response = await fetch(`/breweries/${breweryData.breweryId}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        name: breweryData.breweryName,
+        website: breweryData.website,
+        address: breweryData.address,
+        city: breweryData.city,
+        postal_code: breweryData.postalCode,
+      })
+    })
+    const data = await response.json()
+    if(response.ok) return data
+    else return thunkAPI.rejectWithValue(data)
+  } catch(err) {
+    return thunkAPI.rejectWithValue(err)
+  }
+});
+
 const brewerySlice = createSlice({
   name: "brewery",
   initialState: {
@@ -49,6 +74,7 @@ const brewerySlice = createSlice({
     status: "idle",
     getBreweryErrors: null,
     deleteReviewsErrors: null,
+    editBreweryErrors: null,
     reduxErrors: null,
   },
   reducers: {
@@ -106,6 +132,23 @@ const brewerySlice = createSlice({
       .addCase(fetchDeleteReview.rejected, (state, action) => {
         state.status = 'failed'
         state.deleteReviewsErrors = action.payload.errors
+        state.reduxErrors = action.error.message
+      })
+
+      .addCase(fetchEditBrewery.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(fetchEditBrewery.fulfilled, (state, action) => {
+        console.log(action.payload)
+        state.status = 'succeeded'
+        state.brewery = action.payload
+        state.editBreweryErrors = null
+        state.reduxErrors = null
+      })
+      .addCase(fetchEditBrewery.rejected, (state, action) => {
+        state.editBreweryErrors = null
+        state.status = 'failed'
+        state.editBreweryErrors = action.payload.errors
         state.reduxErrors = action.error.message
       })
   }
