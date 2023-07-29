@@ -6,7 +6,6 @@ import Button from "react-bootstrap/esm/Button";
 
 import { fetchDeleteReview } from "./brewerySlice";
 import EditReviewModal from "../../modals/EditReviewModal";
-import { formatTime } from "../../helpers/time";
 
 export default function BreweryReviews({ review }) {
     const user = useSelector(state => state.session.user)
@@ -27,7 +26,7 @@ export default function BreweryReviews({ review }) {
         <Container>
             <Card>
                 <Card.Header>
-                    <p>{review.review_username} {review.created_at.split('T')[0]} {formatTime(review.created_at.split('T')[1], true)} <i>{review.is_edited ? "Edited" : null}</i></p>
+                    <p>{review.review_username} {review.created_at.split('T')[0]} <i>{review.is_edited ? "Edited" : null}</i></p>
                     {user && user.is_admin ? <Button onClick={handleDelete}>Delete</Button> : null}
                     {user && user.id === review.user_id ? <Button onClick={handleShowModal}>Edit</Button> : null}
                 </Card.Header>
