@@ -1,16 +1,16 @@
+import { useDispatch, useSelector } from "react-redux";
 import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
 import AccordionItem from "react-bootstrap/esm/AccordionItem";
 import Container from "react-bootstrap/esm/Container";
-
-import ScheduleTourForm from "../scheduledTours/ScheduleTourForm";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/esm/Form";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchDeleteTour } from "./toursSlice";
-
-import { formatTime, durationBreakdown } from "../../helpers/time";
 import Spinner from "react-bootstrap/esm/Spinner";
+
+
+import { fetchDeleteTour } from "./toursSlice";
+import { formatTime, durationBreakdown } from "../../helpers/time";
+import ScheduleTourForm from "../scheduledTours/ScheduleTourForm";
 
 export default function Tour({ tour, selectedDate }){
     const isAdmin = useSelector(state => state.session.user.is_admin)

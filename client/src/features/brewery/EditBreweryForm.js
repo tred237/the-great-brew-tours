@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 import { fetchEditBrewery } from './brewerySlice';
 import { breweryEdited } from '../breweries/breweriesSlice';
-import Spinner from 'react-bootstrap/esm/Spinner';
 
 export default function EditBreweryForm({ onCloseModal }) {
     const brewery = useSelector(state => state.brewery.brewery)

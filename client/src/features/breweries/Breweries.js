@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Container from "react-bootstrap/esm/Container";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 import { fetchBreweries } from "./breweriesSlice";
 import BreweryCard from "./BreweryCard";
 import { sortAscending } from '../../helpers/sort';
-import Spinner from "react-bootstrap/esm/Spinner";
 
 export default function Breweries() {
   const breweries = useSelector((state) => state.breweries.breweries);

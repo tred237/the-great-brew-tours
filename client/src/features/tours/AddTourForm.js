@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { fetchAddTour } from './toursSlice';
 import Spinner from 'react-bootstrap/esm/Spinner';
+
+import { fetchAddTour } from './toursSlice';
 
 export default function AddTourForm({ setShowSuccess }) {
     const breweries = useSelector(state => state.breweries.breweries)

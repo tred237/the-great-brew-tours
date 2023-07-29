@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/esm/Form";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchDeleteScheduleTour, fetchEditScheduleTour } from "./scheduledToursSlice";
 import Spinner from "react-bootstrap/esm/Spinner";
+
+import { fetchDeleteScheduleTour, fetchEditScheduleTour } from "./scheduledToursSlice";
 
 export default function EditDeleteScheduledTourForm({ scheduledTourId, availableSlots, reservedSlots, onChange }) {
     const defaultFormData = {

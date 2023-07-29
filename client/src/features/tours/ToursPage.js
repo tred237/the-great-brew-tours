@@ -11,7 +11,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import { fetchTours } from "./toursSlice";
 import Tour from "./Tour";
 import LoginSignupModal from "../../modals/LoginSignupModal";
-import { formatTime } from "../../helpers/time";
 import { sortAscending } from "../../helpers/sort";
 
 export default function Tours() {

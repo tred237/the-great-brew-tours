@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { fetchAddBrewery } from './breweriesSlice';
 import Spinner from 'react-bootstrap/esm/Spinner';
+
+import { fetchAddBrewery } from './breweriesSlice';
 
 export default function AddBreweryForm({ setShowSuccess }) {
     const breweryErrors = useSelector(state => state.breweries.addBreweryErrors)

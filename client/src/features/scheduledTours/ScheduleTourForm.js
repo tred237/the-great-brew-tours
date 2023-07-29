@@ -4,10 +4,10 @@ import dayjs from "dayjs";
 import Form from "react-bootstrap/esm/Form";
 import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 import { fetchAddScheduleTour } from "./scheduledToursSlice";
 import { scheduledTourAdded } from "../tours/toursSlice";
-import Spinner from "react-bootstrap/esm/Spinner";
 
 export default function ScheduleTourForm({ tour_id, available_slots, selectedDate }) {
     const defaultFormData = {

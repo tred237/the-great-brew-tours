@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Navbar from 'react-bootstrap/esm/Navbar';
 import Nav from 'react-bootstrap/esm/Nav';
 import Container from 'react-bootstrap/esm/Container';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import { fetchLogout } from './session/sessionSlice';
 import { resetReviewedBreweries } from './reviewedBreweries/reviewedBreweriesSlice';
@@ -40,8 +41,12 @@ export default function NavBar() {
                         <Nav.Link as={Link} to="/tours">Tours</Nav.Link>
                         <Nav.Link as={Link} to="/scheduled-tours">Scheduled Tours</Nav.Link>
                         <Nav.Link as={Link} to="/reviewed-breweries">Reviewed Breweries</Nav.Link>
-                        {isAdmin ? <Nav.Link as={Link} to="/add-tour">Add Tour</Nav.Link> : null}
-                        {isAdmin ? <Nav.Link as={Link} to="/add-brewery">Add Brewery</Nav.Link> : null}
+                        {isAdmin ? 
+                            <NavDropdown title="Admin Tools">
+                                <NavDropdown.Item as={Link} to="/add-tour">Add Tour</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/add-brewery">Add Brewery</NavDropdown.Item>
+                            </NavDropdown>
+                            : null}
                         {loggedIn ? <Nav.Link onClick={handleLogoutClick}>Logout</Nav.Link> : <Nav.Link onClick={handleShowModal}>Login</Nav.Link>}
                     </Nav>
                 </Container>
