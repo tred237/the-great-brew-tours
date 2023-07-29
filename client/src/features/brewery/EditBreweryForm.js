@@ -42,7 +42,7 @@ export default function EditBreweryForm({ onCloseModal }) {
         <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <Form.Label>Brewery Name *</Form.Label>
-                <Form.Control name="breweryName" value={formData.breweryName} onChange={handleChange} />
+                <Form.Control required name="breweryName" value={formData.breweryName} onChange={handleChange} />
                 {editBreweryErrors && editBreweryErrors.name ? editBreweryErrors.name.map(e => <p key={e}>{`Brewery name ${e}`}</p>) : null}
             </Form.Group>
             <Form.Group>
@@ -55,7 +55,7 @@ export default function EditBreweryForm({ onCloseModal }) {
             </Form.Group>
             <Form.Group>
                 <Form.Label>City *</Form.Label>
-                <Form.Control name="city" value={formData.city} onChange={handleChange} />
+                <Form.Control required name="city" value={formData.city} onChange={handleChange} />
                 {editBreweryErrors && editBreweryErrors.city ? editBreweryErrors.city.map(e => <p key={e}>{`City ${e}`}</p>) : null}
             </Form.Group>
             <Form.Group>

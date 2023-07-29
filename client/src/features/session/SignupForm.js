@@ -45,21 +45,24 @@ export default function SignupForm({ isLogin }) {
         <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <Form.Label>Email Address *</Form.Label>
-                <Form.Control placeholder="Enter email address" 
+                <Form.Control required 
+                            placeholder="Enter email address" 
                             name="email" 
                             value={formData.email}
                             onChange={handleChange} />
             </Form.Group>
             <Form.Group>
                 <Form.Label>Username *</Form.Label>
-                <Form.Control placeholder="Enter username" 
+                <Form.Control required 
+                            placeholder="Enter username" 
                             name="username" 
                             value={formData.username}
                             onChange={handleChange} />
             </Form.Group>
             <Form.Group>
                 <Form.Label>Birth Date*</Form.Label>
-                <Form.Control type="date"
+                <Form.Control required 
+                            type="date"
                             name='birthDate'
                             value={formData.birthDate}
                             onChange={handleChange} />
@@ -67,7 +70,8 @@ export default function SignupForm({ isLogin }) {
             <Form.Group>
                 <Form.Label>Password *</Form.Label>
                 <InputGroup>
-                    <Form.Control type={showPassword ? "text" : "password"}
+                    <Form.Control required 
+                                type={showPassword ? "text" : "password"}
                                 placeholder="Enter password" 
                                 name="password" 
                                 value={formData.password}
@@ -82,7 +86,8 @@ export default function SignupForm({ isLogin }) {
             </Form.Group>
             <Form.Group>
                 <Form.Label>Confirm Password *</Form.Label>
-                <Form.Control type={showPassword ? "text" : "password"}
+                <Form.Control required 
+                            type={showPassword ? "text" : "password"}
                             placeholder="Enter password" 
                             name="passwordConfirmation" 
                             value={formData.passwordConfirmation}

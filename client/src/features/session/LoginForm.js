@@ -33,16 +33,18 @@ export default function LoginForm({ onCloseModal }) {
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Group>
-                <Form.Label>Email Address or Username</Form.Label>
-                <Form.Control placeholder="Enter email address or username" 
+                <Form.Label>Email Address or Username *</Form.Label>
+                <Form.Control required
+                            placeholder="Enter email address or username" 
                             name="user" 
                             value={formData.user}
                             onChange={handleChange} />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Password</Form.Label>
+                <Form.Label>Password *</Form.Label>
                 <InputGroup>
-                    <Form.Control type={showPassword ? "text" : "password"}
+                    <Form.Control required 
+                                type={showPassword ? "text" : "password"}
                                 placeholder="Enter password" 
                                 name="password" 
                                 value={formData.password}

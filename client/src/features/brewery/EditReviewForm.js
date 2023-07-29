@@ -56,7 +56,8 @@ export default function EditReviewForm({ onCloseModal, review }) {
                 <Form.Check inline type="radio" name="isRecommended" label="No" value='false' checked={isSelected('false')} onChange={handleChange} />
             </Form.Group>
             <Form.Group>
-                <Form.Control as="textarea"
+                <Form.Control required 
+                            as="textarea"
                             placeholder="Write a review..." 
                             name="review" 
                             value={formData.review}

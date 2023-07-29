@@ -5,7 +5,7 @@ export default function EditBreweryModal({ showModal, onCloseModal, review }) {
     return (
         <Modal show={showModal} onHide={onCloseModal} animation={false}>
             <Modal.Header closeButton>
-                <Modal.Title>Edit your review</Modal.Title>
+                <Modal.Title>Edit Brewery</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <EditBreweryForm onCloseModal={onCloseModal} />

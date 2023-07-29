@@ -65,7 +65,7 @@ export default function AddTourForm({ setShowSuccess }) {
         <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <Form.Label>Date of Tour *</Form.Label>
-                <Form.Control 
+                <Form.Control required
                             type="date"
                             name="tourDate"
                             value={formData.tourDate}
@@ -93,7 +93,7 @@ export default function AddTourForm({ setShowSuccess }) {
             </Form.Group>
             <Form.Group>
                 <Form.Label>Meeting Location *</Form.Label>
-                <Form.Control name="meetingLocation" value={formData.meetingLocation} onChange={handleChange} />
+                <Form.Control required name="meetingLocation" value={formData.meetingLocation} onChange={handleChange} />
                 {tourErrors && tourErrors.meeting_location ? tourErrors.meeting_location.map(e => <p key={e}>{`Meeting location ${e}`}</p>) : null}
             </Form.Group>
             <Form.Group>

@@ -43,7 +43,6 @@ export const fetchDeleteReview = createAsyncThunk("brewery/fetchDeleteReview", a
 });
 
 export const fetchEditBrewery = createAsyncThunk("tours/fetchEditBrewery", async(breweryData, thunkAPI) => {
-  console.log(breweryData.breweryId)
   try { 
     const response = await fetch(`/breweries/${breweryData.breweryId}`, {
       method: "PATCH",

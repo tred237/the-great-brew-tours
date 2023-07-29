@@ -23,8 +23,6 @@ export default function ReviewedBreweries() {
         else handleShowModal()
     },[dispatch, isLoggedIn])
 
-    console.log(reviewedBreweries)
-
     if(!isLoggedIn) return (
         <Container>
             <h2>You must be logged in to see this content</h2>

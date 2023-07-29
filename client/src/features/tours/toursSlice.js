@@ -115,7 +115,6 @@ const toursSlice = createSlice({
           state.reduxErrors = null
         })
         .addCase(fetchAddTour.rejected, (state, action) => {
-          console.log(action.payload)
           state.addTourErrors = null
           state.status = 'failed'
           state.addTourErrors = action.payload.errors
