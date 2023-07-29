@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { fetchAddBrewery } from './breweriesSlice';
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 export default function AddBreweryForm({ setShowSuccess }) {
     const breweryErrors = useSelector(state => state.breweries.addBreweryErrors)
+    const addBreweryStatus = useSelector(state => state.breweries.status)
     const dispatch = useDispatch()
 
     const defaultFormData = {
@@ -55,7 +57,7 @@ export default function AddBreweryForm({ setShowSuccess }) {
                 <Form.Label>Postal Code</Form.Label>
                 <Form.Control name="postalCode" value={formData.postalCode} onChange={handleChange} />
             </Form.Group>
-            <Button type="submit">Save</Button>
+            {addBreweryStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit">Save</Button>}
         </Form>
     )
 }

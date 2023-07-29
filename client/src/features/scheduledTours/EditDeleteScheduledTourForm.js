@@ -3,6 +3,7 @@ import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/esm/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDeleteScheduleTour, fetchEditScheduleTour } from "./scheduledToursSlice";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 export default function EditDeleteScheduledTourForm({ scheduledTourId, availableSlots, reservedSlots, onChange }) {
     const defaultFormData = {
@@ -11,6 +12,7 @@ export default function EditDeleteScheduledTourForm({ scheduledTourId, available
     }
 
     const editScheduledTourErrors = useSelector(state => state.scheduledTours.editScheduledTourErrors)
+    const scheduledTourStatus = useSelector(state => state.scheduledTours.status)
     const dispatch = useDispatch()
 
     const [formData, setFormData] = useState({...defaultFormData})
@@ -40,7 +42,7 @@ export default function EditDeleteScheduledTourForm({ scheduledTourId, available
                         {Array(availableSlots + reservedSlots).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
                     </Form.Select>
                     {editScheduledTourErrors ? editScheduledTourErrors.map(e => <p key={e}>{e}</p>) : null}
-                    <Button type="submit">Save</Button>
+                    {scheduledTourStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit">Save</Button>}
                 </Form>
                 <Form onSubmit={handleDeleteSubmit}>
                     <Button type="submit">Delete</Button>
@@ -52,7 +54,7 @@ export default function EditDeleteScheduledTourForm({ scheduledTourId, available
     return (
         <>
             {canEditScheduledTour()}
-            <Button onClick={onChange}>Cancel</Button>
+            {scheduledTourStatus === 'loading' ? <Spinner animation="border" /> : <Button onClick={onChange}>Cancel</Button>}
         </>
     )
 }

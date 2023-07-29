@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { fetchAddTour } from './toursSlice';
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 export default function AddTourForm({ setShowSuccess }) {
     const breweries = useSelector(state => state.breweries.breweries)
     const tourErrors = useSelector(state => state.tours.addTourErrors)
+    const addTourStatus = useSelector(state => state.tours.status)
     const dispatch = useDispatch()
 
     const defaultFormData = {
@@ -113,7 +115,7 @@ export default function AddTourForm({ setShowSuccess }) {
                 })}
                 {tourErrors && tourErrors.tour_breweries ? tourErrors.tour_breweries.map(e => <p key={e}>{e}</p>) : null}
             </Form.Group>
-            <Button type="submit">Save</Button>
+            {addTourStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit">Save</Button>}
         </Form>
     )
 }

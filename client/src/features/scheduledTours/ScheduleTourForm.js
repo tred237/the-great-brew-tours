@@ -7,6 +7,7 @@ import Container from "react-bootstrap/esm/Container";
 
 import { fetchAddScheduleTour } from "./scheduledToursSlice";
 import { scheduledTourAdded } from "../tours/toursSlice";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 export default function ScheduleTourForm({ tour_id, available_slots, selectedDate }) {
     const defaultFormData = {
@@ -16,6 +17,7 @@ export default function ScheduleTourForm({ tour_id, available_slots, selectedDat
 
     const scheduledTours = useSelector(state => state.scheduledTours.scheduledTours)
     const scheduleTourErrors = useSelector(state => state.scheduledTours.scheduleTourErrors)
+    const scheduleTourStatus = useSelector(state => state.scheduledTours.status)
     const [formData, setFormData] = useState({...defaultFormData})
     const dispatch = useDispatch()
 
@@ -39,7 +41,7 @@ export default function ScheduleTourForm({ tour_id, available_slots, selectedDat
             <Form.Select defaultValue={formData.numberOfPeople} onChange={handleChange}>
                 {Array(available_slots).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
             </Form.Select>
-            <Button type="submit">Schedule</Button>
+            {scheduleTourStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit">Schedule</Button>}
             <Container>
                 {scheduleTourErrors ? scheduleTourErrors.map(e => <p key={e}>{e}</p>) : null}
             </Container>

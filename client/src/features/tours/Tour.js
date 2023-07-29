@@ -10,9 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDeleteTour } from "./toursSlice";
 
 import { formatTime, durationBreakdown } from "../../helpers/time";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 export default function Tour({ tour, selectedDate }){
     const isAdmin = useSelector(state => state.session.user.is_admin)
+    const deleteTourStatus = useSelector(state => state.tours.status)
     const dispatch = useDispatch()
 
     const handleSubmit = (e) => {
@@ -23,7 +25,7 @@ export default function Tour({ tour, selectedDate }){
     const adminDeleteButton = () => {
         if(isAdmin) return (
             <Form onSubmit={handleSubmit}>
-                <Button type="submit">Delete Tour</Button>
+                {deleteTourStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit">Delete Tour</Button>}
             </Form>
         )
     }
@@ -42,7 +44,7 @@ export default function Tour({ tour, selectedDate }){
                     <ul>
                         {tour.breweries.map(b => <li key={b.brewery_id}>{b.brewery_name}</li>)}
                     </ul>
-                    <ScheduleTourForm tour_id={tour.id} available_slots={tour.available_slots - tour.taken_slots} selectedDate={selectedDate} />
+                    {tour.available_slots - tour.taken_slots !== 0 ? <ScheduleTourForm tour_id={tour.id} available_slots={tour.available_slots - tour.taken_slots} selectedDate={selectedDate} /> : null}
                     {adminDeleteButton()}
                 </Container>
             </AccordionBody>
