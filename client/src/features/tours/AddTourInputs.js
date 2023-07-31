@@ -13,6 +13,7 @@ export default function AddTourInputs({ formData, handleChange }) {
                             name="tourDate"
                             value={formData.tourDate}
                             onChange={handleChange} />
+                                {tourErrors && tourErrors.tour_date ? tourErrors.tour_date.map(e => <p className="error-message" key={e}>{`Tour date ${e}`}</p>) : null}
                 <Form.Label className="pt-2">Meeting Time (Hours) *</Form.Label>
                 <Form.Control required as="select" name="meetingTimeHours" value={formData.meetingTimeHours} onChange={handleChange}>
                     <option value=''>Choose hour to meet</option>
@@ -23,7 +24,6 @@ export default function AddTourInputs({ formData, handleChange }) {
                     <option value=''>Choose minute to meet</option>
                     {[0, 15, 30, 45].map(s => <option key={s} value={s}>{s}</option>)}
                 </Form.Control>
-                {tourErrors && tourErrors.tour_date ? tourErrors.tour_date.map(e => <p key={e}>{`Tour date ${e}`}</p>) : null}
             </Form.Group>
             <Form.Group>
                 <Form.Label className="pt-2">Duration (Hours) *</Form.Label>
@@ -36,20 +36,20 @@ export default function AddTourInputs({ formData, handleChange }) {
                     <option value=''>Choose tour duration minutes</option>
                     {[0, 15, 30, 45].map(s => <option key={s} value={s}>{s}</option>)}
                 </Form.Control>
-                {tourErrors && tourErrors.duration ? tourErrors.duration.map(e => <p key={e}>{`Tour duration ${e}`}</p>) : null}
+                {tourErrors && tourErrors.duration ? tourErrors.duration.map(e => <p className="error-message" key={e}>{`Tour duration ${e}`}</p>) : null}
             </Form.Group>
             <Form.Group>
                 <Form.Label className="pt-2">Meeting Location *</Form.Label>
                 <Form.Control required name="meetingLocation" value={formData.meetingLocation} onChange={handleChange} />
-                {tourErrors && tourErrors.meeting_location ? tourErrors.meeting_location.map(e => <p key={e}>{`Meeting location ${e}`}</p>) : null}
+                {tourErrors && tourErrors.meeting_location ? tourErrors.meeting_location.map(e => <p className="error-message" key={e}>{`Meeting location ${e}`}</p>) : null}
             </Form.Group>
-            <Form.Group className="pb-2">
+            <Form.Group className="pb-3">
                 <Form.Label className="pt-2">Available Slots *</Form.Label>
                 <Form.Control required as="select" name="availableSlots" value={formData.availableSlots} onChange={handleChange}>
                     <option value=''>Choose amount of available slots</option>
                     {Array(20).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
                 </Form.Control>
-                {tourErrors && tourErrors.available_slots ? tourErrors.available_slots.map(e => <p key={e}>{`Available slots ${e}`}</p>) : null}
+                {tourErrors && tourErrors.available_slots ? tourErrors.available_slots.map(e => <p className="error-message" key={e}>{`Available slots ${e}`}</p>) : null}
             </Form.Group>
         </>
     )

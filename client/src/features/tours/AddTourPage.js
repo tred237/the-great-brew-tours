@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/esm/Container';
 import { fetchBreweries } from '../breweries/breweriesSlice';
 import AddTourForm from './AddTourForm';
 import { buttonStyle } from '../../helpers/customStyles';
+import { clearAddTourErrors } from './toursSlice';
 
 export default function AddTour() {
     const isAdmin = useSelector(state => state.session.user.is_admin)
@@ -18,6 +19,7 @@ export default function AddTour() {
     const [hover, setHover] = useState(false)
 
     useEffect(() => {
+        dispatch(clearAddTourErrors())
         if((sessionStatus === 'succeeded' || sessionStatus === 'failed') && !isAdmin) navigate("/home")
         if(breweryStatus === 'idle') dispatch(fetchBreweries())
     }, [dispatch, breweryStatus, isAdmin, navigate, sessionStatus]);

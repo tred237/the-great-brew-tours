@@ -49,7 +49,6 @@ const breweriesSlice = createSlice({
     initialState,
     reducers: {
       breweryEdited: (state, action) => {
-        console.log(action.payload)
         const editedBrewery = state.breweries.find(b => b.id === action.payload.id)
         console.log(editedBrewery)
         editedBrewery.name = action.payload.name
@@ -58,7 +57,10 @@ const breweriesSlice = createSlice({
         editedBrewery.image = action.payload.image
         const filteredBreweries = state.breweries.filter(b => b.id !== action.payload.id)
         state.breweries = [...filteredBreweries, editedBrewery]
-      }
+      },
+      clearAddBreweryErrors: (state) => {
+        state.addBreweryErrors = null
+      },
     },
     extraReducers(builder) {
       builder
@@ -95,6 +97,6 @@ const breweriesSlice = createSlice({
     }
 });
 
-export const { breweryEdited } = breweriesSlice.actions; 
+export const { breweryEdited, clearAddBreweryErrors } = breweriesSlice.actions; 
 
 export default breweriesSlice.reducer;
