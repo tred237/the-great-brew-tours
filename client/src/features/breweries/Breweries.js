@@ -15,7 +15,7 @@ export default function Breweries() {
       <Container className="breweries-container">
         <Container className="pb-4">
           <Stack direction="horizontal" gap={3}>
-            {[...new Set(breweries.map(b => b.city.toLowerCase()))].map(c => <CityCarousel key={c} city={c} />)}
+            {[...new Set(breweries.map(b => b.city.toLowerCase()).sort())].map(c => <CityCarousel key={c} city={c} />)}
           </Stack>
         </Container>
         <Container>

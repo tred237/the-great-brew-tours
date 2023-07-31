@@ -27,7 +27,7 @@ export default function ReviewedBreweries() {
 
     if(!isLoggedIn) return (
         <Container className="pt-5 text-center">
-            <h2>You must be logged in to see this content</h2>
+            <h2>You must be logged in to see this content.</h2>
             <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />
         </Container>
     )
