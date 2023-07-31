@@ -6,7 +6,6 @@ import Spinner from "react-bootstrap/esm/Spinner";
 
 import { fetchDeleteScheduleTour, fetchEditScheduleTour } from "./scheduledToursSlice";
 import { deleteButtonStyle, submitButtonStyle } from "../../helpers/customStyles";
-import Container from "react-bootstrap/esm/Container";
 
 export default function EditDeleteScheduledTourForm({ scheduledTourId, availableSlots, reservedSlots, onChange }) {
     const editScheduledTourErrors = useSelector(state => state.scheduledTours.editScheduledTourErrors)
