@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Container from "react-bootstrap/esm/Container";
 import Form from 'react-bootstrap/esm/Form';
 import Button from 'react-bootstrap/esm/Button';
 import InputGroup from 'react-bootstrap/esm/InputGroup';
+
 import { submitButtonStyle } from "../../helpers/customStyles";
 
 export default function SignupForm({ isLogin }) {
@@ -42,8 +42,6 @@ export default function SignupForm({ isLogin }) {
         if(response.ok) isLogin()
         else setSignupErrors(data.errors) 
     }
-
-    console.log(signupErrors)
 
     return (
         <Form onSubmit={handleSubmit}>

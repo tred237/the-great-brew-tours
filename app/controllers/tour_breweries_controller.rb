@@ -17,15 +17,4 @@ class TourBreweriesController < ApplicationController
             render json: { errors: ["You are not authorized to add a brewery to a tour"] }, status: :unauthorized
         end
     end
-
-    # def destroy
-    #     destroyer = find_user
-    #     if creator.is_admin
-    #         tour_brewery = TourBrewery.find(params[:id])
-    #         tour_brewery.destroy
-    #         head :no_content
-    #     else
-    #         render json: { errors: ["You are not authorized to delete a brewery from a tour"] }, status: :unauthorized
-    #     end
-    # end
 end

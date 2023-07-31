@@ -14,7 +14,6 @@ import ScheduleTourForm from "../scheduledTours/ScheduleTourForm";
 import { deleteButtonStyle } from "../../helpers/customStyles";
 
 export default function Tour({ tour, selectedDate }){
-    const tours = useSelector(state => state.tours)
     const isAdmin = useSelector(state => state.session.user.is_admin)
     const deleteTourStatus = useSelector(state => state.tours.status)
     const dispatch = useDispatch()
@@ -32,8 +31,6 @@ export default function Tour({ tour, selectedDate }){
             </Form>
         )
     }
-
-    // console.log(tours)
 
     return (
         <AccordionItem eventKey={tour.id}>

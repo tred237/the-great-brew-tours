@@ -36,17 +36,6 @@ class BreweriesController < ApplicationController
         end
     end
 
-    # def destroy
-    #     destroyer = find_user
-    #     if destroyer.is_admin
-    #         brewery = find_brewery
-    #         brewery.destroy
-    #         head :no_content
-    #     else
-    #         render json: {errors: ["You are not authorized to delete a brewery"]}, status: :unauthorized
-    #     end
-    # end
-
     def reviewed_breweries
         reviewer = find_user
         reviewed_brewery_ids = reviewer.brewery_reviews.order(created_at: :desc).pluck(:brewery_id).uniq

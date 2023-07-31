@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchLogin = createAsyncThunk("session/fetchLogin", async (loginCredentials, thunkAPI) => {
-    console.log('create session running...')
     try {
         const response = await fetch('/login', {
             method: 'POST',
@@ -20,11 +19,9 @@ export const fetchLogin = createAsyncThunk("session/fetchLogin", async (loginCre
 });
 
 export const fetchSession = createAsyncThunk("session/fetchSession", async (_, thunkAPI) => {
-    console.log("fetch session running")
     try {
         const response = await fetch('/logged-in-user')
         const data = await response.json()
-        // console.log(data)
         if(response.ok) return data
         else return thunkAPI.rejectWithValue(data) 
     } catch(err) {
@@ -87,7 +84,6 @@ const sessionSlice = createSlice({
             state.status = 'loading'
         })
         .addCase(fetchSession.fulfilled, (state, action) => {
-            // console.log(action)
             state.status = 'succeeded'
             state.loggedIn = true
             state.user = action.payload
@@ -95,7 +91,6 @@ const sessionSlice = createSlice({
             state.reduxErrors = null
         })
         .addCase(fetchSession.rejected, (state, action) => {
-            // console.log(action)
             state.status = 'failed'
             state.loggedIn = false
             state.user = {}

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
 
 import { reviewAdded } from './brewerySlice';
 import { addReviewedBrewery } from '../reviewedBreweries/reviewedBreweriesSlice';

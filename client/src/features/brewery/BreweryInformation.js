@@ -23,6 +23,7 @@ export default function BreweryInformation({ name, website, address, city, posta
         <>
             <ListGroup className="w-50">
                 <ListGroup.Item>{`Name: ${name}`}</ListGroup.Item>
+                {/* eslint-disable-next-line */}
                 <ListGroup.Item>Website: {<a href={website} target="_blank">{website}</a>}</ListGroup.Item>
                 <ListGroup.Item>Address: {address}</ListGroup.Item>
                 <ListGroup.Item>{`City: ${city}`}</ListGroup.Item>
