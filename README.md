@@ -16,14 +16,14 @@ A brewery tour scheduling app for breweries located in Denver, Colorado Springs,
 
 ### Installation
   1. Fork this repository
-  2. 
+
   ![image](https://github.com/tred237/the-great-brew-tours/assets/103388556/811bb032-6726-403f-9468-2423f2295cb5)
 
-  3. Copy the SSH key from the forked repository
-  4. 
+  2. Copy the SSH key from the forked repository
+
   ![image](https://github.com/tred237/the-great-brew-tours/assets/103388556/3b848765-0474-4e4d-9dd5-8fa436febae5)
 
-  5. In your terminal, clone the repository using the SSH key you copied from the fork
+  3. In your terminal, clone the repository using the SSH key you copied from the fork
   ```
   git clone <pasted-ssh-key>
   ```
