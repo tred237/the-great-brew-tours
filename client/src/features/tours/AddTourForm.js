@@ -3,23 +3,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/esm/Spinner';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
 
 import { fetchAddTour } from './toursSlice';
+import AddTourInputs from './AddTourInputs';
+import AddTourCheckbox from './AddTourCheckbox';
+import { buttonStyle } from '../../helpers/customStyles';
 
 export default function AddTourForm({ setShowSuccess }) {
-    const breweries = useSelector(state => state.breweries.breweries)
-    const tourErrors = useSelector(state => state.tours.addTourErrors)
     const addTourStatus = useSelector(state => state.tours.status)
     const dispatch = useDispatch()
+    const [hover, setHover] = useState(false)
 
     const defaultFormData = {
         tourDate: '',
-        meetingTimeHours: '0',
-        meetingTimeMinutes: '0',
-        durationHours: '1',
-        durationMinutes: '0',
+        meetingTimeHours: '',
+        meetingTimeMinutes: '',
+        durationHours: '',
+        durationMinutes: '',
         meetingLocation: '',
-        availableSlots: '1',
+        availableSlots: '',
         breweries: [],
     }
 
@@ -63,60 +67,16 @@ export default function AddTourForm({ setShowSuccess }) {
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Group>
-                <Form.Label>Date of Tour *</Form.Label>
-                <Form.Control required
-                            type="date"
-                            name="tourDate"
-                            value={formData.tourDate}
-                            onChange={handleChange} />
-                <Form.Label>Meeting Time (Hours) *</Form.Label>
-                <Form.Control required as="select" name="meetingTimeHours" value={formData.meetingTimeHours} onChange={handleChange}>
-                    {Array(24).fill(0).map((_,i) => i).map(s => <option key={s} value={s}>{s}</option>)}
-                </Form.Control>
-                <Form.Label>Meeting Time (Minutes) *</Form.Label>
-                <Form.Control required as="select" name="meetingTimeMinutes" value={formData.meetingTimeMinutes} onChange={handleChange}>
-                    {[0, 15, 30, 45].map(s => <option key={s} value={s}>{s}</option>)}
-                </Form.Control>
-                {tourErrors && tourErrors.tour_date ? tourErrors.tour_date.map(e => <p key={e}>{`Tour date ${e}`}</p>) : null}
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Duration (Hours) *</Form.Label>
-                <Form.Control required as="select" name="durationHours" value={formData.durationHours} onChange={handleChange}>
-                    {Array(23).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
-                </Form.Control>
-                <Form.Label>Duration (Minutes) *</Form.Label>
-                <Form.Control required as="select" name="durationMinutes" value={formData.durationMinutes} onChange={handleChange}>
-                    {[0, 15, 30, 45].map(s => <option key={s} value={s}>{s}</option>)}
-                </Form.Control>
-                {tourErrors && tourErrors.duration ? tourErrors.duration.map(e => <p key={e}>{`Tour duration ${e}`}</p>) : null}
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Meeting Location *</Form.Label>
-                <Form.Control required name="meetingLocation" value={formData.meetingLocation} onChange={handleChange} />
-                {tourErrors && tourErrors.meeting_location ? tourErrors.meeting_location.map(e => <p key={e}>{`Meeting location ${e}`}</p>) : null}
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Available Slots *</Form.Label>
-                <Form.Control required as="select" name="availableSlots" value={formData.availableSlots} onChange={handleChange}>
-                    {Array(20).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
-                </Form.Control>
-                {tourErrors && tourErrors.available_slots ? tourErrors.available_slots.map(e => <p key={e}>{`Available slots ${e}`}</p>) : null}
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Breweries *</Form.Label>
-                {breweries.map(b => {
-                    return (<Form.Check key={b.id}
-                    type='checkbox'
-                    name='breweries'
-                    value={b.id}
-                    label={b.name}
-                    onChange={handleChange} />)
-                })}
-                {tourErrors && tourErrors.tour_breweries ? tourErrors.tour_breweries.map(e => <p key={e}>{e}</p>) : null}
-            </Form.Group>
-            {addTourStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit">Save</Button>}
+        <Form className="form-container" onSubmit={handleSubmit}>
+            <Row>
+                <Col>
+                <AddTourInputs formData={formData} handleChange={handleChange}/>
+                {addTourStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit" style={buttonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} >Save</Button>}
+                </Col>
+                <Col className="check-box-column" sm={8}>
+                    <AddTourCheckbox handleChange={handleChange} />
+                </Col>
+            </Row>
         </Form>
     )
 }

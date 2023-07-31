@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import { fetchBreweries } from '../breweries/breweriesSlice';
-// import { fetchAddTour } from './toursSlice';
 import { useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/esm/Container';
+
+import { fetchBreweries } from '../breweries/breweriesSlice';
 import AddTourForm from './AddTourForm';
+import { buttonStyle } from '../../helpers/customStyles';
 
 export default function AddTour() {
     const isAdmin = useSelector(state => state.session.user.is_admin)
@@ -15,25 +15,22 @@ export default function AddTour() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [showSuccess, setShowSuccess] = useState(false)
+    const [hover, setHover] = useState(false)
 
     useEffect(() => {
         if((sessionStatus === 'succeeded' || sessionStatus === 'failed') && !isAdmin) navigate("/home")
         if(breweryStatus === 'idle') dispatch(fetchBreweries())
     }, [dispatch, breweryStatus, isAdmin, navigate, sessionStatus]);
 
-    const submissionSuccess = () => {
-        return (
-            <>
-                <h4>Success!</h4>
-                <Button onClick={() => setShowSuccess(false)}>Add Another Tour</Button>
-            </>
-        )
-    }
-
     return (
-        <Container>
-            <h3>Add Tour</h3>
-            {showSuccess ? submissionSuccess() : <AddTourForm setShowSuccess={setShowSuccess} />}
+        <Container className='form-page-container'>
+            <h3 className="text-center pb-3">{showSuccess ? "Success!" : "Add Tour"}</h3>
+            {showSuccess ? <Button className="form-success-button" 
+                                style={buttonStyle(hover)} 
+                                onMouseOver={() => setHover(true)}
+                                onMouseOut={() => setHover(false)} 
+                                onClick={() => setShowSuccess(false)}>Add Another Tour</Button> 
+                        : <AddTourForm setShowSuccess={setShowSuccess} />}
         </Container>
     )
 }

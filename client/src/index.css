@@ -7,7 +7,7 @@
 
 .nav-bar {
     background-color: #525325;
-    height: 10vh;
+    height: 12vh;
     font-size: large;
 }
 
@@ -96,4 +96,23 @@
     top: 55%;
     left: 45%;
     color: #ffffff8C;
+}
+
+.form-page-container {
+    padding-top: 4%;
+    padding-bottom: 4%;
+}
+
+.form-container {
+    padding-top: 1%;
+    margin-left: 5%;
+}
+
+.check-box-column {
+    margin-left: 5%;
+}
+
+.form-success-button {
+    position: absolute;
+    left: 45%;
 }

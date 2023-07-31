@@ -60,7 +60,9 @@ export default function EditBreweryForm({ onCloseModal }) {
             </Form.Group>
             <Form.Group>
                 <Form.Label>City *</Form.Label>
-                <Form.Control required name="city" value={formData.city} onChange={handleChange} />
+                <Form.Control required as="select" name="city" value={formData.city} onChange={handleChange}>
+                    {['Colorado Springs', 'Denver', 'Fort Collins'].map(s => <option key={s} value={s}>{s}</option>)}
+                </Form.Control>
                 {editBreweryErrors && editBreweryErrors.city ? editBreweryErrors.city.map(e => <p key={e}>{`City ${e}`}</p>) : null}
             </Form.Group>
             <Form.Group>
