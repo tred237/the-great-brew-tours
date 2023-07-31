@@ -12,12 +12,11 @@ export default function BreweryInformation({ name, website, address, city, posta
     const handleShowModal = () => setShowModal(true)
     const handleCloseModal = () => setShowModal(false)
 
-
     return (
         <>
             <ListGroup className="w-50">
                 <ListGroup.Item>{`Name: ${name}`}</ListGroup.Item>
-                <ListGroup.Item>Website: {<a href={website}>{website}</a>}</ListGroup.Item>
+                <ListGroup.Item>Website: {<a href={website} target="_blank">{website}</a>}</ListGroup.Item>
                 <ListGroup.Item>Address: {address}</ListGroup.Item>
                 <ListGroup.Item>{`City: ${city}`}</ListGroup.Item>
                 <ListGroup.Item>{`Postal Code: ${postal_code}`}</ListGroup.Item>
