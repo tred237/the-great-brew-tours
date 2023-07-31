@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from 'react-bootstrap/Spinner';
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
 
 import { fetchReviewedBreweries } from "./reviewedBreweriesSlice";
 import BreweryCard from "../breweries/BreweryCard";
@@ -30,9 +32,17 @@ export default function ReviewedBreweries() {
         </Container>
     )
     else return (
-        <Container>
-            <h2>Reviewed Breweries</h2>
-            {reviewedBreweryStatus === 'loading' || reviewedBreweryStatus === 'idle' ? <Spinner animation="border" /> : reviewedBreweries.slice().sort((a,b) => sortAscending(a.name, b.name)).map(b => <BreweryCard key={b.id} brewery_id={b.id} brewery_name={b.name} /> )}
+        <Container className="pt-5">
+            <h2 className="text-center pb-3">Reviewed Breweries</h2>
+            <Row className="breweries-row" md={4}>
+                {reviewedBreweryStatus === 'loading' || reviewedBreweryStatus === 'idle' 
+                    ? <Spinner animation="border" /> 
+                    : reviewedBreweries.slice().sort((a,b) => sortAscending(a.name.toLowerCase(), b.name.toLowerCase())).map(b => {
+                        return <Col className="breweries-col" key={b.id}>
+                                    <BreweryCard breweryId={b.id} breweryName={b.name} breweryImage={b.image} />
+                               </Col>
+                    })}
+            </Row>
         </Container>
     )
 }
