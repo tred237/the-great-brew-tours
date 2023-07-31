@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Container from "react-bootstrap/esm/Container";
 import Form from 'react-bootstrap/esm/Form';
 import Button from 'react-bootstrap/esm/Button';
 import InputGroup from 'react-bootstrap/esm/InputGroup';
 
 import { fetchLogin } from "./sessionSlice";
+import { submitButtonStyle } from "../../helpers/customStyles";
 
 export default function LoginForm({ onCloseModal }) {
     const formDataDefault = {
         user: '',
         password: '', 
-
     }
     const loginErrors = useSelector((state) => state.session.loginErrors);
     const dispatch = useDispatch()
     const [formData, setFormData] = useState(formDataDefault)
     const [showPassword, setShowPassword] = useState(false)
+    const [hover, setHover] = useState(false)
 
     const handleTogglePassword = () => setShowPassword(!showPassword)
 
@@ -41,21 +41,19 @@ export default function LoginForm({ onCloseModal }) {
                             onChange={handleChange} />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Password *</Form.Label>
-                <InputGroup>
+                <Form.Label className="pt-1">Password *</Form.Label>
+                <InputGroup className="pb-2">
                     <Form.Control required 
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Enter password" 
                                 name="password" 
                                 value={formData.password}
                                 onChange={handleChange}/>
-                    <Button onMouseUp={handleTogglePassword} onMouseDown={handleTogglePassword}>Show Password</Button>
+                    <Button style={submitButtonStyle(showPassword)} onMouseUp={handleTogglePassword} onMouseDown={handleTogglePassword}>Show Password</Button>
                 </InputGroup>
             </Form.Group>
-            <Container>
-                {loginErrors ? loginErrors.map(e => <p key={e}>{e}</p>) : null}
-            </Container>
-            <Button type="submit">Log in</Button>
+            {loginErrors ? loginErrors.map(e => <p className="error-message" key={e}>{e}</p>) : null}
+            <Button style={submitButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} type="submit">Log in</Button>
         </Form>
     )
 }

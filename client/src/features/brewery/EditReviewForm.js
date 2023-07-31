@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
 import { reviewEdited } from './brewerySlice';
+import { submitButtonStyle } from '../../helpers/customStyles';
 
 export default function EditReviewForm({ onCloseModal, review }) {
     const brewery_id = useSelector(state => state.brewery.brewery.id)
@@ -18,6 +19,7 @@ export default function EditReviewForm({ onCloseModal, review }) {
 
     const [formData, setFormData] = useState(formDataDefault)
     const dispatch = useDispatch()
+    const [hover, setHover] = useState(false)
 
     const isSelected = (value) => formData.isRecommended === value
 
@@ -52,10 +54,11 @@ export default function EditReviewForm({ onCloseModal, review }) {
         <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <Form.Label>Would you recommend this brewery?</Form.Label>
+                {' '}
                 <Form.Check inline type="radio" name="isRecommended" label="Yes" value='true' checked={isSelected('true')} onChange={handleChange} />
                 <Form.Check inline type="radio" name="isRecommended" label="No" value='false' checked={isSelected('false')} onChange={handleChange} />
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="pb-2">
                 <Form.Control required 
                             as="textarea"
                             placeholder="Write a review..." 
@@ -63,10 +66,8 @@ export default function EditReviewForm({ onCloseModal, review }) {
                             value={formData.review}
                             onChange={handleChange}/>
             </Form.Group>
-            <Container>
-                {editReviewErrors ? editReviewErrors.map(e => <p key={e}>{e}</p>) : null}
-            </Container>
-            <Button type="submit">Save</Button>
+            {editReviewErrors ? editReviewErrors.map(e => <p className="error-message" key={e}>{e}</p>) : null}
+            <Button style={submitButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} type="submit">Save</Button>
         </Form>
     )
 }

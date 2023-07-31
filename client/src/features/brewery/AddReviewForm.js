@@ -6,11 +6,13 @@ import Container from 'react-bootstrap/Container';
 
 import { reviewAdded } from './brewerySlice';
 import { addReviewedBrewery } from '../reviewedBreweries/reviewedBreweriesSlice';
+import { submitButtonStyle } from '../../helpers/customStyles';
 
 export default function AddReviewForm({ onCloseModal }) {
     const brewery = useSelector(state => state.brewery.brewery)
     const [addReviewErrors, setAddReviewErrors] = useState([])
     const dispatch = useDispatch()
+    const [hover, setHover] = useState(false)
     
     const formDataDefault = {
         isRecommended: 'true',
@@ -52,10 +54,11 @@ export default function AddReviewForm({ onCloseModal }) {
         <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <Form.Label>Would you recommend this brewery?</Form.Label>
+                {' '}
                 <Form.Check inline type="radio" name="isRecommended" label="Yes" value='true' checked={isSelected('true')} onChange={handleChange} />
                 <Form.Check inline type="radio" name="isRecommended" label="No" value='false' checked={isSelected('false')} onChange={handleChange} />
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="pb-2">
                 <Form.Control required
                             as="textarea"
                             placeholder="Write a review..." 
@@ -63,10 +66,8 @@ export default function AddReviewForm({ onCloseModal }) {
                             value={formData.review}
                             onChange={handleChange}/>
             </Form.Group>
-            <Container>
-                {addReviewErrors ? addReviewErrors.map(e => <p key={e}>{e}</p>) : null}
-            </Container>
-            <Button type="submit">Save</Button>
+            {addReviewErrors ? addReviewErrors.map(e => <p className="error-message" key={e}>{e}</p>) : null}
+            <Button style={submitButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} type="submit">Save</Button>
         </Form>
     )
 }

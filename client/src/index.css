@@ -146,3 +146,14 @@
     padding-right: 12%;
     padding-bottom: 2%;
 }
+
+.button-center {
+    position: relative;
+    left: 46%;
+}
+
+.reviews-container {
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-bottom: 1%;
+}

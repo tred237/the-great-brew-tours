@@ -6,12 +6,14 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 
 import { fetchEditBrewery } from './brewerySlice';
 import { breweryEdited } from '../breweries/breweriesSlice';
+import { submitButtonStyle } from '../../helpers/customStyles';
 
 export default function EditBreweryForm({ onCloseModal }) {
     const brewery = useSelector(state => state.brewery.brewery)
     const editBreweryErrors = useSelector(state => state.brewery.editBreweryErrors)
     const editBreweryStatus = useSelector(state => state.brewery.status)
     const dispatch = useDispatch()
+    const [hover, setHover] = useState(false)
 
     const defaultFormData = {
         breweryName: brewery.name,
@@ -32,49 +34,45 @@ export default function EditBreweryForm({ onCloseModal }) {
         dispatch(fetchEditBrewery(formData))
         .unwrap()
         .then((data) => {
-            console.log(data)
             dispatch(breweryEdited(data))
             setFormData({...defaultFormData})
             onCloseModal()
         })
-        .catch(err => console.log(err))
+        .catch(() => console.log('Brewery edit failed'))
     }
-
-    // console.log(formData)
-    // console.log(brewery)
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Form.Group>
+            <Form.Group className="pb-2">
                 <Form.Label>Brewery Name *</Form.Label>
                 <Form.Control required name="breweryName" value={formData.breweryName} onChange={handleChange} />
-                {editBreweryErrors && editBreweryErrors.name ? editBreweryErrors.name.map(e => <p key={e}>{`Brewery name ${e}`}</p>) : null}
+                {editBreweryErrors && editBreweryErrors.name ? editBreweryErrors.name.map(e => <p className="error-message" key={e}>{`Brewery name ${e}`}</p>) : null}
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="pb-2">
                 <Form.Label>Website</Form.Label>
                 <Form.Control name="website" value={formData.website} onChange={handleChange} />
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="pb-2">
                 <Form.Label>Address</Form.Label>
                 <Form.Control name="address" value={formData.address} onChange={handleChange} />
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="pb-2">
                 <Form.Label>City *</Form.Label>
                 <Form.Control required as="select" name="city" value={formData.city} onChange={handleChange}>
                     {['Colorado Springs', 'Denver', 'Fort Collins'].map(s => <option key={s} value={s}>{s}</option>)}
                 </Form.Control>
-                {editBreweryErrors && editBreweryErrors.city ? editBreweryErrors.city.map(e => <p key={e}>{`City ${e}`}</p>) : null}
+                {editBreweryErrors && editBreweryErrors.city ? editBreweryErrors.city.map(e => <p className="error-message" key={e}>{`City ${e}`}</p>) : null}
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="pb-2">
                 <Form.Label>Postal Code</Form.Label>
                 <Form.Control name="postalCode" value={formData.postalCode} onChange={handleChange} />
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="pb-2">
                 <Form.Label>Image</Form.Label>
                 <Form.Control required name="image" value={formData.image} onChange={handleChange} />
-                {editBreweryErrors && editBreweryErrors.image ? editBreweryErrors.image.map(e => <p key={e}>{`Image ${e}`}</p>) : null}
+                {editBreweryErrors && editBreweryErrors.image ? editBreweryErrors.image.map(e => <p className="error-message" key={e}>{`Image ${e}`}</p>) : null}
             </Form.Group>
-            {editBreweryStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit">Save</Button>}
+            {editBreweryStatus === 'loading' ? <Spinner animation="border" /> : <Button style={submitButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} type="submit">Save</Button>}
         </Form>
     )
 }

@@ -1,16 +1,23 @@
 import { useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import ListGroup from "react-bootstrap/esm/ListGroup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import EditBreweryModal from "../../modals/EditBreweryModal";
+import { submitButtonStyle } from "../../helpers/customStyles";
+import { clearBreweryEditErrors } from "./brewerySlice";
 
 export default function BreweryInformation({ name, website, address, city, postal_code }) {
     const user = useSelector(state => state.session.user)
     const [showModal, setShowModal] = useState(false)
+    const [hover, setHover] = useState(false)
+    const dispatch = useDispatch()
 
     const handleShowModal = () => setShowModal(true)
-    const handleCloseModal = () => setShowModal(false)
+    const handleCloseModal = () => {
+        setShowModal(false)
+        dispatch(clearBreweryEditErrors())
+    }
 
     return (
         <>
@@ -22,7 +29,7 @@ export default function BreweryInformation({ name, website, address, city, posta
                 <ListGroup.Item>{`Postal Code: ${postal_code}`}</ListGroup.Item>
                 {user && user.is_admin ? 
                     <ListGroup.Item> 
-                        <Button onClick={handleShowModal}>Edit</Button>
+                        <Button style={submitButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} onClick={handleShowModal}>Edit</Button>
                     </ListGroup.Item>
                     : null
                 }

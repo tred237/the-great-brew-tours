@@ -48,7 +48,7 @@ export default function AddTourForm({ setShowSuccess }) {
             setShowSuccess(true)
             setFormData({...defaultFormData})
         })
-        .catch(err => console.log(err.errors))
+        .catch(() => console.log("Failed to add tour"))
     }
 
     const fetchAddTourBreweries = async (tourId, breweries) => {

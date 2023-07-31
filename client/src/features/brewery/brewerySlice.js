@@ -1,29 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchBrewery = createAsyncThunk("brewery/fetchBrewery", async (breweryId, thunkAPI) => {
-  // console.log(breweryId)
   try{
     const response = await fetch(`/breweries/${breweryId.toString()}`)
-    // console.log(response)
     const data = await response.json()
-    // console.log(breweryId)
     if(response.ok) return data
     else return thunkAPI.rejectWithValue(data) 
   } catch(err) {
     return thunkAPI.rejectWithValue(err)
   }
 });
-
-// export const fetchBrewery = createAsyncThunk("brewery/fetchBrewery", (breweryId) => {
-//   // console.log(breweryId)
-//   return fetch(`/breweries/${breweryId}`)
-//           .then(response => {
-//             console.log(response)
-//             return response.json()
-//           })
-//           .then(data => data)
-//           // .catch()
-// });
 
 export const fetchDeleteReview = createAsyncThunk("brewery/fetchDeleteReview", async (reviewId, thunkAPI) => {
   try { 
@@ -84,25 +70,11 @@ const brewerySlice = createSlice({
     reviewEdited: (state, action) => {
       state.brewery.brewery_reviews = state.brewery.brewery_reviews.filter(r => r.id !== action.payload.id)
       state.brewery.brewery_reviews.unshift(action.payload)
+    },
+    clearBreweryEditErrors: (state) => {
+      state.editBreweryErrors = null
     }
   },
-  // extraReducers: {
-  //   [fetchBrewery.loading]: (state) => {
-  //      state.status = 'loading'
-  //   },
-  //   [fetchBrewery.fulfilled]: (state, action) => {
-  //         state.status = 'succeeded'
-  //         state.brewery = action.payload
-  //         state.getBreweryErrors = null
-  //         state.reduxErrors = null
-  //   },
-  //   [fetchBrewery.rejected]: (state, action) => {
-  //     console.log(action)
-  //           state.status = 'failed'
-  //           state.getBreweryErrors = action.payload
-  //           state.reduxErrors = action.error.message
-  //   }
-  // }
   extraReducers(builder) {
     builder
       .addCase(fetchBrewery.pending, (state) => {
@@ -153,6 +125,6 @@ const brewerySlice = createSlice({
   }
 });
 
-export const { reviewAdded, reviewEdited } = brewerySlice.actions; 
+export const { reviewAdded, reviewEdited, clearBreweryEditErrors } = brewerySlice.actions; 
 
 export default brewerySlice.reducer;

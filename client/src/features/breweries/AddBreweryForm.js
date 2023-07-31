@@ -39,7 +39,7 @@ export default function AddBreweryForm({ setShowSuccess }) {
             setShowSuccess(true)
             setFormData({...defaultFormData})
         })
-        .catch(err => console.log(err.errors))
+        .catch(() => console.log('Failed to add brewery'))
     }
 
     return (

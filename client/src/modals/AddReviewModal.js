@@ -3,7 +3,7 @@ import AddReviewForm from '../features/brewery/AddReviewForm';
 
 export default function AddReviewModal({ showModal, onCloseModal }) {
     return (
-        <Modal show={showModal} onHide={onCloseModal} animation={false}>
+        <Modal style={{fontFamily: "Didot, serif"}} show={showModal} onHide={onCloseModal} animation={false}>
             <Modal.Header closeButton>
                 <Modal.Title>Write a review</Modal.Title>
             </Modal.Header>
