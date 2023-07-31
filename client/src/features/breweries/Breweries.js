@@ -22,7 +22,7 @@ export default function Breweries() {
           <hr />
           <h3 className="text-center pt-2 pb-3">Take a look at our catalog!</h3>
           <Row className="breweries-row" md={4}>
-            {breweries.slice().sort((a,b) => sortAscending(a.name, b.name)).map(b => {
+            {breweries.slice().sort((a,b) => sortAscending(a.name.toLowerCase(), b.name.toLowerCase())).map(b => {
               return <Col className="breweries-col" key={b.id}>
                         <BreweryCard breweryId={b.id} breweryName={b.name} breweryImage={b.image} />
                     </Col>
