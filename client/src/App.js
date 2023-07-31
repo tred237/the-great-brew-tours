@@ -4,13 +4,14 @@ import { useDispatch } from "react-redux";
 
 import { fetchSession } from "./features/session/sessionSlice";
 import NavBar from "./features/NavBar";
-import Home from "./features/HomePage";
+import Home from "./features/breweries/HomePage";
 import Brewery from "./features/brewery/BreweryPage";
 import ReviewedBreweries from "./features/reviewedBreweries/ReviewedBreweriesPage";
 import Tours from "./features/tours/ToursPage";
 import ScheduledTours from "./features/scheduledTours/ScheduledToursPage";
 import AddTour from "./features/tours/AddTourPage";
 import AddBrewery from "./features/breweries/AddBreweryPage";
+import gbtlogo1 from "./assets/gbtlogo1.png";
 
 export default function App() {
   // const state = useSelector(state => state);
@@ -36,6 +37,10 @@ export default function App() {
         <Route exact path="/home" element={<Home />} />
         <Route path="*" element={<Home />} />
       </Routes>
+      <section className="footer">
+        <img className="footer-image" src={gbtlogo1} alt="GBT Logo" width="70" height="40" />
+        <p className="footer-text">The Great Brew Tours</p>
+      </section>
     </div>
   );
 }

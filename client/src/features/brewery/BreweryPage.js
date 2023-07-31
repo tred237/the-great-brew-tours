@@ -14,6 +14,7 @@ import LoginSignupModal from "../../modals/LoginSignupModal";
 import BreweryNotFound from "./BreweryNotFound";
 import { sortDescending } from "../../helpers/sort";
 import { fetchBreweries } from "../breweries/breweriesSlice";
+import gbtlogo2 from "../../assets/gbtlogo2.png";
 
 export default function Brewery() {
     const brewery = useSelector((state) => state.brewery.brewery)
@@ -47,8 +48,7 @@ export default function Brewery() {
     return (
         <Container>
             <Container className='d-flex justify-content-center p-4 w-75 h-25'>
-                <Image className="rounded brewery-information-image" src={brewery.image} alt={brewery.name} />
-                {/* onError={(e) => e.target.src = gbtlogo} /> */}
+                <Image className="rounded brewery-information-image" src={brewery.image} alt={brewery.name} onError={(e) => e.target.src = gbtlogo2} />
             </Container>
             <Container className='d-flex justify-content-center'>
                 <BreweryInformation name={brewery.name}

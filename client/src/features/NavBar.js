@@ -11,6 +11,7 @@ import { resetReviewedBreweries } from './reviewedBreweries/reviewedBreweriesSli
 import { resetTours } from './tours/toursSlice';
 import { resetScheduledTours } from './scheduledTours/scheduledToursSlice';
 import LoginSignupModal from '../modals/LoginSignupModal';
+import gbtlogo1 from "../assets/gbtlogo1.png";
 
 
 export default function NavBar() {
@@ -33,9 +34,11 @@ export default function NavBar() {
 
     return (
         <>
-            <Navbar className="bg-body-tertiary">
+            <Navbar className="nav-bar" variant="dark">
                 <Container>
-                    <Navbar.Brand as={Link} to="/home">GBT</Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/home">
+                        <img src={gbtlogo1} alt='GBT' width="80" height="50" className="d-inline-block align-top"/>
+                    </Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/home">Home</Nav.Link>
                         <Nav.Link as={Link} to="/tours">Tours</Nav.Link>
