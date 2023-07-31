@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/esm/Col';
 import { fetchAddTour } from './toursSlice';
 import AddTourInputs from './AddTourInputs';
 import AddTourCheckbox from './AddTourCheckbox';
-import { buttonStyle } from '../../helpers/customStyles';
+import { submitButtonStyle } from '../../helpers/customStyles';
 
 export default function AddTourForm({ setShowSuccess }) {
     const addTourStatus = useSelector(state => state.tours.status)
@@ -71,7 +71,7 @@ export default function AddTourForm({ setShowSuccess }) {
             <Row>
                 <Col>
                 <AddTourInputs formData={formData} handleChange={handleChange}/>
-                {addTourStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit" style={buttonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} >Save</Button>}
+                {addTourStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit" style={submitButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} >Save</Button>}
                 </Col>
                 <Col className="check-box-column" sm={8}>
                     <AddTourCheckbox handleChange={handleChange} />

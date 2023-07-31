@@ -8,10 +8,11 @@ import Spinner from "react-bootstrap/esm/Spinner";
 
 import { fetchAddScheduleTour } from "./scheduledToursSlice";
 import { scheduledTourAdded } from "../tours/toursSlice";
+import { submitButtonStyle } from '../../helpers/customStyles';
 
 export default function ScheduleTourForm({ tour_id, available_slots, selectedDate }) {
     const defaultFormData = {
-        numberOfPeople: 1,
+        numberOfPeople: '',
         tour_id: tour_id
     }
 
@@ -20,6 +21,7 @@ export default function ScheduleTourForm({ tour_id, available_slots, selectedDat
     const scheduleTourStatus = useSelector(state => state.scheduledTours.status)
     const [formData, setFormData] = useState({...defaultFormData})
     const dispatch = useDispatch()
+    const [hover, setHover] = useState(false)
 
     const handleChange = (e) => setFormData({...formData, numberOfPeople: e.target.value})
 
@@ -38,13 +40,14 @@ export default function ScheduleTourForm({ tour_id, available_slots, selectedDat
     )
     else return (
         <Form onSubmit={handleSubmit}>
-            <Form.Select defaultValue={formData.numberOfPeople} onChange={handleChange}>
+            <Form.Control required as="select" name="numberOfPeople" value={formData.numberOfPeople} onChange={handleChange}>
+                <option value="">How many people are coming?</option>
                 {Array(available_slots).fill(1).map((_,i) => i + 1).map(s => <option key={s} value={s}>{s}</option>)}
-            </Form.Select>
-            {scheduleTourStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit">Schedule</Button>}
-            <Container>
+            </Form.Control>
+            <Container className="pt-2">
                 {scheduleTourErrors ? scheduleTourErrors.map(e => <p key={e}>{e}</p>) : null}
             </Container>
+            {scheduleTourStatus === 'loading' ? <Spinner animation="border" /> : <Button style={submitButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} type="submit">Schedule</Button>}
         </Form>
     )
 }

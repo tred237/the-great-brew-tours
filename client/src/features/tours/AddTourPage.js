@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/esm/Container';
 
 import { fetchBreweries } from '../breweries/breweriesSlice';
 import AddTourForm from './AddTourForm';
-import { buttonStyle } from '../../helpers/customStyles';
+import { submitButtonStyle } from '../../helpers/customStyles';
 import { clearAddTourErrors } from './toursSlice';
 
 export default function AddTour() {
@@ -28,7 +28,7 @@ export default function AddTour() {
         <Container className='form-page-container'>
             <h3 className="text-center pb-3">{showSuccess ? "Success!" : "Add Tour"}</h3>
             {showSuccess ? <Button className="form-success-button" 
-                                style={buttonStyle(hover)} 
+                                style={submitButtonStyle(hover)} 
                                 onMouseOver={() => setHover(true)}
                                 onMouseOut={() => setHover(false)} 
                                 onClick={() => setShowSuccess(false)}>Add Another Tour</Button> 

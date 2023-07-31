@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
 import AddBreweryForm from './AddBreweryForm';
-import { buttonStyle } from '../../helpers/customStyles';
+import { submitButtonStyle } from '../../helpers/customStyles';
 import { clearAddBreweryErrors } from './breweriesSlice';
 
 export default function AddBrewery() {
@@ -25,7 +25,7 @@ export default function AddBrewery() {
         <Container className='form-page-container'>
             <h3 className="text-center pb-3">{showSuccess ? "Success!" : "Add Brewery"}</h3>
             {showSuccess ? <Button className="form-success-button" 
-                                style={buttonStyle(hover)} 
+                                style={submitButtonStyle(hover)} 
                                 onMouseOver={() => setHover(true)}
                                 onMouseOut={() => setHover(false)} 
                                 onClick={() => setShowSuccess(false)}>Add Another Brewery</Button> 

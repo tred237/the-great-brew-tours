@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/esm/Spinner';
 
 import { fetchAddBrewery, fetchBreweries } from './breweriesSlice';
-import { buttonStyle } from '../../helpers/customStyles';
+import { submitButtonStyle } from '../../helpers/customStyles';
 
 export default function AddBreweryForm({ setShowSuccess }) {
     const breweriesStatus = useSelector(state => state.breweries.status)
@@ -74,7 +74,7 @@ export default function AddBreweryForm({ setShowSuccess }) {
                 <Form.Control name="image" value={formData.image} onChange={handleChange} />
                 {breweryErrors && breweryErrors.image ? breweryErrors.image.map(e => <p className="error-message" key={e}>{`Image ${e}`}</p>) : null}
             </Form.Group>
-            {addBreweryStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit" style={buttonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} >Save</Button>}
+            {addBreweryStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit" style={submitButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} >Save</Button>}
         </Form>
     )
 }

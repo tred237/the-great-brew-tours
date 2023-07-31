@@ -7,6 +7,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import Spinner from 'react-bootstrap/Spinner';
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
 
 import { fetchTours } from "./toursSlice";
 import Tour from "./Tour";
@@ -41,17 +43,23 @@ export default function Tours() {
         </Container>
     )
     else return (
-        <Container>
-            <h2>Tours</h2>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateCalendar value={date} onChange={(e) => setDate(e)} />
-            </LocalizationProvider>
-            {toursStatus === 'loading' ? <Spinner animation="border" /> :
-                <Accordion defaultActiveKey="0">
-                    {tours ? tours.filter(t=> dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD'))
-                                .slice().sort((a,b) => sortAscending(a.tour_date, b.tour_date))
-                                .map(t => <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />) : null}
-                </Accordion>}
+        <Container className="pt-5">
+            <h2 className="text-center pb-3">Tours</h2>
+            <Row className="tours-container">
+                <Col>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DateCalendar value={date} onChange={(e) => setDate(e)} />
+                    </LocalizationProvider>
+                </Col>
+                <Col sm={8}>
+                    {toursStatus === 'loading' ? <Spinner animation="border" /> :
+                        <Accordion defaultActiveKey="0">
+                            {tours ? tours.filter(t=> dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD'))
+                                        .slice().sort((a,b) => sortAscending(a.tour_date, b.tour_date))
+                                        .map(t => <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />) : null}
+                        </Accordion>}
+                </Col>
+            </Row>
         </Container>
     )
 }

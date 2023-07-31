@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
@@ -7,15 +8,16 @@ import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/esm/Form";
 import Spinner from "react-bootstrap/esm/Spinner";
 
-
 import { fetchDeleteTour } from "./toursSlice";
 import { formatTime, durationBreakdown } from "../../helpers/time";
 import ScheduleTourForm from "../scheduledTours/ScheduleTourForm";
+import { deleteButtonStyle } from "../../helpers/customStyles";
 
 export default function Tour({ tour, selectedDate }){
     const isAdmin = useSelector(state => state.session.user.is_admin)
     const deleteTourStatus = useSelector(state => state.tours.status)
     const dispatch = useDispatch()
+    const [hover, setHover] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -24,8 +26,8 @@ export default function Tour({ tour, selectedDate }){
 
     const adminDeleteButton = () => {
         if(isAdmin) return (
-            <Form onSubmit={handleSubmit}>
-                {deleteTourStatus === 'loading' ? <Spinner animation="border" /> : <Button type="submit">Delete Tour</Button>}
+            <Form className="pt-1" onSubmit={handleSubmit}>
+                {deleteTourStatus === 'loading' ? <Spinner animation="border" /> : <Button style={deleteButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}  type="submit">Delete Tour</Button>}
             </Form>
         )
     }
