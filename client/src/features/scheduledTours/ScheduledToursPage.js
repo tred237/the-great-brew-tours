@@ -35,10 +35,10 @@ export default function ScheduledTours() {
         </Container>
     )
     else return (
-        <Container>
-            <h2>Scheduled Tours</h2>
+        <Container className="pt-5">
+            <h2 className="text-center pb-3">Scheduled Tours</h2>
             {scheduledToursStatus === 'loading' || scheduledToursStatus === 'idle' ? <Spinner animation="border" /> :
-                <Accordion defaultActiveKey="0">
+                <Accordion className="scheduled-tour-accordion" defaultActiveKey="0">
                     {scheduledTours ? scheduledTours.slice().sort((a,b) => sortAscending(a.tour.tour_date, b.tour.tour_date)).map(t => <ScheduledTour key={t.id} scheduledTour={t} />) : null}
                 </Accordion>}
         </Container>

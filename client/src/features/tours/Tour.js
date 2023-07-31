@@ -27,7 +27,7 @@ export default function Tour({ tour, selectedDate }){
     const adminDeleteButton = () => {
         if(isAdmin) return (
             <Form className="pt-1" onSubmit={handleSubmit}>
-                {deleteTourStatus === 'loading' ? <Spinner animation="border" /> : <Button style={deleteButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}  type="submit">Delete Tour</Button>}
+                {deleteTourStatus === 'loading' ? <Spinner animation="border" /> : <Button style={deleteButtonStyle(hover)} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)} type="submit">Delete Tour</Button>}
             </Form>
         )
     }

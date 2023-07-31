@@ -7,11 +7,32 @@ import Container from "react-bootstrap/esm/Container";
 
 import EditDeleteScheduledTourForm from "./EditDeleteScheduledTourForm";
 import { formatTime, durationBreakdown } from "../../helpers/time";
+import { submitButtonStyle } from "../../helpers/customStyles";
 
 export default function ScheduledTour({ scheduledTour }){
     const [change, setChange] = useState(false)
+    const [hoverCancel, setHoverCancel] = useState(false)
+    const [hoverChange, setHoverChange] = useState(false)
 
-    const handleChange = () => setChange(!change)
+    const handleChange = () => {
+        setChange(!change)
+        setHoverChange(false)
+        setHoverCancel(false)
+    }
+
+    const scheduledTourForms = () => {
+        if(change) {
+            return (
+                <>
+                    <EditDeleteScheduledTourForm scheduledTourId={scheduledTour.id} 
+                                                availableSlots={scheduledTour.tour.available_slots - scheduledTour.taken_slots} 
+                                                reservedSlots={scheduledTour.number_of_people} 
+                                                onChange={handleChange} />
+                    <Button style={submitButtonStyle(hoverCancel)} onMouseOver={() => setHoverCancel(true)} onMouseOut={() => setHoverCancel(false)} onClick={handleChange}>Cancel</Button>
+                </>
+            )
+        } else return <Button style={submitButtonStyle(hoverChange)} onMouseOver={() => setHoverChange(true)} onMouseOut={() => setHoverChange(false)} onClick={handleChange}>Change</Button>
+    }
 
     return (
         <AccordionItem eventKey={scheduledTour.id}>
@@ -30,7 +51,7 @@ export default function ScheduledTour({ scheduledTour }){
                     <ul>
                         {scheduledTour.tour_breweries.map(b => <li key={b}>{b}</li>)}
                     </ul>
-                    {change ? <EditDeleteScheduledTourForm scheduledTourId={scheduledTour.id} availableSlots={scheduledTour.tour.available_slots - scheduledTour.taken_slots} reservedSlots={scheduledTour.number_of_people} onChange={handleChange} /> : <Button onClick={handleChange}>Change</Button>}
+                    {scheduledTourForms()}
                 </Container>
             </AccordionBody>
         </AccordionItem>

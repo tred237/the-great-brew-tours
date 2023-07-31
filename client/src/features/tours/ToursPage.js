@@ -51,9 +51,9 @@ export default function Tours() {
                         <DateCalendar value={date} onChange={(e) => setDate(e)} />
                     </LocalizationProvider>
                 </Col>
-                <Col sm={8}>
+                <Col sm={7}>
                     {toursStatus === 'loading' ? <Spinner animation="border" /> :
-                        <Accordion defaultActiveKey="0">
+                        <Accordion className="tour-accordion" defaultActiveKey="0">
                             {tours ? tours.filter(t=> dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD') !== dayjs(Date()).format('YYYYMMDD') && date.format('YYYYMMDD') === dayjs(t.tour_date.split('T')[0]).format('YYYYMMDD'))
                                         .slice().sort((a,b) => sortAscending(a.tour_date, b.tour_date))
                                         .map(t => <Tour key={t.id} tour={t} selectedDate={date.format('YYYYMMDD')} />) : null}
