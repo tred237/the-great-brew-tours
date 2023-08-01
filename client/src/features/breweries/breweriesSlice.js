@@ -50,7 +50,6 @@ const breweriesSlice = createSlice({
     reducers: {
       breweryEdited: (state, action) => {
         const editedBrewery = state.breweries.find(b => b.id === action.payload.id)
-        console.log(editedBrewery)
         editedBrewery.name = action.payload.name
         editedBrewery.city = action.payload.city
         editedBrewery.postal_code = action.payload.postal_code

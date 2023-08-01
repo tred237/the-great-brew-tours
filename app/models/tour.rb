@@ -12,7 +12,8 @@ class Tour < ApplicationRecord
     validate :tour_date_after_current_date
 
     def tour_date_after_current_date
-        unless tour_date and tour_date.to_date > Date.today
+        # byebug
+        unless tour_date and tour_date.to_date > Date.today.in_time_zone('US/Mountain').to_date #Date.today
             errors.add(:tour_date, "must occur after current date")
         end
     end
