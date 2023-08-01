@@ -12,7 +12,7 @@ class Tour < ApplicationRecord
     validate :tour_date_after_current_date
 
     def tour_date_after_current_date
-        byebug
+        # byebug
         current_date = DateTime.now.in_time_zone('US/Mountain')
         current_year = current_date.year.to_s
         current_month = current_date.month < 10 ? "0#{current_date.month.to_s}" : current_date.month.to_s
