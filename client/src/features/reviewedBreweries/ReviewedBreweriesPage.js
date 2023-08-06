@@ -25,13 +25,20 @@ export default function ReviewedBreweries() {
         else handleShowModal()
     },[dispatch, isLoggedIn])
 
-    if(!isLoggedIn) return (
-        <Container className="pt-5 text-center">
-            <h2>You must be logged in to see this content.</h2>
-            <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />
-        </Container>
-    )
-    else return (
+    if(!isLoggedIn) {
+        return (
+            <Container className="pt-5 text-center">
+                <h2>You must be logged in to see this content.</h2>
+                <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />
+            </Container>
+        )
+    } else if(isLoggedIn && reviewedBreweries.length === 0) {
+        return (
+            <Container className="pt-5 text-center">
+                <h2>Review a brewery that you have been to!</h2>
+            </Container>
+        )
+    } else return (
         <Container className="pt-5">
             <h2 className="text-center pb-3">Reviewed Breweries</h2>
             <Row className="breweries-row" md={4}>

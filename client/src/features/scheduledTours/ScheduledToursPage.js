@@ -28,12 +28,23 @@ export default function ScheduledTours() {
         } else handleShowModal()
     },[dispatch, isLoggedIn])
 
-    if(!isLoggedIn) return (
-        <Container className="pt-5 text-center">
-            <h2>You must be logged in to see this content.</h2>
-            <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />
-        </Container>
-    )
+    console.log("is log " + isLoggedIn)
+    if(isLoggedIn && scheduledToursStatus === 'succeeded') console.log("is sched " + scheduledTours.length === 0)
+    if(!isLoggedIn) {
+        return (
+            <Container className="pt-5 text-center">
+                <h2>You must be logged in to see this content.</h2>
+                <LoginSignupModal showModal={showModal} onCloseModal={handleCloseModal} />
+            </Container>
+        )
+    }
+    else if(isLoggedIn && scheduledTours.length === 0) {
+        return (
+            <Container className="pt-5 text-center">
+                <h2>Schedule a tour from the "Tours" tab!</h2>
+            </Container>
+        )
+    }
     else return (
         <Container className="pt-5">
             <h2 className="text-center pb-3">Scheduled Tours</h2>
