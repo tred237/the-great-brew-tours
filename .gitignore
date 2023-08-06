@@ -30,3 +30,6 @@
 
 # Ignore byebug history
 /.byebug_history 
+
+# Ignore DS Store
+.DS_Store
